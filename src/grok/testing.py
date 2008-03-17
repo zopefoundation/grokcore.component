@@ -159,67 +159,6 @@ class UnitTestSetup(BasicTestSetup):
         return suite
 
 
-class FunctionalTestSetup(BasicTestSetup):
-    """A functional test setup for packages.
-
-    A collection of methods to search for appropriate doctest files in
-    a given package. ``FunctionalTestSetup`` is also able to
-    'register' the tests found and to deliver them as a ready-to-use
-    ``unittest.TestSuite`` instance.
-
-    While the functionality to search for testfiles is mostly
-    inherited from the base class, the focus here is to setup the
-    tests correctly.
-    """
-    ftesting_zcml = os.path.join(os.path.dirname(__file__),
-                                 'ftesting.zcml')
-    layer = ZCMLLayer(ftesting_zcml, __name__,
-                      'FunctionalLayer')
-
-    globs=dict(http=HTTPCaller(),
-               getRootFolder=getRootFolder,
-               sync=sync
-               )
-
-    optionflags = (doctest.ELLIPSIS+
-                   doctest.NORMALIZE_WHITESPACE+
-                   doctest.REPORT_NDIFF)
-
-    regexp_list = [
-        '^\s*:(T|t)est-(L|l)ayer:\s*(functional)\s*',
-        ]
-
-    def setUp(self, test):
-        FunctionalTestSetup().setUp()
-
-    def tearDown(self, test):
-        FunctionalTestSetup().tearDown()
-
-    def suiteFromFile(self, name):
-        suite = unittest.TestSuite()
-        if os.path.isabs(name):
-            # We get absolute pathnames, but we need relative ones...
-            common_prefix = os.path.commonprefix([self.package.__file__, name])
-            name = name[len(common_prefix):]
-        test = FunctionalDocFileSuite(
-            name, package=self.package,
-            setUp=self.setUp, tearDown=self.tearDown,
-            globs=self.globs,
-            optionflags=self.optionflags,
-            **self.additional_options
-            )
-        test.layer = self.layer
-        suite.addTest(test)
-        return suite
-
-    def getTestSuite(self):
-        docfiles = self.getDocTestFiles(package=self.package)
-        suite = unittest.TestSuite()
-        for name in docfiles:
-            suite.addTest(self.suiteFromFile(name))
-        return suite
-
-
 def grok(module_name):
     config = ConfigurationMachine()
     zcml.do_grok('grok.meta', config)
