@@ -51,10 +51,10 @@ specify the one to use:
 import grok
 from zope import interface
 
-class Cave(grok.Model):
+class Cave(grok.Context):
     pass
 
-class Fireplace(grok.Model):
+class Fireplace(grok.Context):
     pass
 
 class IHome(interface.Interface):

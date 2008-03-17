@@ -49,7 +49,7 @@ class IMoreHome(interface.Interface):
 class IYetAnotherHome(interface.Interface):
     pass
 
-class Cave(grok.Model):
+class Cave(grok.Context):
     grok.implements(ICave)
     pass
 

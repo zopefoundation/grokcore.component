@@ -15,10 +15,10 @@ Explicit class-level context in case of multiple models:
 import grok
 from zope import interface
 
-class Cave(grok.Model):
+class Cave(grok.Context):
     pass
 
-class Club(grok.Model):
+class Club(grok.Context):
     pass
 
 class IHome(interface.Interface):

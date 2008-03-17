@@ -1,9 +1,9 @@
 import grok
 
-class Cave(grok.Model):
+class Cave(grok.Context):
     pass
 
-class Club(grok.Model):
+class Club(grok.Context):
     pass
 
 class Anything(object):

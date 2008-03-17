@@ -15,7 +15,7 @@ Grok does not depend on the alphabetical order:
 import grok
 from zope import interface
 
-class ZCave(grok.Model):
+class ZCave(grok.Context):
     """we call this `ZCave` because we want to test that we do not
     depend on alphabetical order"""
 

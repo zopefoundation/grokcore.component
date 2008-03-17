@@ -20,7 +20,7 @@ You can register a named adapter by using grok.name:
 import grok
 from zope import interface
 
-class Cave(grok.Model):
+class Cave(grok.Context):
     pass
 
 class IHome(interface.Interface):

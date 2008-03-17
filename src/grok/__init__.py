@@ -19,7 +19,6 @@ from zope.component import adapts
 
 from martian import ClassGrokker, InstanceGrokker, GlobalGrokker
 from grok.components import Adapter, GlobalUtility, MultiAdapter, Context
-from grok.components import Context as Model
 
 from grok.directive import (context, name, title,
                             provides, baseclass, global_utility,

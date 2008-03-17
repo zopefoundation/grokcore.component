@@ -10,7 +10,7 @@ interface:
 """
 import grok
 
-class Cave(grok.Model):
+class Cave(grok.Context):
     pass
 
 class Home(grok.MultiAdapter):
