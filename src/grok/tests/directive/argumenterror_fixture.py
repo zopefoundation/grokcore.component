@@ -1,3 +1,3 @@
 import grok
 
-grok.templatedir('too', 'many', 'arguments')
+grok.name('too', 'many', 'arguments')

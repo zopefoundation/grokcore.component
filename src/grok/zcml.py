@@ -15,11 +15,11 @@
 
 from zope.interface import Interface
 from zope.configuration.fields import GlobalObject
-from zope.configuration.config import ConfigurationMachine
+#from zope.configuration.config import ConfigurationMachine
 
 import martian
-from martian import scan
-from martian.error import GrokError
+#from martian import scan
+#from martian.error import GrokError
 
 class IGrokDirective(Interface):
     """Grok a package or module."""

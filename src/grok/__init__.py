@@ -16,45 +16,20 @@
 
 from zope.interface import implements
 from zope.component import adapts
-from zope.event import notify
-from zope.app.component.hooks import getSite
-from zope.lifecycleevent import (
-    IObjectCreatedEvent, ObjectCreatedEvent,
-    IObjectModifiedEvent, ObjectModifiedEvent,
-    IObjectCopiedEvent, ObjectCopiedEvent)
-
-from zope.app.container.contained import (
-    IObjectAddedEvent, ObjectAddedEvent,
-    IObjectMovedEvent, ObjectMovedEvent,
-    IObjectRemovedEvent, ObjectRemovedEvent,
-    IContainerModifiedEvent, ContainerModifiedEvent)
 
 from martian import ClassGrokker, InstanceGrokker, GlobalGrokker
-from grok.components import Model, Adapter, MultiAdapter, View
-from grok.components import XMLRPC, REST, JSON
-from grok.components import PageTemplate, PageTemplateFile, Container, Traverser
-from grok.components import Site, GlobalUtility, LocalUtility, Annotation
-from grok.components import Application, Form, AddForm, EditForm, DisplayForm
-from grok.components import Indexes
-from grok.components import Permission, Role
-from grok.components import Skin, IGrokLayer
-from grok.components import RESTProtocol, IRESTLayer
-from grok.interfaces import IRESTSkinType
-from grok.components import ViewletManager, Viewlet
+from grok.components import Adapter, GlobalUtility, MultiAdapter, Context
+from grok.components import Context as Model
 
-from grok.directive import (context, name, title, template, templatedir,
-                            provides, baseclass, global_utility, local_utility,
-                            permissions, require, site, layer, direct, viewletmanager,
-                            view, order)
-from grok.decorators import subscribe, adapter, implementer
+from grok.directive import (context, name, title,
+                            provides, baseclass, global_utility,
+                            direct, order)
+from grok.decorators import adapter, implementer
 from martian.error import GrokError, GrokImportError
 
 # BBB These two functions are meant for test fixtures and should be
 # imported from grok.testing, not from grok.
 from grok.testing import grok, grok_component
-
-from grok.formlib import action, AutoFields, Fields
-from grok.util import url
 
 # Our __init__ provides the grok API directly so using 'import grok' is enough.
 from grok.interfaces import IGrokAPI

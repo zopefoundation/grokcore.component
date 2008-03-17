@@ -23,8 +23,9 @@ import os.path
 import re
 from zope.testing import doctest, cleanup
 from zope.app.testing.functional import (
-    HTTPCaller, getRootFolder, FunctionalTestSetup,
-    sync, ZCMLLayer, FunctionalDocFileSuite)
+    HTTPCaller, getRootFolder, sync)
+#, FunctionalDocFileSuite
+#, FunctionalTestSetup
 
 class BasicTestSetup(object):
     """A basic test setup for a package.
@@ -162,7 +163,6 @@ class UnitTestSetup(BasicTestSetup):
 def grok(module_name):
     config = ConfigurationMachine()
     zcml.do_grok('grok.meta', config)
-    zcml.do_grok('grok.templatereg', config)
     zcml.do_grok(module_name, config)
     config.execute_actions()
 

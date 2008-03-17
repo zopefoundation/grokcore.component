@@ -44,7 +44,7 @@ class ContextGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
         context = determine_module_component(module_info, 'grok.context',
-                                             [grok.Model, grok.Container])
+                                             [grok.Context])
         module.__grok_context__ = context
         return True
 
