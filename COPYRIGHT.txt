@@ -1,4 +1,4 @@
-Copyright (c) 2006 gocept gmbh & co. kg, Martijn Faassen and Philipp von
+Copyright (c) 2008 gocept gmbh & co. kg, Martijn Faassen and Philipp von
 Weitershausen
 All Rights Reserved.
 
