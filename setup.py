@@ -14,13 +14,13 @@ long_description = (
     )
 
 setup(
-    name='grok',
+    name='grokcore.component',
     version='0.12dev',
     author='Grok Team',
     author_email='grok-dev@zope.org',
     url='http://grok.zope.org',
     download_url='http://cheeseshop.python.org/pypi/grok/',
-    description='Grok: Now even cavemen can use Zope 3!',
+    description='Grok component registration core',
     long_description=long_description,
     license='ZPL',
     classifiers=['Environment :: Web Environment',
