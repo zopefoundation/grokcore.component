@@ -29,9 +29,3 @@ from martian.error import GrokError, GrokImportError
 # BBB These two functions are meant for test fixtures and should be
 # imported from grokcore.component.testing, not from grokcore.component.
 from grokcore.component.testing import grok, grok_component
-
-# Our __init__ provides the grok API directly so using 'import grok' is enough.
-from grokcore.component.interfaces import IGrokAPI
-from zope.interface import moduleProvides
-moduleProvides(IGrokAPI)
-__all__ = list(IGrokAPI)
