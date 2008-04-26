@@ -32,6 +32,9 @@ def get_name_classname(factory):
 def get_name(factory, default=''):
     return grokcore.component.util.class_annotation(factory, 'grok.name', default)
 
+def get_title(factory, default=''):
+    return grokcore.component.util.class_annotation(factory, 'grok.title', default)
+
 def get_provides(factory):
     provides = util.class_annotation(factory, 'grok.provides', None)
     if provides is None:
