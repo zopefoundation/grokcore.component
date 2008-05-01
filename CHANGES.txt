@@ -6,6 +6,8 @@ Changes
 
 * ...
 
+* Improved documentation
+
 1.0 (2008-05-01)
 ----------------
 
