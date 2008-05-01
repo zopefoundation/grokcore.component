@@ -13,13 +13,14 @@
 ##############################################################################
 """Grokkers for the various components."""
 
-from zope import component
 import martian
-from martian import util
-
 import grokcore.component
+
+from zope import component
+from martian import util
 from grokcore.component.util import check_adapts
-from grokcore.component.util import check_module_component, determine_module_component
+from grokcore.component.util import check_module_component
+from grokcore.component.util import determine_module_component
 from grokcore.component.util import determine_class_component
 
 def get_context(module_info, factory):
@@ -30,10 +31,12 @@ def get_name_classname(factory):
     return get_name(factory, factory.__name__.lower())
 
 def get_name(factory, default=''):
-    return grokcore.component.util.class_annotation(factory, 'grok.name', default)
+    return grokcore.component.util.class_annotation(factory, 'grok.name',
+                                                    default)
 
 def get_title(factory, default=''):
-    return grokcore.component.util.class_annotation(factory, 'grok.title', default)
+    return grokcore.component.util.class_annotation(factory, 'grok.title',
+                                                    default)
 
 def get_provides(factory):
     provides = util.class_annotation(factory, 'grok.provides', None)
