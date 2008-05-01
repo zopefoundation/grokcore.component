@@ -44,6 +44,7 @@ def get_provides(factory):
         util.check_implements_one(factory)
     return provides
 
+
 class ContextGrokker(martian.GlobalGrokker):
 
     priority = 1001
@@ -53,6 +54,7 @@ class ContextGrokker(martian.GlobalGrokker):
                                              [grokcore.component.Context])
         module.__grok_context__ = context
         return True
+
 
 class AdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.Adapter
@@ -68,6 +70,7 @@ class AdapterGrokker(martian.ClassGrokker):
             args=(factory, (adapter_context,), provides, name),
             )
         return True
+
 
 class MultiAdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.MultiAdapter
@@ -85,6 +88,7 @@ class MultiAdapterGrokker(martian.ClassGrokker):
             args=(factory, None, provides, name),
             )
         return True
+
 
 class GlobalUtilityGrokker(martian.ClassGrokker):
     component_class = grokcore.component.GlobalUtility
@@ -107,6 +111,7 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
             args=(factory, provides, name),
             )
         return True
+
 
 class AdapterDecoratorGrokker(martian.GlobalGrokker):
 
