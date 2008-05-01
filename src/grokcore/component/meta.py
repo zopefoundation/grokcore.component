@@ -15,6 +15,7 @@
 
 import martian
 import grokcore.component
+import zope.component.interface
 
 from zope import component
 from martian import util
@@ -150,4 +151,25 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
             component.provideUtility(obj,
                                      provides=info.provides,
                                      name=info.name)
+        return True
+
+
+class SubscriberGrokker(martian.GlobalGrokker):
+
+    def grok(self, name, module, module_info, config, **kw):
+        subscribers = module_info.getAnnotation('grok.subscribers', [])
+
+        for factory, subscribed in subscribers:
+            config.action(
+                discriminator=None,
+                callable=component.provideHandler,
+                args=(factory, subscribed),
+                )
+
+            for iface in subscribed:
+                config.action(
+                    discriminator=None,
+                    callable=zope.component.interface.provideInterface,
+                    args=('', iface)
+                    )
         return True

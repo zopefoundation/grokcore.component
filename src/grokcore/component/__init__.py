@@ -23,7 +23,7 @@ from grokcore.component.components import Adapter, GlobalUtility, MultiAdapter, 
 from grokcore.component.directive import (context, name, title,
                             provides, baseclass, global_utility,
                             direct, order)
-from grokcore.component.decorators import adapter, implementer
+from grokcore.component.decorators import subscribe, adapter, implementer
 from martian.error import GrokError, GrokImportError
 
 # BBB These two functions are meant for test fixtures and should be
