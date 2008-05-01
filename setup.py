@@ -8,19 +8,17 @@ long_description = (
     read('README.txt')
     + '\n' +
     read('CHANGES.txt')
-    + '\n' +
-    'Download\n'
-    '********\n'
     )
 
 setup(
     name='grokcore.component',
-    version='0.12dev',
+    version='1.0',
     author='Grok Team',
     author_email='grok-dev@zope.org',
     url='http://grok.zope.org',
-    download_url='http://cheeseshop.python.org/pypi/grok/',
-    description='Grok component registration core',
+    download_url='http://pypi.python.org/pypi/grok/',
+    description='Grok-like configuration for basic components '
+                '(adapters, utilities, subscribers)',
     long_description=long_description,
     license='ZPL',
     classifiers=['Intended Audience :: Developers',

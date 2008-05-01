@@ -1,9 +1,9 @@
-grokcore.component changes
-**************************
+Changes
+=======
 
-0.1 (unreleased)
-================
+1.0 (2008-05-01)
+----------------
 
-* Created ``grokcore.component`` in March 2008
-  by copying things in ``grok``
-  and then renaming the module in all of the tests.
+* Created ``grokcore.component`` in March 2008 by factoring basic
+  component base classes and their directives and grokkers out of
+  Grok.
