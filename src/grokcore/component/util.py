@@ -14,10 +14,11 @@
 """Grok utility functions.
 """
 
+import grokcore.component
 from zope import component, interface
 
 from martian.error import GrokError
-from martian.util import class_annotation, methods_from_class, scan_for_classes
+from martian.util import methods_from_class, scan_for_classes
 
 def check_adapts(class_):
     if component.adaptedBy(class_) is None:
@@ -25,23 +26,8 @@ def check_adapts(class_):
                         "(use grok.adapts to specify)."
                         % class_, class_)
 
-def determine_class_directive(directive_name, factory, module_info,
-                              default=None):
-    directive = class_annotation(factory, directive_name, None)
-    if directive is None:
-        directive = module_info.getAnnotation(directive_name, None)
-    if directive is not None:
-        return directive
-    return default
-
-def public_methods_from_class(factory):
-    return [m for m in methods_from_class(factory) if \
-            not m.__name__.startswith('_')]
-
 def _sort_key(component):
-    explicit_order, implicit_order = class_annotation(component,
-                                                      'grok.order',
-                                                      (0,0))
+    explicit_order, implicit_order = grokcore.component.order.get(component)
     return (explicit_order,
             component.__module__,
             implicit_order,
@@ -52,8 +38,7 @@ def sort_components(components):
     return sorted(components, key=_sort_key)
 
 AMBIGUOUS_COMPONENT = object()
-def check_module_component(factory, component,
-                           component_name, component_directive):
+def check_module_component(factory, component, component_name, directive):
     """Raise error if module-level component cannot be determined.
 
     If the module-level component is None, it's never been specified;
@@ -63,15 +48,17 @@ def check_module_component(factory, component,
     an error telling developer to specify which one to use.
     """
     if component is None:
-        raise GrokError("No module-level %s for %r, please use "
-                        "%s." % (component_name, factory, component_directive),
+        raise GrokError("No module-level %s for %r, please use the '%s' "
+                        "directive."
+                        % (component_name, factory, directive.__name__),
                         factory)
     elif component is AMBIGUOUS_COMPONENT:
-        raise GrokError("Multiple possible %ss for %r, please use "
-                        "%s." % (component_name, factory, component_directive),
+        raise GrokError("Multiple possible %ss for %r, please use the '%s' "
+                        "directive."
+                        % (component_name, factory, directive.__name__),
                         factory)
 
-def determine_module_component(module_info, annotation, classes):
+def determine_module_component(module_info, directive, classes):
     """Determine module-level component.
 
     The module-level component can be set explicitly using the
@@ -88,7 +75,8 @@ def determine_module_component(module_info, annotation, classes):
     If there are more than one module-level component, AMBIGUOUS_COMPONENT
     is returned.
     """
-    components = scan_for_classes(module_info.getModule(), classes)
+    module = module_info.getModule()
+    components = scan_for_classes(module, classes)
     if len(components) == 0:
         component = None
     elif len(components) == 1:
@@ -96,24 +84,11 @@ def determine_module_component(module_info, annotation, classes):
     else:
         component= AMBIGUOUS_COMPONENT
 
-    module_component = module_info.getAnnotation(annotation, None)
-    if module_component:
+    module_component = directive.get(module)
+    if module_component is not None:
         component = module_component
     return component
 
-
-def determine_class_component(module_info, class_,
-                              component_name, component_directive):
-    """Determine component for a class.
-
-    Determine a component for a class. If no class-specific component exists,
-    try falling back on module-level component.
-    """
-    module_component = module_info.getAnnotation(component_directive, None)
-    component = class_annotation(class_, component_directive, module_component)
-    check_module_component(class_, component,
-                           component_name, component_directive)
-    return component
 
 def check_provides_one(obj):
     provides = list(interface.providedBy(obj))

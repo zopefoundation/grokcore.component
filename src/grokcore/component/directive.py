@@ -14,21 +14,9 @@
 """Grok directives.
 """
 import grokcore.component
-
 from zope.interface.interfaces import IInterface
 
 from martian.error import GrokImportError
-from martian.directive import (OnceDirective,
-                               MultipleTimesDirective,
-                               SingleTextDirective,
-                               MarkerDirective,
-                               InterfaceDirective,
-                               InterfaceOrClassDirective,
-                               ModuleDirectiveContext,
-                               OptionalValueDirective,
-                               ClassDirectiveContext,
-                               ClassOrModuleDirectiveContext)
-from martian import util
 from martian import ndir
 from martian.ndir import baseclass
 
@@ -43,6 +31,7 @@ class global_utility(ndir.MultipleTimesDirective):
         return GlobalUtilityInfo(factory, provides, name, direct)
 
 class GlobalUtilityInfo(object):
+
     def __init__(self, factory, provides=None, name=u'', direct=None):
         self.factory = factory
         if direct is None:
@@ -54,7 +43,7 @@ class GlobalUtilityInfo(object):
         self.provides = provides
 
         if name is u'':
-            name = util.class_annotation(factory, 'grok.name', u'')
+            name = grokcore.component.name.get(factory)
         self.name = name
 
 class order(ndir.Directive):
@@ -70,11 +59,12 @@ class order(ndir.Directive):
         return super(order, self).factory(value)
 
     def default_value(self, component):
-        return 0, order._order
+        return 0, self._order
 
 class name(ndir.Directive):
     scope = ndir.CLASS
     store = ndir.ONCE
+    default = u''
     validate = ndir.validateText
 
 class context(ndir.Directive):

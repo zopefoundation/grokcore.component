@@ -13,40 +13,31 @@
 ##############################################################################
 """Grokkers for the various components."""
 
-import martian
+import martian.util
 import grokcore.component
 import zope.component.interface
 
 from zope import component, interface
-from martian import util
 from martian.error import GrokError
 from grokcore.component.util import check_adapts
 from grokcore.component.util import check_module_component
 from grokcore.component.util import determine_module_component
-from grokcore.component.util import determine_class_component
 from grokcore.component.util import check_provides_one
 from grokcore.component import directive
 
-def get_context(module_info, factory):
-    return determine_class_component(module_info, factory,
-                                     'context', 'grok.context')
+def get_context(factory, module_info):
+    component = directive.context.get(factory, module_info.getModule())
+    check_module_component(factory, component, 'context', directive.context)
+    return component
 
 def get_name_classname(factory):
     return get_name(factory, factory.__name__.lower())
-
-def get_name(factory, default=''):
-    return grokcore.component.util.class_annotation(factory, 'grok.name',
-                                                    default)
-
-def get_title(factory, default=''):
-    return grokcore.component.util.class_annotation(factory, 'grok.title',
-                                                    default)
 
 def get_provides(factory):
     provides = directive.provides.get(factory)
 
     if provides is None:
-        util.check_implements_one(factory)
+        martian.util.check_implements_one(factory)
         provides = list(interface.implementedBy(factory))[0]
     return provides
 
@@ -56,9 +47,12 @@ class ContextGrokker(martian.GlobalGrokker):
     priority = 1001
 
     def grok(self, name, module, module_info, config, **kw):
-        context = determine_module_component(module_info, 'grok.context',
+        context = determine_module_component(module_info, directive.context,
                                              [grokcore.component.Context])
-        module.__grok_context__ = context
+        # XXX this depends on the particular implementation of the
+        # directive storages :(
+        dotted_name = 'grokcore.component.directive.context'
+        setattr(module, dotted_name, context)
         return True
 
 
@@ -66,9 +60,9 @@ class AdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.Adapter
 
     def grok(self, name, factory, module_info, config, **kw):
-        adapter_context = get_context(module_info, factory)
+        adapter_context = get_context(factory, module_info)
         provides = get_provides(factory)
-        name = get_name(factory)
+        name = directive.name.get(factory)
 
         config.action(
             discriminator=('adapter', adapter_context, provides, name),
@@ -83,7 +77,7 @@ class MultiAdapterGrokker(martian.ClassGrokker):
 
     def grok(self, name, factory, module_info, config, **kw):
         provides = get_provides(factory)
-        name = get_name(factory)
+        name = directive.name.get(factory)
 
         check_adapts(factory)
         for_ = component.adaptedBy(factory)
@@ -106,7 +100,7 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
     def grok(self, name, factory, module_info, config, **kw):
         provides = directive.provides.get(factory)
         direct = directive.direct.get(factory)
-        name = get_name(factory)
+        name = directive.name.get(factory)
 
         if direct:
             obj = factory
@@ -129,15 +123,15 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
 class AdapterDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        context = module_info.getAnnotation('grok.context', None)
+        context = directive.context.get(module)
         implementers = module_info.getAnnotation('implementers', [])
         for function in implementers:
             interfaces = getattr(function, '__component_adapts__', None)
             if interfaces is None:
                 # There's no explicit interfaces defined, so we assume the
                 # module context to be the thing adapted.
-                check_module_component(module_info.getModule(), context,
-                                       'context', 'grok.context')
+                check_module_component(function, context, 'context',
+                                       directive.context)
                 interfaces = (context, )
 
             config.action(
