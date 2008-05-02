@@ -152,8 +152,8 @@ implementation and register an instance::
                                     direct=True)
 
 
-API
-===
+API overview
+============
 
 Base classes
 ------------
