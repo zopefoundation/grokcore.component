@@ -34,10 +34,6 @@ def determine_class_directive(directive_name, factory, module_info,
         return directive
     return default
 
-def public_methods_from_class(factory):
-    return [m for m in methods_from_class(factory) if \
-            not m.__name__.startswith('_')]
-
 def _sort_key(component):
     explicit_order, implicit_order = class_annotation(component,
                                                       'grok.order',
