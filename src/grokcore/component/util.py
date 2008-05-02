@@ -70,7 +70,7 @@ def check_module_component(factory, component,
         raise GrokError("Multiple possible %ss for %r, please use "
                         "%s." % (component_name, factory, component_directive),
                         factory)
-    
+
 def determine_module_component(module_info, annotation, classes):
     """Determine module-level component.
 
@@ -95,7 +95,7 @@ def determine_module_component(module_info, annotation, classes):
         component = components[0]
     else:
         component= AMBIGUOUS_COMPONENT
-        
+
     module_component = module_info.getAnnotation(annotation, None)
     if module_component:
         component = module_component
