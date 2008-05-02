@@ -25,6 +25,7 @@ from grokcore.component.util import check_module_component
 from grokcore.component.util import determine_module_component
 from grokcore.component.util import determine_class_component
 from grokcore.component.util import check_provides_one
+from grokcore.component import directive
 
 def get_context(module_info, factory):
     return determine_class_component(module_info, factory,
@@ -42,7 +43,8 @@ def get_title(factory, default=''):
                                                     default)
 
 def get_provides(factory):
-    provides = util.class_annotation(factory, 'grok.provides', None)
+    provides = directive.provides.get(factory)
+
     if provides is None:
         util.check_implements_one(factory)
         provides = list(interface.implementedBy(factory))[0]
@@ -67,7 +69,7 @@ class AdapterGrokker(martian.ClassGrokker):
         adapter_context = get_context(module_info, factory)
         provides = get_provides(factory)
         name = get_name(factory)
-        
+
         config.action(
             discriminator=('adapter', adapter_context, provides, name),
             callable=component.provideAdapter,
@@ -82,7 +84,7 @@ class MultiAdapterGrokker(martian.ClassGrokker):
     def grok(self, name, factory, module_info, config, **kw):
         provides = get_provides(factory)
         name = get_name(factory)
-        
+
         check_adapts(factory)
         for_ = component.adaptedBy(factory)
 
@@ -102,8 +104,8 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
     priority = 1100
 
     def grok(self, name, factory, module_info, config, **kw):
-        provides = util.class_annotation(factory, 'grok.provides', None)
-        direct = util.class_annotation(factory, 'grok.direct', False)
+        provides = directive.provides.get(factory)
+        direct = directive.direct.get(factory)
         name = get_name(factory)
 
         if direct:

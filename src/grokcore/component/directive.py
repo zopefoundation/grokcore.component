@@ -13,6 +13,7 @@
 ##############################################################################
 """Grok directives.
 """
+import grokcore.component
 
 from zope.interface.interfaces import IInterface
 
@@ -29,6 +30,8 @@ from martian.directive import (OnceDirective,
                                ClassOrModuleDirectiveContext)
 from martian import util
 
+from martian import ndir
+
 class GlobalUtilityDirective(MultipleTimesDirective):
     def check_arguments(self, factory, provides=None, name=u'',
                         direct=False):
@@ -44,11 +47,11 @@ class GlobalUtilityInfo(object):
     def __init__(self, factory, provides=None, name=u'', direct=None):
         self.factory = factory
         if direct is None:
-            direct = util.class_annotation(factory, 'grok.direct', False)
+            direct = grokcore.component.direct.get(factory)
         self.direct = direct
 
         if provides is None:
-            provides = util.class_annotation(factory, 'grok.provides', None)
+            provides = grokcore.component.provides.get(factory)
         self.provides = provides
 
         if name is u'':
@@ -81,10 +84,16 @@ class OrderDirective(OptionalValueDirective, OnceDirective):
 name = SingleTextDirective('grok.name', ClassDirectiveContext())
 context = InterfaceOrClassDirective('grok.context',
                                     ClassOrModuleDirectiveContext())
-provides = InterfaceDirective('grok.provides', ClassDirectiveContext())
 baseclass = MarkerDirective('grok.baseclass', ClassDirectiveContext())
 global_utility = GlobalUtilityDirective('grok.global_utility',
                                         ModuleDirectiveContext())
 title = SingleTextDirective('grok.title', ClassDirectiveContext())
 order = OrderDirective('grok.order', ClassDirectiveContext())
-direct = MarkerDirective('grok.direct', ClassDirectiveContext())
+
+direct = ndir.Directive(
+    'grok', 'direct', ndir.CLASS, ndir.ONCE, default=False,
+    arg=ndir.NO_ARG)
+
+provides = ndir.Directive(
+    'grok', 'provides', ndir.CLASS, ndir.ONCE, default=None,
+    validate=ndir.validateInterface)
