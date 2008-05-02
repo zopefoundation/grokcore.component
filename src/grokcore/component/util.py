@@ -14,7 +14,7 @@
 """Grok utility functions.
 """
 
-from zope import component
+from zope import component, interface
 
 from martian.error import GrokError
 from martian.util import class_annotation, methods_from_class, scan_for_classes
@@ -114,3 +114,14 @@ def determine_class_component(module_info, class_,
     check_module_component(class_, component,
                            component_name, component_directive)
     return component
+
+def check_provides_one(obj):
+    provides = list(interface.providedBy(obj))
+    if len(provides) < 1:
+        raise GrokError("%r must provide at least one interface "
+                        "(use zope.interface.classProvides to specify)."
+                        % obj, obj)
+    if len(provides) > 1:
+        raise GrokError("%r provides more than one interface "
+                        "(use grok.provides to specify which one to use)."
+                        % obj, obj)

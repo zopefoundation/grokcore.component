@@ -4,7 +4,16 @@ Changes
 1.1 (unreleased)
 ----------------
 
-* ...
+* The grokkers for adapters and global utilities did not use the
+  correct value for the *provided* interface in the configuration
+  action discriminator.  Because of this, uninformative and
+  potentially wrong conflict errors would occur, as well as no
+  conflict where a conflict should have occurred.
+
+* The grokker for the ``global_utility()`` directive did immediate
+  registrations instead of generating configuration actions.
+  Therefore it did not provoke ``ConflictErrors`` for conflicting
+  registrations.
 
 * Improved documentation
 

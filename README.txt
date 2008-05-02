@@ -52,6 +52,9 @@ To sum up, your ``site.zcml`` file should look like something like this::
 Examples
 ========
 
+Adapter
+-------
+
 Here's a simple adapter that may be useful in Zope.  It extracts the
 languages that a user prefers from the request::
 
@@ -75,6 +78,35 @@ languages that a user prefers from the request::
 
           # According to IUserPreferredLanguages, we must return a list.
           return [lang]
+
+Multi-adapter
+-------------
+
+Here's a multi-adapter that functions as a content provider as known
+from the ``zope.contentprovider`` library.  Content providers are
+components that return snippets of HTML.  They're multi-adapters for
+the content object (model), the request and the view that they're
+supposed to be a part of::
+
+  import grokcore.component
+  from zope.publisher.interfaces.browser import IBrowserRequest
+  from zope.publisher.interfaces.browser import IBrowserPage
+  from zope.contentprovider.interfaces import IContentProvider
+
+  class HelloWorldProvider(grokcore.component.MultiAdapter):
+      """Display Hello World!"""
+      grokcore.component.adapts(Interface, IBrowserRequest, IBrowserPage)
+      grokcore.component.implements(IContentProvider)
+
+      def update(self):
+          pass
+
+      def render(self):
+          return u'<p>Hello World!</p>'
+
+
+Global utility
+--------------
 
 Here's a simple named utility, again from the Zope world.  It's a
 translation domain.  In other words, it contains translations of user
