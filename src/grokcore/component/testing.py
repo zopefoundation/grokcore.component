@@ -174,7 +174,10 @@ def grok_component(name, component,
 
     module = module_info.getModule()
     if context is not None:
-        module.__grok_context__ = context
+        # XXX this depends on the particular implementation of the
+        # directive storages :(
+        dotted_name = 'grokcore.component.directive.context'
+        setattr(module, dotted_name, context)
     if templates is not None:
         module.__grok_templates__ = templates
     config = ConfigurationMachine()
