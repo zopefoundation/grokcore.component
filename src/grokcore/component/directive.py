@@ -29,19 +29,18 @@ from martian.directive import (OnceDirective,
                                ClassDirectiveContext,
                                ClassOrModuleDirectiveContext)
 from martian import util
-
 from martian import ndir
+from martian.ndir import baseclass
 
-class GlobalUtilityDirective(MultipleTimesDirective):
-    def check_arguments(self, factory, provides=None, name=u'',
-                        direct=False):
+class global_utility(ndir.MultipleTimesDirective):
+    scope = ndir.MODULE
+
+    def factory(self, factory, provides=None, name=u'', direct=False):
         if provides is not None and not IInterface.providedBy(provides):
-            raise GrokImportError("You can only pass an interface to the "
-                                  "provides argument of %s." % self.name)
-
-    def value_factory(self, *args, **kw):
-        return GlobalUtilityInfo(*args, **kw)
-
+            raise GrokImportError(
+                "You can only pass an interface to the "
+                "provides argument of %s." % self.name)
+        return GlobalUtilityInfo(factory, provides, name, direct)
 
 class GlobalUtilityInfo(object):
     def __init__(self, factory, provides=None, name=u'', direct=None):
@@ -58,42 +57,40 @@ class GlobalUtilityInfo(object):
             name = util.class_annotation(factory, 'grok.name', u'')
         self.name = name
 
+class order(ndir.Directive):
+    scope = ndir.CLASS
+    store = ndir.ONCE
 
-class MultiValueOnceDirective(OnceDirective):
+    _order = 0
 
-    def check_arguments(self, *values):
-        pass
-
-    def value_factory(self, *args):
-        return args
-
-class OrderDirective(OptionalValueDirective, OnceDirective):
-
-    order = 0
-
-    def value_factory(self, value=None):
-        OrderDirective.order += 1
+    def factory(self, value=None):
+        order._order += 1
         if value is not None:
-            return value, OrderDirective.order
-        return super(OrderDirective, self).value_factory(value)
+            return value, order._order
+        return super(order, self).factory(value)
 
-    def default_value(self):
-        return 0, OrderDirective.order
+    def default_value(self, component):
+        return 0, order._order
 
-# Define grok directives
-name = SingleTextDirective('grok.name', ClassDirectiveContext())
-context = InterfaceOrClassDirective('grok.context',
-                                    ClassOrModuleDirectiveContext())
-baseclass = MarkerDirective('grok.baseclass', ClassDirectiveContext())
-global_utility = GlobalUtilityDirective('grok.global_utility',
-                                        ModuleDirectiveContext())
-title = SingleTextDirective('grok.title', ClassDirectiveContext())
-order = OrderDirective('grok.order', ClassDirectiveContext())
+class name(ndir.Directive):
+    scope = ndir.CLASS
+    store = ndir.ONCE
+    validate = ndir.validateText
 
-direct = ndir.Directive(
-    'grok', 'direct', ndir.CLASS, ndir.ONCE, default=False,
-    arg=ndir.NO_ARG)
+class context(ndir.Directive):
+    scope = ndir.CLASS_OR_MODULE
+    store = ndir.ONCE
+    validate = ndir.validateInterfaceOrClass
 
-provides = ndir.Directive(
-    'grok', 'provides', ndir.CLASS, ndir.ONCE, default=None,
-    validate=ndir.validateInterface)
+class title(ndir.Directive):
+    scope = ndir.CLASS
+    store = ndir.ONCE
+    validate = ndir.validateText
+
+class direct(ndir.MarkerDirective):
+    scope = ndir.CLASS
+
+class provides(ndir.Directive):
+    scope = ndir.CLASS
+    store = ndir.ONCE
+    validate = ndir.validateInterface

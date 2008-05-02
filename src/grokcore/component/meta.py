@@ -151,7 +151,7 @@ class AdapterDecoratorGrokker(martian.GlobalGrokker):
 class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        infos = module_info.getAnnotation('grok.global_utility', [])
+        infos = directive.global_utility.get(module)
 
         for info in infos:
             provides = info.provides
