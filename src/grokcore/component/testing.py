@@ -22,8 +22,6 @@ from os import listdir
 import os.path
 import re
 from zope.testing import doctest, cleanup
-#, FunctionalDocFileSuite
-#, FunctionalTestSetup
 
 class BasicTestSetup(object):
     """A basic test setup for a package.
