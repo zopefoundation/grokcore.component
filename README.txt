@@ -152,6 +152,27 @@ implementation and register an instance::
                                     direct=True)
 
 
+Subscriber
+----------
+
+Here we see a subscriber much like it occurs within Zope itself.  It
+subscribes to the modified event for all annotatable objects (in other
+words, objects that can have metadata associated with them).  When
+invoked, it updates the Dublin Core 'Modified' property accordingly::
+
+  import datetime
+  import grokcore.component
+  from zope.annotation.interfaces import IAnnotatable
+  from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+  from zope.dublincore.interfaces import IZopeDublinCore
+
+  @grokcore.component.subscriber(IAnnotatable, IObjectModifiedEvent)
+  def updateDublinCoreAfterModification(obj, event):
+      """Updated the Dublin Core 'Modified' property when a modified
+      event is sent for an object."""
+      IZopeDublinCore(obj).modified = datetime.datetime.now()
+
+
 API overview
 ============
 
