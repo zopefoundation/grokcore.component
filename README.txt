@@ -4,8 +4,8 @@ registering them directly in Python (without ZCML).
 
 .. contents::
 
-How to use ``grokcore.component``
-=================================
+How to set up ``grokcore.component``
+====================================
 
 In the following we assume you're writing or extending an application
 that does bootstrap configuration using ZCML.  There's always a single
