@@ -49,17 +49,13 @@ class GlobalUtilityInfo(object):
 class order(ndir.Directive):
     scope = ndir.CLASS
     store = ndir.ONCE
+    default = 0, 0
 
     _order = 0
 
-    def factory(self, value=None):
+    def factory(self, value=0):
         order._order += 1
-        if value is not None:
-            return value, order._order
-        return super(order, self).factory(value)
-
-    def default_value(self, component):
-        return 0, self._order
+        return value, order._order
 
 class name(ndir.Directive):
     scope = ndir.CLASS
