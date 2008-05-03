@@ -1,3 +1,4 @@
 import grokcore.component as grok
 
-grok.name('too', 'many', 'arguments')
+class Foo(object):
+    grok.name('too', 'many', 'arguments')
