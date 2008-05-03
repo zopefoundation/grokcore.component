@@ -4,7 +4,11 @@ Changes
 1.1 (unreleased)
 ----------------
 
-* ...
+* ``determine_module_component`` now looks for classes that implement
+  a certain interface (such as ``IContext``), instead of taking a list
+  of classes.  If looking for ``IContext``, it still will find
+  ``Context`` subclasses, as these were also made to implement
+  ``IContext``.
 
 1.0.1 (2008-05-02)
 ------------------

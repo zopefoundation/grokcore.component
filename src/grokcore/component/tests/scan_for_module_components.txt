@@ -1,0 +1,32 @@
+Scanning for the context object
+-------------------------------
+
+Let's import a module that contains no ``Context`` subclass, nor classes
+that implement ``IContext``::
+
+  >>> import grokcore.component.tests.scan_for_module_components_fixture as tests
+  >>> from grokcore.component.interfaces import IContext
+
+We shouldn't see any classes that are contexts::
+
+  >>> from grokcore.component.util import scan_for_module_components
+  >>> scan_for_module_components(tests.test1, IContext)
+  []
+
+Now we look at a module with a single ``Context`` subclass::
+
+  >>> scan_for_module_components(tests.test2, IContext)
+  [<class 'grokcore.component.tests.scan_for_module_components_fixture.test2.MyContext'>]
+
+Now we'll look at a module with a single class that implements ``IContext``::
+
+  >>> scan_for_module_components(tests.test3, IContext)
+  [<class 'grokcore.component.tests.scan_for_module_components_fixture.test3.MyContext'>]
+
+Let's finish by looking at a module which defines multiple contexts::
+
+  >>> len(scan_for_module_components(tests.test4, IContext))
+  4
+
+
+

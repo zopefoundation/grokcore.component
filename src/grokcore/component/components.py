@@ -13,6 +13,10 @@
 ##############################################################################
 """Grok components"""
 
+from zope.interface import implements
+
+from grokcore.component.interfaces import IContext
+
 class Adapter(object):
     def __init__(self, context):
         self.context = context
@@ -24,4 +28,4 @@ class MultiAdapter(object):
     pass
 
 class Context(object):
-    pass
+    implements(IContext)

@@ -48,6 +48,10 @@ def test_suite():
     for name in ['adapter', 'directive', 'grokker', 'order', 'testsetup',
                  'util', 'utility', 'view', 'event']:
         suite.addTest(suiteFromPackage(name))
+
+    suite.addTest(doctest.DocFileSuite(
+            'scan_for_module_components.txt',
+            optionflags=doctest.ELLIPSIS + doctest.NORMALIZE_WHITESPACE))
     return suite
 
 if __name__ == '__main__':

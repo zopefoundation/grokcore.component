@@ -17,7 +17,9 @@
 from zope import component, interface
 
 from martian.error import GrokError
-from martian.util import class_annotation, scan_for_classes
+from martian.util import class_annotation, defined_locally, isclass
+
+from grokcore.component.interfaces import IContext
 
 def check_adapts(class_):
     if component.adaptedBy(class_) is None:
@@ -66,16 +68,31 @@ def check_module_component(factory, component,
         raise GrokError("Multiple possible %ss for %r, please use "
                         "%s." % (component_name, factory, component_directive),
                         factory)
+
+def scan_for_module_components(module, iface):
+    """Given a module, scan for classes that that implements an interface.
+    """
+    result = set()
+    for name in dir(module):
+        if name.startswith('__grok_'):
+            continue
+        obj = getattr(module, name)
+        if not defined_locally(obj, module.__name__):
+            continue
+        
+        if isclass(obj) and iface.implementedBy(obj):
+            result.add(obj)
+    return list(result)
     
-def determine_module_component(module_info, annotation, classes):
+def determine_module_component(module_info, annotation, iface):
     """Determine module-level component.
 
     The module-level component can be set explicitly using the
     annotation (such as grok.context).
 
     If there is no annotation, the module-level component is determined
-    by scanning for subclasses of any in the list of classes.
-
+    by scanning for classes that implement an interface.
+    
     If there is no module-level component, the module-level component is
     None.
 
@@ -84,7 +101,7 @@ def determine_module_component(module_info, annotation, classes):
     If there are more than one module-level component, AMBIGUOUS_COMPONENT
     is returned.
     """
-    components = scan_for_classes(module_info.getModule(), classes)
+    components = scan_for_module_components(module_info.getModule(), iface)
     if len(components) == 0:
         component = None
     elif len(components) == 1:

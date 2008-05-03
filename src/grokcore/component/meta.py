@@ -25,6 +25,7 @@ from grokcore.component.util import check_module_component
 from grokcore.component.util import determine_module_component
 from grokcore.component.util import determine_class_component
 from grokcore.component.util import check_provides_one
+from grokcore.component.interfaces import IContext
 
 def get_context(module_info, factory):
     return determine_class_component(module_info, factory,
@@ -55,7 +56,7 @@ class ContextGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
         context = determine_module_component(module_info, 'grok.context',
-                                             [grokcore.component.Context])
+                                             IContext)
         module.__grok_context__ = context
         return True
 
