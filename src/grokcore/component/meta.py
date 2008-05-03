@@ -30,9 +30,6 @@ def get_context(factory, module_info):
     check_module_component(factory, component, 'context', directive.context)
     return component
 
-def get_name_classname(factory):
-    return get_name(factory, factory.__name__.lower())
-
 def get_provides(factory):
     provides = directive.provides.get(factory)
 

@@ -13,6 +13,7 @@
 ##############################################################################
 """Grok test helpers
 """
+import grokcore.component
 from zope.configuration.config import ConfigurationMachine
 from martian import scan
 from grokcore.component import zcml
@@ -174,10 +175,7 @@ def grok_component(name, component,
 
     module = module_info.getModule()
     if context is not None:
-        # XXX this depends on the particular implementation of the
-        # directive storages :(
-        dotted_name = 'grokcore.component.directive.context'
-        setattr(module, dotted_name, context)
+        grokcore.component.context.set(module, context)
     if templates is not None:
         module.__grok_templates__ = templates
     config = ConfigurationMachine()
