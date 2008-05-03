@@ -20,9 +20,9 @@ from zope.component import adapts
 from martian import ClassGrokker, InstanceGrokker, GlobalGrokker
 from grokcore.component.components import Adapter, GlobalUtility, MultiAdapter, Context
 
-from grokcore.component.directive import (context, name, title,
-                            provides, baseclass, global_utility,
-                            direct, order)
+from martian import baseclass
+from grokcore.component.directive import (
+    context, name, title, provides, global_utility, direct, order)
 from grokcore.component.decorators import subscribe, adapter, implementer
 from martian.error import GrokError, GrokImportError
 

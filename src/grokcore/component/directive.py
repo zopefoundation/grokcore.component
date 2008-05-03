@@ -13,15 +13,13 @@
 ##############################################################################
 """Grok directives.
 """
+import martian
 import grokcore.component
 from zope.interface.interfaces import IInterface
-
 from martian.error import GrokImportError
-from martian import ndir
-from martian.ndir import baseclass
 
-class global_utility(ndir.MultipleTimesDirective):
-    scope = ndir.MODULE
+class global_utility(martian.MultipleTimesDirective):
+    scope = martian.MODULE
 
     def factory(self, factory, provides=None, name=u'', direct=False):
         if provides is not None and not IInterface.providedBy(provides):
@@ -46,9 +44,9 @@ class GlobalUtilityInfo(object):
             name = grokcore.component.name.get(factory)
         self.name = name
 
-class order(ndir.Directive):
-    scope = ndir.CLASS
-    store = ndir.ONCE
+class order(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
     default = 0, 0
 
     _order = 0
@@ -57,26 +55,26 @@ class order(ndir.Directive):
         order._order += 1
         return value, order._order
 
-class name(ndir.Directive):
-    scope = ndir.CLASS
-    store = ndir.ONCE
+class name(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
     default = u''
-    validate = ndir.validateText
+    validate = martian.validateText
 
-class context(ndir.Directive):
-    scope = ndir.CLASS_OR_MODULE
-    store = ndir.ONCE
-    validate = ndir.validateInterfaceOrClass
+class context(martian.Directive):
+    scope = martian.CLASS_OR_MODULE
+    store = martian.ONCE
+    validate = martian.validateInterfaceOrClass
 
-class title(ndir.Directive):
-    scope = ndir.CLASS
-    store = ndir.ONCE
-    validate = ndir.validateText
+class title(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    validate = martian.validateText
 
-class direct(ndir.MarkerDirective):
-    scope = ndir.CLASS
+class direct(martian.MarkerDirective):
+    scope = martian.CLASS
 
-class provides(ndir.Directive):
-    scope = ndir.CLASS
-    store = ndir.ONCE
-    validate = ndir.validateInterface
+class provides(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    validate = martian.validateInterface
