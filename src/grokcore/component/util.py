@@ -17,7 +17,7 @@
 from zope import component, interface
 
 from martian.error import GrokError
-from martian.util import class_annotation, methods_from_class, scan_for_classes
+from martian.util import class_annotation, scan_for_classes
 
 def check_adapts(class_):
     if component.adaptedBy(class_) is None:
