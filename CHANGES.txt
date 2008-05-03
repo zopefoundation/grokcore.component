@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.1 (unreleased)
+1.1 (2008-05-03)
 ----------------
 
 * ``determine_module_component`` now looks for classes that implement
