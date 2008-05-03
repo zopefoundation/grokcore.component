@@ -46,10 +46,7 @@ class ContextGrokker(martian.GlobalGrokker):
     def grok(self, name, module, module_info, config, **kw):
         context = determine_module_component(module_info, directive.context,
                                              [grokcore.component.Context])
-        # XXX this depends on the particular implementation of the
-        # directive storages :(
-        dotted_name = 'grokcore.component.directive.context'
-        setattr(module, dotted_name, context)
+        grokcore.component.context.set(module, context)
         return True
 
 
