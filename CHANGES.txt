@@ -10,6 +10,9 @@ Changes
   ``Context`` subclasses, as these were also made to implement
   ``IContext``.
 
+* Move the ``public_methods_from_class`` helper function back to Grok,
+  it isn't used at all in ``grokcore.component``.
+
 1.0.1 (2008-05-02)
 ------------------
 
