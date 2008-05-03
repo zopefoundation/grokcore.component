@@ -71,6 +71,9 @@ class title(martian.Directive):
     store = martian.ONCE
     validate = martian.validateText
 
+class description(title):
+    pass
+
 class direct(martian.MarkerDirective):
     scope = martian.CLASS
 

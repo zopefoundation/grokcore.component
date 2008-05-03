@@ -22,7 +22,7 @@ from grokcore.component.components import Adapter, GlobalUtility, MultiAdapter, 
 
 from martian import baseclass
 from grokcore.component.directive import (
-    context, name, title, provides, global_utility, direct, order)
+    context, name, title, description, provides, global_utility, direct, order)
 from grokcore.component.decorators import subscribe, adapter, implementer
 from martian.error import GrokError, GrokImportError
 
