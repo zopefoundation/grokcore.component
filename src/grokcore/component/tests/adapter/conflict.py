@@ -7,7 +7,7 @@ explicitly declared with grok.provides):
   Traceback (most recent call last):
   ...
   ConfigurationConflictError: Conflicting configuration actions
-    For: ('adapter', <InterfaceClass grokcore.component.tests.adapter.conflict.ICave>, <InterfaceClass grokcore.component.tests.adapter.conflict.IDecoration>, '')
+    For: ('adapter', <InterfaceClass grokcore.component.tests.adapter.conflict.ICave>, <InterfaceClass grokcore.component.tests.adapter.conflict.IDecoration>, u'')
 
 """
 import grokcore.component as grok

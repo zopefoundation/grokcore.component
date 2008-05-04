@@ -2,10 +2,11 @@
 Since grok.global_utility is a MultipleTimesDirective, there is a list of
 GlobalUtilityInfo objects annotated on the module.
 
+
   >>> from martian import scan
+  >>> import grokcore.component as grok
   >>> from grokcore.component.tests.directive import multipletimes
-  >>> module_info = scan.module_info_from_module(multipletimes)
-  >>> guis = module_info.getAnnotation('grok.global_utility', None)
+  >>> guis = grok.global_utility.get(multipletimes)
   >>> guis
   [<grokcore.component.directive.GlobalUtilityInfo object at 0x...>,
   <grokcore.component.directive.GlobalUtilityInfo object at 0x...>]
@@ -21,7 +22,7 @@ GlobalUtilityInfo objects annotated on the module.
   True
   >>> guis[1].name
   u''
-  
+
 """
 import grokcore.component as grok
 from zope import interface

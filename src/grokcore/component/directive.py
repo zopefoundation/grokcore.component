@@ -13,78 +13,71 @@
 ##############################################################################
 """Grok directives.
 """
-
+import types
+import martian
+import grokcore.component
 from zope.interface.interfaces import IInterface
-
 from martian.error import GrokImportError
-from martian.directive import (OnceDirective,
-                               MultipleTimesDirective,
-                               SingleTextDirective,
-                               MarkerDirective,
-                               InterfaceDirective,
-                               InterfaceOrClassDirective,
-                               ModuleDirectiveContext,
-                               OptionalValueDirective,
-                               ClassDirectiveContext,
-                               ClassOrModuleDirectiveContext)
-from martian import util
+from grokcore.component.scan import check_module_component
 
-class GlobalUtilityDirective(MultipleTimesDirective):
-    def check_arguments(self, factory, provides=None, name=u'',
-                        direct=False):
+class global_utility(martian.MultipleTimesDirective):
+    scope = martian.MODULE
+
+    def factory(self, factory, provides=None, name=u'', direct=False):
         if provides is not None and not IInterface.providedBy(provides):
-            raise GrokImportError("You can only pass an interface to the "
-                                  "provides argument of %s." % self.name)
-
-    def value_factory(self, *args, **kw):
-        return GlobalUtilityInfo(*args, **kw)
-
+            raise GrokImportError(
+                "You can only pass an interface to the "
+                "provides argument of %s." % self.name)
+        return GlobalUtilityInfo(factory, provides, name, direct)
 
 class GlobalUtilityInfo(object):
+
     def __init__(self, factory, provides=None, name=u'', direct=None):
         self.factory = factory
         if direct is None:
-            direct = util.class_annotation(factory, 'grok.direct', False)
+            direct = grokcore.component.direct.get(factory)
         self.direct = direct
 
         if provides is None:
-            provides = util.class_annotation(factory, 'grok.provides', None)
+            provides = grokcore.component.provides.get(factory)
         self.provides = provides
 
         if name is u'':
-            name = util.class_annotation(factory, 'grok.name', u'')
+            name = grokcore.component.name.get(factory)
         self.name = name
 
+class name(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    default = u''
+    validate = martian.validateText
 
-class MultiValueOnceDirective(OnceDirective):
+class context(martian.Directive):
+    scope = martian.CLASS_OR_MODULE
+    store = martian.ONCE
+    validate = martian.validateInterfaceOrClass
 
-    def check_arguments(self, *values):
-        pass
+    @classmethod
+    def get(cls, component, module=None):
+        value = super(cls, context).get(component, module)
+        if not isinstance(component, types.ModuleType):
+            # 'component' must be a class then, so let's make sure
+            # that the context is not ambiguous or None.
+            check_module_component(component, value, 'context', cls)    
+        return value
 
-    def value_factory(self, *args):
-        return args
+class title(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    validate = martian.validateText
 
-class OrderDirective(OptionalValueDirective, OnceDirective):
+class description(title):
+    pass
 
-    order = 0
+class direct(martian.MarkerDirective):
+    scope = martian.CLASS
 
-    def value_factory(self, value=None):
-        OrderDirective.order += 1
-        if value is not None:
-            return value, OrderDirective.order
-        return super(OrderDirective, self).value_factory(value)
-
-    def default_value(self):
-        return 0, OrderDirective.order
-
-# Define grok directives
-name = SingleTextDirective('grok.name', ClassDirectiveContext())
-context = InterfaceOrClassDirective('grok.context',
-                                    ClassOrModuleDirectiveContext())
-provides = InterfaceDirective('grok.provides', ClassDirectiveContext())
-baseclass = MarkerDirective('grok.baseclass', ClassDirectiveContext())
-global_utility = GlobalUtilityDirective('grok.global_utility',
-                                        ModuleDirectiveContext())
-title = SingleTextDirective('grok.title', ClassDirectiveContext())
-order = OrderDirective('grok.order', ClassDirectiveContext())
-direct = MarkerDirective('grok.direct', ClassDirectiveContext())
+class provides(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    validate = martian.validateInterface

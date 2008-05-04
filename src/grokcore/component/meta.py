@@ -13,39 +13,22 @@
 ##############################################################################
 """Grokkers for the various components."""
 
-import martian
+import martian.util
 import grokcore.component
 import zope.component.interface
 
 from zope import component, interface
-from martian import util
 from martian.error import GrokError
-from grokcore.component.util import check_adapts
-from grokcore.component.util import check_module_component
-from grokcore.component.util import determine_module_component
-from grokcore.component.util import determine_class_component
-from grokcore.component.util import check_provides_one
+from grokcore.component.scan import check_module_component
+from grokcore.component.scan import determine_module_component
+from grokcore.component.interfaces import IContext
 from grokcore.component.interfaces import IContext
 
-def get_context(module_info, factory):
-    return determine_class_component(module_info, factory,
-                                     'context', 'grok.context')
-
-def get_name_classname(factory):
-    return get_name(factory, factory.__name__.lower())
-
-def get_name(factory, default=''):
-    return grokcore.component.util.class_annotation(factory, 'grok.name',
-                                                    default)
-
-def get_title(factory, default=''):
-    return grokcore.component.util.class_annotation(factory, 'grok.title',
-                                                    default)
-
 def get_provides(factory):
-    provides = util.class_annotation(factory, 'grok.provides', None)
+    provides = grokcore.component.provides.get(factory)
+
     if provides is None:
-        util.check_implements_one(factory)
+        martian.util.check_implements_one(factory)
         provides = list(interface.implementedBy(factory))[0]
     return provides
 
@@ -55,9 +38,10 @@ class ContextGrokker(martian.GlobalGrokker):
     priority = 1001
 
     def grok(self, name, module, module_info, config, **kw):
-        context = determine_module_component(module_info, 'grok.context',
+        context = determine_module_component(module_info,
+                                             grokcore.component.context,
                                              IContext)
-        module.__grok_context__ = context
+        grokcore.component.context.set(module, context)
         return True
 
 
@@ -65,10 +49,10 @@ class AdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.Adapter
 
     def grok(self, name, factory, module_info, config, **kw):
-        adapter_context = get_context(module_info, factory)
+        adapter_context = grokcore.component.context.get(factory, module_info.getModule())
         provides = get_provides(factory)
-        name = get_name(factory)
-        
+        name = grokcore.component.name.get(factory)
+
         config.action(
             discriminator=('adapter', adapter_context, provides, name),
             callable=component.provideAdapter,
@@ -82,9 +66,12 @@ class MultiAdapterGrokker(martian.ClassGrokker):
 
     def grok(self, name, factory, module_info, config, **kw):
         provides = get_provides(factory)
-        name = get_name(factory)
-        
-        check_adapts(factory)
+        name = grokcore.component.name.get(factory)
+
+        if component.adaptedBy(factory) is None:
+            raise GrokError("%r must specify which contexts it adapts "
+                            "(use the 'adapts' directive to specify)."
+                            % factory, factory)
         for_ = component.adaptedBy(factory)
 
         config.action(
@@ -103,14 +90,14 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
     priority = 1100
 
     def grok(self, name, factory, module_info, config, **kw):
-        provides = util.class_annotation(factory, 'grok.provides', None)
-        direct = util.class_annotation(factory, 'grok.direct', False)
-        name = get_name(factory)
+        provides = grokcore.component.provides.get(factory)
+        direct = grokcore.component.direct.get(factory)
+        name = grokcore.component.name.get(factory)
 
         if direct:
             obj = factory
             if provides is None:
-                check_provides_one(factory)
+                martian.util.check_provides_one(factory)
                 provides = list(interface.providedBy(factory))[0]
         else:
             obj = factory()
@@ -128,15 +115,15 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
 class AdapterDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        context = module_info.getAnnotation('grok.context', None)
+        context = grokcore.component.context.get(module)
         implementers = module_info.getAnnotation('implementers', [])
         for function in implementers:
             interfaces = getattr(function, '__component_adapts__', None)
             if interfaces is None:
                 # There's no explicit interfaces defined, so we assume the
                 # module context to be the thing adapted.
-                check_module_component(module_info.getModule(), context,
-                                       'context', 'grok.context')
+                check_module_component(function, context, 'context',
+                                       grokcore.component.context)
                 interfaces = (context, )
 
             config.action(
@@ -150,7 +137,7 @@ class AdapterDecoratorGrokker(martian.GlobalGrokker):
 class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        infos = module_info.getAnnotation('grok.global_utility', [])
+        infos = grokcore.component.global_utility.get(module)
 
         for info in infos:
             provides = info.provides
@@ -158,7 +145,7 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
             if info.direct:
                 obj = info.factory
                 if provides is None:
-                    check_provides_one(obj)
+                    martian.util.check_provides_one(obj)
                     provides = list(interface.providedBy(obj))[0]
             else:
                 obj = info.factory()

@@ -4,7 +4,16 @@ Changes
 1.2 (unreleased)
 ----------------
 
-* ...
+* Ported directives to Martian's new directive implementation.  As a
+  result, nearly all helper functions that were available from
+  ``grokcore.component.util`` have been removed.  The functionality is
+  mostly available from the directives themselves now.
+
+* The ``baseclass`` directive has been moved to Martian.
+
+* The ``order`` directive and its helper functions have been moved
+  back to Grok, as it was of no general use, but very specific to
+  viewlets.
 
 1.1 (2008-05-03)
 ----------------

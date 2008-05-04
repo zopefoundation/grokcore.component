@@ -1,4 +1,0 @@
-from grokcore.component.tests.scan_for_module_components_fixture import test1
-from grokcore.component.tests.scan_for_module_components_fixture import test2
-from grokcore.component.tests.scan_for_module_components_fixture import test3
-from grokcore.component.tests.scan_for_module_components_fixture import test4
