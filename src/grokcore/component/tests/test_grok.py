@@ -48,6 +48,13 @@ def test_suite():
     for name in ['adapter', 'directive', 'grokker', 'testsetup',
                  'utility', 'view', 'event']:
         suite.addTest(suiteFromPackage(name))
+
+    # this test cannot follow the normal testing pattern, as the
+    # bug it tests for is only exposed in the context of a doctest
+    grok_component = doctest.DocFileSuite('grok_component.txt',
+                                          setUp=setUpZope,
+                                          tearDown=cleanUpZope)
+    suite.addTest(grok_component)
     return suite
 
 if __name__ == '__main__':
