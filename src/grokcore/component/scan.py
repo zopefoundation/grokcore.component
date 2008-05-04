@@ -15,7 +15,7 @@
 """
 
 from martian.error import GrokError
-from martian.util import methods_from_class, scan_for_classes
+from martian.util import scan_for_classes
 
 AMBIGUOUS_COMPONENT = object()
 def check_module_component(factory, component, component_name, directive):
@@ -56,7 +56,7 @@ def determine_module_component(module_info, directive, iface):
     is returned.
     """
     module = module_info.getModule()
-    components = list(scan_for_classes(module, interface=iface))
+    components = list(scan_for_classes(module, iface))
     if len(components) == 0:
         component = None
     elif len(components) == 1:
