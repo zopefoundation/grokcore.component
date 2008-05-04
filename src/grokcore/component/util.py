@@ -76,7 +76,7 @@ def determine_module_component(module_info, directive, classes):
     is returned.
     """
     module = module_info.getModule()
-    components = scan_for_classes(module, classes)
+    components = list(scan_for_classes(module, classes))
     if len(components) == 0:
         component = None
     elif len(components) == 1:
