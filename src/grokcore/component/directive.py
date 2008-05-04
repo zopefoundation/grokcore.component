@@ -18,7 +18,7 @@ import martian
 import grokcore.component
 from zope.interface.interfaces import IInterface
 from martian.error import GrokImportError
-from grokcore.component.util import check_module_component
+from grokcore.component.scan import check_module_component
 
 class global_utility(martian.MultipleTimesDirective):
     scope = martian.MODULE

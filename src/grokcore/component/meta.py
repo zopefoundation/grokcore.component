@@ -19,8 +19,8 @@ import zope.component.interface
 
 from zope import component, interface
 from martian.error import GrokError
-from grokcore.component.util import check_module_component
-from grokcore.component.util import determine_module_component
+from grokcore.component.scan import check_module_component
+from grokcore.component.scan import determine_module_component
 from grokcore.component.interfaces import IContext
 
 def get_provides(factory):
