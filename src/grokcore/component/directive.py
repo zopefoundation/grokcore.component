@@ -46,17 +46,6 @@ class GlobalUtilityInfo(object):
             name = grokcore.component.name.get(factory)
         self.name = name
 
-class order(martian.Directive):
-    scope = martian.CLASS
-    store = martian.ONCE
-    default = 0, 0
-
-    _order = 0
-
-    def factory(self, value=0):
-        order._order += 1
-        return value, order._order
-
 class name(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE

@@ -14,22 +14,8 @@
 """Grok utility functions.
 """
 
-import grokcore.component
-from zope import component, interface
-
 from martian.error import GrokError
 from martian.util import methods_from_class, scan_for_classes
-
-def _sort_key(component):
-    explicit_order, implicit_order = grokcore.component.order.get(component)
-    return (explicit_order,
-            component.__module__,
-            implicit_order,
-            component.__class__.__name__)
-
-def sort_components(components):
-    # if components have a grok.order directive, sort by that
-    return sorted(components, key=_sort_key)
 
 AMBIGUOUS_COMPONENT = object()
 def check_module_component(factory, component, component_name, directive):
