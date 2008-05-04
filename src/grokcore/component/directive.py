@@ -13,10 +13,12 @@
 ##############################################################################
 """Grok directives.
 """
+import types
 import martian
 import grokcore.component
 from zope.interface.interfaces import IInterface
 from martian.error import GrokImportError
+from grokcore.component.util import check_module_component
 
 class global_utility(martian.MultipleTimesDirective):
     scope = martian.MODULE
@@ -65,6 +67,15 @@ class context(martian.Directive):
     scope = martian.CLASS_OR_MODULE
     store = martian.ONCE
     validate = martian.validateInterfaceOrClass
+
+    @classmethod
+    def get(cls, component, module=None):
+        value = super(cls, context).get(component, module)
+        if not isinstance(component, types.ModuleType):
+            # 'component' must be a class then, so let's make sure
+            # that the context is not ambiguous or None.
+            check_module_component(component, value, 'context', cls)    
+        return value
 
 class title(martian.Directive):
     scope = martian.CLASS

@@ -23,12 +23,6 @@ from grokcore.component.util import check_adapts
 from grokcore.component.util import check_module_component
 from grokcore.component.util import determine_module_component
 
-def get_context(factory, module_info):
-    component = grokcore.component.context.get(factory, module_info.getModule())
-    check_module_component(factory, component, 'context',
-                           grokcore.component.context)
-    return component
-
 def get_provides(factory):
     provides = grokcore.component.provides.get(factory)
 
@@ -54,7 +48,7 @@ class AdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.Adapter
 
     def grok(self, name, factory, module_info, config, **kw):
-        adapter_context = get_context(factory, module_info)
+        adapter_context = grokcore.component.context.get(factory, module_info.getModule())
         provides = get_provides(factory)
         name = grokcore.component.name.get(factory)
 
