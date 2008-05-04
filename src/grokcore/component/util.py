@@ -51,16 +51,16 @@ def check_module_component(factory, component, component_name, directive):
                         "directive."
                         % (component_name, factory, directive.__name__),
                         factory)
-
-def determine_module_component(module_info, directive, classes):
+    
+def determine_module_component(module_info, directive, iface):
     """Determine module-level component.
 
     The module-level component can be set explicitly using the
     annotation (such as grok.context).
 
     If there is no annotation, the module-level component is determined
-    by scanning for subclasses of any in the list of classes.
-
+    by scanning for classes that implement an interface.
+    
     If there is no module-level component, the module-level component is
     None.
 
@@ -70,7 +70,7 @@ def determine_module_component(module_info, directive, classes):
     is returned.
     """
     module = module_info.getModule()
-    components = list(scan_for_classes(module, classes))
+    components = list(scan_for_classes(module, interface=iface))
     if len(components) == 0:
         component = None
     elif len(components) == 1:

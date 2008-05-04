@@ -21,6 +21,7 @@ from zope import component, interface
 from martian.error import GrokError
 from grokcore.component.util import check_module_component
 from grokcore.component.util import determine_module_component
+from grokcore.component.interfaces import IContext
 
 def get_provides(factory):
     provides = grokcore.component.provides.get(factory)
@@ -38,7 +39,7 @@ class ContextGrokker(martian.GlobalGrokker):
     def grok(self, name, module, module_info, config, **kw):
         context = determine_module_component(module_info,
                                              grokcore.component.context,
-                                             [grokcore.component.Context])
+                                             IContext)
         grokcore.component.context.set(module, context)
         return True
 
