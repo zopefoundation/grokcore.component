@@ -20,12 +20,6 @@ from zope import component, interface
 from martian.error import GrokError
 from martian.util import methods_from_class, scan_for_classes
 
-def check_adapts(class_):
-    if component.adaptedBy(class_) is None:
-        raise GrokError("%r must specify which contexts it adapts "
-                        "(use grok.adapts to specify)."
-                        % class_, class_)
-
 def _sort_key(component):
     explicit_order, implicit_order = grokcore.component.order.get(component)
     return (explicit_order,

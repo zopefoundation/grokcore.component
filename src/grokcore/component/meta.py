@@ -19,7 +19,6 @@ import zope.component.interface
 
 from zope import component, interface
 from martian.error import GrokError
-from grokcore.component.util import check_adapts
 from grokcore.component.util import check_module_component
 from grokcore.component.util import determine_module_component
 
@@ -67,7 +66,10 @@ class MultiAdapterGrokker(martian.ClassGrokker):
         provides = get_provides(factory)
         name = grokcore.component.name.get(factory)
 
-        check_adapts(factory)
+        if component.adaptedBy(factory) is None:
+            raise GrokError("%r must specify which contexts it adapts "
+                            "(use the 'adapts' directive to specify)."
+                            % factory, factory)
         for_ = component.adaptedBy(factory)
 
         config.action(
