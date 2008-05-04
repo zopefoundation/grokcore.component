@@ -82,6 +82,17 @@ class MultiAdapterGrokker(martian.ClassGrokker):
         return True
 
 
+def default_global_utility_provides(factory, module, direct, **data):
+    if direct:
+        if provides is None:
+            martian.util.check_provides_one(factory)
+            provides = list(interface.providedBy(factory))[0]
+    else:
+        if provides is None:
+            provides = get_provides(factory)
+    return provides
+
+
 class GlobalUtilityGrokker(martian.ClassGrokker):
     component_class = grokcore.component.GlobalUtility
 
@@ -89,20 +100,15 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
     # happens, since it relies on the ITemplateFileFactories being grokked.
     priority = 1100
 
-    def grok(self, name, factory, module_info, config, **kw):
-        provides = grokcore.component.provides.get(factory)
-        direct = grokcore.component.direct.get(factory)
-        name = grokcore.component.name.get(factory)
+    class directives:
+        direct = grokcore.component.direct.bind()
+        provides = grokcore.component.provides.bind(
+            default_global_utility_provides)
+        name = grokcore.component.name.bind()
 
-        if direct:
-            obj = factory
-            if provides is None:
-                martian.util.check_provides_one(factory)
-                provides = list(interface.providedBy(factory))[0]
-        else:
-            obj = factory()
-            if provides is None:
-                provides = get_provides(factory)
+    def register(self, factory, config, direct, provides, name):
+        if not direct:
+            factory = factory()
 
         config.action(
             discriminator=('utility', provides, name),
