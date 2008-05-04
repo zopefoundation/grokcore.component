@@ -22,7 +22,6 @@ from martian.error import GrokError
 from grokcore.component.util import check_adapts
 from grokcore.component.util import check_module_component
 from grokcore.component.util import determine_module_component
-from grokcore.component.util import check_provides_one
 from grokcore.component import directive
 
 def get_context(factory, module_info):
@@ -99,7 +98,7 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
         if direct:
             obj = factory
             if provides is None:
-                check_provides_one(factory)
+                martian.util.check_provides_one(factory)
                 provides = list(interface.providedBy(factory))[0]
         else:
             obj = factory()
@@ -147,7 +146,7 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
             if info.direct:
                 obj = info.factory
                 if provides is None:
-                    check_provides_one(obj)
+                    martian.util.check_provides_one(obj)
                     provides = list(interface.providedBy(obj))[0]
             else:
                 obj = info.factory()

@@ -88,15 +88,3 @@ def determine_module_component(module_info, directive, classes):
     if module_component is not None:
         component = module_component
     return component
-
-
-def check_provides_one(obj):
-    provides = list(interface.providedBy(obj))
-    if len(provides) < 1:
-        raise GrokError("%r must provide at least one interface "
-                        "(use zope.interface.classProvides to specify)."
-                        % obj, obj)
-    if len(provides) > 1:
-        raise GrokError("%r provides more than one interface "
-                        "(use grok.provides to specify which one to use)."
-                        % obj, obj)
