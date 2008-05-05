@@ -100,11 +100,14 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
     # happens, since it relies on the ITemplateFileFactories being grokked.
     priority = 1100
 
-    class directives:
-        direct = grokcore.component.direct.bind()
-        provides = grokcore.component.provides.bind(
-            default_global_utility_provides)
-        name = grokcore.component.name.bind()
+    directives = [
+        grokcore.component.direct.bind(),
+        grokcore.component.provides.bind(
+            get_default=default_global_utility_provides),
+        grokcore.component.provides.bind(default=IFoo),
+        grokcore.component.name.bind(),
+        ]
+
 
     def register(self, factory, config, direct, provides, name):
         if not direct:
@@ -116,6 +119,46 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
             args=(obj, provides, name),
             )
         return True
+
+
+    def grok(self, name, factory, module_info, config, **kw):
+        module = module_info.getModule()
+
+        # Populate the data dict with information from the directives:
+        data = {}
+        for bound_directive in self.directives:
+            data[dirname] = bound_directive.get(factory, module, **data)
+        return self.register(factory, config, **data)
+
+
+class Directive(...):
+
+    @classmethod
+    def bind(cls, default=None, get_default=None, name=None):
+        return BoundDirective(cls, default, get_default, name)
+
+
+class BoundDirective(object):
+
+    def __init__(self, directive, default=None, get_default=None, name=None):
+        self.directive = directive
+        self.default = default
+        if name is None:
+            name = directive.__name__
+        self.name = name
+        if get_default is not None:
+            self.get_default = get_default
+
+    def get_default(self, component, module, **data):
+        if self.default is not None:
+            return self.default
+        return self.directive.default
+
+    def get(self, component, module, **data):
+        value = self.directive.get(component, module, default=_DEFAULT)
+        if value is _DEFAULT:
+            value = self.get_default(component, module, **data)
+        return value
 
 
 class AdapterDecoratorGrokker(martian.GlobalGrokker):
