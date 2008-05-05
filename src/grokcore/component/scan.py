@@ -64,7 +64,7 @@ def determine_module_component(module_info, directive, iface):
     else:
         component= AMBIGUOUS_COMPONENT
 
-    module_component = directive.get(module)
+    module_component = directive.bind().get(module)
     if module_component is not None:
         component = module_component
     return component
