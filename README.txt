@@ -166,7 +166,7 @@ invoked, it updates the Dublin Core 'Modified' property accordingly::
   from zope.lifecycleevent.interfaces import IObjectModifiedEvent
   from zope.dublincore.interfaces import IZopeDublinCore
 
-  @grokcore.component.subscriber(IAnnotatable, IObjectModifiedEvent)
+  @grokcore.component.subscribe(IAnnotatable, IObjectModifiedEvent)
   def updateDublinCoreAfterModification(obj, event):
       """Updated the Dublin Core 'Modified' property when a modified
       event is sent for an object."""
