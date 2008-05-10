@@ -18,7 +18,7 @@ import martian
 import grokcore.component
 from zope.interface.interfaces import IInterface
 from martian.error import GrokImportError
-from grokcore.component.scan import check_module_component
+from grokcore.component.scan import UnambiguousComponentScope
 
 class global_utility(martian.MultipleTimesDirective):
     scope = martian.MODULE
@@ -44,16 +44,9 @@ class name(martian.Directive):
     validate = martian.validateText
 
 class context(martian.Directive):
-    scope = martian.CLASS_OR_MODULE
+    scope = UnambiguousComponentScope('context')
     store = martian.ONCE
     validate = martian.validateInterfaceOrClass
-
-    @classmethod
-    def check_value(cls, value, component, module=None, **data):
-        if not isinstance(component, types.ModuleType):
-            # 'component' must be a class then, so let's make sure
-            # that the context is not ambiguous or None.
-            check_module_component(component, value, 'context', cls)    
 
 class title(martian.Directive):
     scope = martian.CLASS

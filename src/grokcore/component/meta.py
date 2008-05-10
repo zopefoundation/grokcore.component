@@ -25,21 +25,6 @@ from grokcore.component.interfaces import IContext
 from grokcore.component.interfaces import IContext
 
 
-class ClassGrokker(martian.ClassGrokker):
-
-    def grok(self, name, class_, module_info, config, **kw):
-        module = module_info.getModule()
-
-        # Populate the data dict with information from the directives:
-        data = {}
-        for directive in self.directives:
-            data[directive.name] = directive.get(class_, module, **data)
-        return self.register(class_, config, **data)
-
-    def register(self, class_, config, **data):
-        raise NotImplementedError
-
-
 def default_provides(factory, module=None, **data):
     martian.util.check_implements_one(factory)
     return list(interface.implementedBy(factory))[0]
@@ -63,7 +48,7 @@ class ContextGrokker(martian.GlobalGrokker):
         return True
 
 
-class AdapterGrokker(ClassGrokker):
+class AdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.Adapter
 
     directives = [
@@ -72,7 +57,7 @@ class AdapterGrokker(ClassGrokker):
         grokcore.component.name.bind(),
         ]
 
-    def register(self, factory, config, context, provides, name):
+    def execute(self, factory, config, context, provides, name, **kw):
         config.action(
             discriminator=('adapter', context, provides, name),
             callable=component.provideAdapter,
@@ -81,7 +66,7 @@ class AdapterGrokker(ClassGrokker):
         return True
 
 
-class MultiAdapterGrokker(ClassGrokker):
+class MultiAdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.MultiAdapter
 
     directives = [
@@ -89,7 +74,7 @@ class MultiAdapterGrokker(ClassGrokker):
         grokcore.component.name.bind(),
         ]
 
-    def register(self, factory, config, provides, name):
+    def execute(self, factory, config, provides, name, **kw):
         if component.adaptedBy(factory) is None:
             raise GrokError("%r must specify which contexts it adapts "
                             "(use the 'adapts' directive to specify)."
@@ -104,7 +89,7 @@ class MultiAdapterGrokker(ClassGrokker):
         return True
 
 
-class GlobalUtilityGrokker(ClassGrokker):
+class GlobalUtilityGrokker(martian.ClassGrokker):
     component_class = grokcore.component.GlobalUtility
 
     # This needs to happen before the FilesystemPageTemplateGrokker grokker
@@ -118,7 +103,7 @@ class GlobalUtilityGrokker(ClassGrokker):
         grokcore.component.name.bind(),
         ]
 
-    def register(self, factory, config, direct, provides, name):
+    def execute(self, factory, config, direct, provides, name, **kw):
         if not direct:
             factory = factory()
 
@@ -132,7 +117,7 @@ class GlobalUtilityGrokker(ClassGrokker):
 class AdapterDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        context = grokcore.component.context.bind().get(module)
+        context = grokcore.component.context.bind().get(module=module)
         implementers = module_info.getAnnotation('implementers', [])
         for function in implementers:
             interfaces = getattr(function, '__component_adapts__', None)
@@ -154,7 +139,7 @@ class AdapterDecoratorGrokker(martian.GlobalGrokker):
 class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        infos = grokcore.component.global_utility.bind().get(module)
+        infos = grokcore.component.global_utility.bind().get(module=module)
 
         for factory, provides, name, direct in infos:
             if direct:

@@ -6,7 +6,7 @@ GlobalUtilityInfo objects annotated on the module.
   >>> from martian import scan
   >>> import grokcore.component as grok
   >>> from grokcore.component.tests.directive import multipletimes
-  >>> guis = grok.global_utility.bind().get(multipletimes)
+  >>> guis = grok.global_utility.bind().get(module=multipletimes)
   >>> len(guis)
   2
 
