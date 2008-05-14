@@ -32,7 +32,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=['setuptools',
-                      'martian >= 0.9.5',
+                      'martian >= 0.9.6',
                       'zope.component',
                       'zope.configuration',
                       'zope.interface',
