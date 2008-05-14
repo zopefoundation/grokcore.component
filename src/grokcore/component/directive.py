@@ -18,7 +18,7 @@ import martian
 import grokcore.component
 from zope.interface.interfaces import IInterface
 from martian.error import GrokImportError
-from grokcore.component.scan import check_module_component
+from grokcore.component.scan import UnambiguousComponentScope
 
 class global_utility(martian.MultipleTimesDirective):
     scope = martian.MODULE
@@ -28,23 +28,14 @@ class global_utility(martian.MultipleTimesDirective):
             raise GrokImportError(
                 "You can only pass an interface to the "
                 "provides argument of %s." % self.name)
-        return GlobalUtilityInfo(factory, provides, name, direct)
-
-class GlobalUtilityInfo(object):
-
-    def __init__(self, factory, provides=None, name=u'', direct=None):
-        self.factory = factory
-        if direct is None:
-            direct = grokcore.component.direct.get(factory)
-        self.direct = direct
 
         if provides is None:
-            provides = grokcore.component.provides.get(factory)
-        self.provides = provides
-
-        if name is u'':
-            name = grokcore.component.name.get(factory)
-        self.name = name
+            provides = grokcore.component.provides.bind().get(factory)
+        if direct is None:
+            direct = grokcore.component.direct.bind().get(factory)
+        if not name:
+            name = grokcore.component.name.bind().get(factory)
+        return (factory, provides, name, direct)
 
 class name(martian.Directive):
     scope = martian.CLASS
@@ -53,18 +44,9 @@ class name(martian.Directive):
     validate = martian.validateText
 
 class context(martian.Directive):
-    scope = martian.CLASS_OR_MODULE
+    scope = UnambiguousComponentScope('context')
     store = martian.ONCE
     validate = martian.validateInterfaceOrClass
-
-    @classmethod
-    def get(cls, component, module=None):
-        value = super(cls, context).get(component, module)
-        if not isinstance(component, types.ModuleType):
-            # 'component' must be a class then, so let's make sure
-            # that the context is not ambiguous or None.
-            check_module_component(component, value, 'context', cls)    
-        return value
 
 class title(martian.Directive):
     scope = martian.CLASS

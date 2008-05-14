@@ -24,13 +24,16 @@ from grokcore.component.scan import determine_module_component
 from grokcore.component.interfaces import IContext
 from grokcore.component.interfaces import IContext
 
-def get_provides(factory):
-    provides = grokcore.component.provides.get(factory)
 
-    if provides is None:
-        martian.util.check_implements_one(factory)
-        provides = list(interface.implementedBy(factory))[0]
-    return provides
+def default_provides(factory, module=None, **data):
+    martian.util.check_implements_one(factory)
+    return list(interface.implementedBy(factory))[0]
+
+def default_global_utility_provides(factory, module, direct, **data):
+    if direct:
+        martian.util.check_provides_one(factory)
+        return list(interface.providedBy(factory))[0]
+    return default_provides(factory)
 
 
 class ContextGrokker(martian.GlobalGrokker):
@@ -48,15 +51,17 @@ class ContextGrokker(martian.GlobalGrokker):
 class AdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.Adapter
 
-    def grok(self, name, factory, module_info, config, **kw):
-        adapter_context = grokcore.component.context.get(factory, module_info.getModule())
-        provides = get_provides(factory)
-        name = grokcore.component.name.get(factory)
+    directives = [
+        grokcore.component.context.bind(),
+        grokcore.component.provides.bind(get_default=default_provides),
+        grokcore.component.name.bind(),
+        ]
 
+    def execute(self, factory, config, context, provides, name, **kw):
         config.action(
-            discriminator=('adapter', adapter_context, provides, name),
+            discriminator=('adapter', context, provides, name),
             callable=component.provideAdapter,
-            args=(factory, (adapter_context,), provides, name),
+            args=(factory, (context,), provides, name),
             )
         return True
 
@@ -64,10 +69,12 @@ class AdapterGrokker(martian.ClassGrokker):
 class MultiAdapterGrokker(martian.ClassGrokker):
     component_class = grokcore.component.MultiAdapter
 
-    def grok(self, name, factory, module_info, config, **kw):
-        provides = get_provides(factory)
-        name = grokcore.component.name.get(factory)
+    directives = [
+        grokcore.component.provides.bind(get_default=default_provides),
+        grokcore.component.name.bind(),
+        ]
 
+    def execute(self, factory, config, provides, name, **kw):
         if component.adaptedBy(factory) is None:
             raise GrokError("%r must specify which contexts it adapts "
                             "(use the 'adapts' directive to specify)."
@@ -89,33 +96,28 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
     # happens, since it relies on the ITemplateFileFactories being grokked.
     priority = 1100
 
-    def grok(self, name, factory, module_info, config, **kw):
-        provides = grokcore.component.provides.get(factory)
-        direct = grokcore.component.direct.get(factory)
-        name = grokcore.component.name.get(factory)
+    directives = [
+        grokcore.component.direct.bind(),
+        grokcore.component.provides.bind(
+            get_default=default_global_utility_provides),
+        grokcore.component.name.bind(),
+        ]
 
-        if direct:
-            obj = factory
-            if provides is None:
-                martian.util.check_provides_one(factory)
-                provides = list(interface.providedBy(factory))[0]
-        else:
-            obj = factory()
-            if provides is None:
-                provides = get_provides(factory)
+    def execute(self, factory, config, direct, provides, name, **kw):
+        if not direct:
+            factory = factory()
 
         config.action(
             discriminator=('utility', provides, name),
             callable=component.provideUtility,
-            args=(obj, provides, name),
+            args=(factory, provides, name),
             )
         return True
-
 
 class AdapterDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        context = grokcore.component.context.get(module)
+        context = grokcore.component.context.bind().get(module=module)
         implementers = module_info.getAnnotation('implementers', [])
         for function in implementers:
             interfaces = getattr(function, '__component_adapts__', None)
@@ -137,25 +139,23 @@ class AdapterDecoratorGrokker(martian.GlobalGrokker):
 class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        infos = grokcore.component.global_utility.get(module)
+        infos = grokcore.component.global_utility.bind().get(module=module)
 
-        for info in infos:
-            provides = info.provides
-
-            if info.direct:
-                obj = info.factory
+        for factory, provides, name, direct in infos:
+            if direct:
+                obj = factory
                 if provides is None:
                     martian.util.check_provides_one(obj)
                     provides = list(interface.providedBy(obj))[0]
             else:
-                obj = info.factory()
+                obj = factory()
                 if provides is None:
-                    provides = get_provides(info.factory)
+                    provides = default_provides(factory)
 
             config.action(
-                discriminator=('utility', provides, info.name),
+                discriminator=('utility', provides, name),
                 callable=component.provideUtility,
-                args=(obj, provides, info.name),
+                args=(obj, provides, name),
                 )
 
         return True

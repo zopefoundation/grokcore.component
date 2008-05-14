@@ -6,21 +6,24 @@ GlobalUtilityInfo objects annotated on the module.
   >>> from martian import scan
   >>> import grokcore.component as grok
   >>> from grokcore.component.tests.directive import multipletimes
-  >>> guis = grok.global_utility.get(multipletimes)
-  >>> guis
-  [<grokcore.component.directive.GlobalUtilityInfo object at 0x...>,
-  <grokcore.component.directive.GlobalUtilityInfo object at 0x...>]
-  >>> guis[0].factory
+  >>> guis = grok.global_utility.bind().get(module=multipletimes)
+  >>> len(guis)
+  2
+
+  >>> factory, provides, name, direct = guis[0]
+  >>> factory
   <class 'grokcore.component.tests.directive.multipletimes.Club'>
-  >>> guis[0].provides
+  >>> provides
   <InterfaceClass grokcore.component.tests.directive.multipletimes.IClub>
-  >>> guis[0].name
+  >>> name
   'foo'
-  >>> guis[1].factory
+
+  >>> factory, provides, name, direct = guis[1]
+  >>> factory
   <class 'grokcore.component.tests.directive.multipletimes.Cave'>
-  >>> guis[1].provides is None
+  >>> provides is None
   True
-  >>> guis[1].name
+  >>> name
   u''
 
 """
