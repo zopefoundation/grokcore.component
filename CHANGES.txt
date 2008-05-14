@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.3 (unreleased)
+1.3 (2008-05-14)
 ----------------
 
 * Ported class grokkers to make use of the new declarative way of
