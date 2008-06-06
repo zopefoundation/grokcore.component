@@ -6,6 +6,7 @@ priorities:
 - BetaGrokker with priority 1
 - GammaGrokker with priority -1
 
+    >>> import grokcore.component as grok
     >>> grok.testing.grok(__name__)
 
 We grok a module that implements subclasses for Alpha, Beta, and Gamma and our
@@ -17,7 +18,7 @@ grokkers get executed in the order of priority (highest first)::
     gamma
 
 """
-import grokcore.component as grok
+import martian
 
 
 class Alpha(object):
@@ -30,24 +31,24 @@ class Beta(object):
 class Gamma(object):
     pass
 
-class AlphaGrokker(grok.ClassGrokker):
-    component_class = Alpha
+class AlphaGrokker(martian.ClassGrokker):
+    martian.component(Alpha)
 
     def grok(self, name, factory, module_info, **kw):
         print "alpha"
         return True
 
-class BetaGrokker(grok.ClassGrokker):
-    component_class = Beta
-    priority = 1
-
+class BetaGrokker(martian.ClassGrokker):
+    martian.component(Beta)
+    martian.priority(1)
+    
     def grok(self, name, factory, module_info, **kw):
         print "beta"
         return True
     
-class GammaGrokker(grok.ClassGrokker):
-    component_class = Gamma
-    priority = -1
+class GammaGrokker(martian.ClassGrokker):
+    martian.component(Gamma)
+    martian.priority(-1)
 
     def grok(self, name, factory, module_info, **kw):
         print "gamma"

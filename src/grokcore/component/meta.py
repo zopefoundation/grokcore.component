@@ -13,6 +13,7 @@
 ##############################################################################
 """Grokkers for the various components."""
 
+import martian
 import martian.util
 import grokcore.component
 import zope.component.interface
@@ -38,7 +39,7 @@ def default_global_utility_provides(factory, module, direct, **data):
 
 class ContextGrokker(martian.GlobalGrokker):
 
-    priority = 1001
+    martian.priority(1001)
 
     def grok(self, name, module, module_info, config, **kw):
         context = determine_module_component(module_info,
@@ -49,14 +50,13 @@ class ContextGrokker(martian.GlobalGrokker):
 
 
 class AdapterGrokker(martian.ClassGrokker):
-    component_class = grokcore.component.Adapter
+    martian.component(grokcore.component.Adapter)
 
-    directives = [
-        grokcore.component.context.bind(),
-        grokcore.component.provides.bind(get_default=default_provides),
-        grokcore.component.name.bind(),
-        ]
-
+    martian.directive(grokcore.component.context)
+    martian.directive(grokcore.component.provides,
+                      get_default=default_provides)
+    martian.directive(grokcore.component.name)
+    
     def execute(self, factory, config, context, provides, name, **kw):
         config.action(
             discriminator=('adapter', context, provides, name),
@@ -67,12 +67,11 @@ class AdapterGrokker(martian.ClassGrokker):
 
 
 class MultiAdapterGrokker(martian.ClassGrokker):
-    component_class = grokcore.component.MultiAdapter
+    martian.component(grokcore.component.MultiAdapter)
 
-    directives = [
-        grokcore.component.provides.bind(get_default=default_provides),
-        grokcore.component.name.bind(),
-        ]
+    martian.directive(grokcore.component.provides,
+                      get_default=default_provides)
+    martian.directive(grokcore.component.name)
 
     def execute(self, factory, config, provides, name, **kw):
         if component.adaptedBy(factory) is None:
@@ -90,18 +89,16 @@ class MultiAdapterGrokker(martian.ClassGrokker):
 
 
 class GlobalUtilityGrokker(martian.ClassGrokker):
-    component_class = grokcore.component.GlobalUtility
+    martian.component(grokcore.component.GlobalUtility)
 
     # This needs to happen before the FilesystemPageTemplateGrokker grokker
     # happens, since it relies on the ITemplateFileFactories being grokked.
-    priority = 1100
+    martian.priority(1100)
 
-    directives = [
-        grokcore.component.direct.bind(),
-        grokcore.component.provides.bind(
-            get_default=default_global_utility_provides),
-        grokcore.component.name.bind(),
-        ]
+    martian.directive(grokcore.component.direct)
+    martian.directive(grokcore.component.provides,
+                      get_default=default_global_utility_provides)
+    martian.directive(grokcore.component.name)
 
     def execute(self, factory, config, direct, provides, name, **kw):
         if not direct:
