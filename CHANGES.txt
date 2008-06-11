@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.4 (unreleased)
+1.4 (2008-06-11)
 ----------------
 
 * Ported class grokkers to make use of further improvements in Martian. 
