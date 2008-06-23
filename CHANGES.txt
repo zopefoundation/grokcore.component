@@ -1,6 +1,14 @@
 Changes
 =======
 
+1.5 (unreleased)
+----------------
+
+* Fix https://bugs.launchpad.net/grok/+bug/242353: grokcore.component
+  contains old-style test setup. There is no `register_all_tests`
+  method in grokcore.component.testing anymore. Use z3c.testsetup
+  instead.
+
 1.4 (2008-06-11)
 ----------------
 
