@@ -45,8 +45,8 @@ def suiteFromPackage(name):
 
 def test_suite():
     suite = unittest.TestSuite()
-    for name in ['adapter', 'directive', 'grokker', 'testsetup',
-                 'utility', 'view', 'event']:
+    for name in ['adapter', 'directive', 'grokker', 'utility', 'view',
+                 'event']:
         suite.addTest(suiteFromPackage(name))
 
     # this test cannot follow the normal testing pattern, as the
