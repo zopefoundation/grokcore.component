@@ -13,7 +13,6 @@
 ##############################################################################
 """Grok directives.
 """
-import types
 import martian
 import grokcore.component
 from zope.interface.interfaces import IInterface
