@@ -23,7 +23,6 @@ from martian.error import GrokError
 from grokcore.component.scan import check_module_component
 from grokcore.component.scan import determine_module_component
 from grokcore.component.interfaces import IContext
-from grokcore.component.interfaces import IContext
 
 
 def default_provides(factory, module=None, **data):
