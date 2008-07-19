@@ -39,7 +39,11 @@ class subscribe:
         if subscribers is None:
             frame.f_locals['__grok_subscribers__'] = subscribers = []
         subscribers.append((function, self.subscribed))
-        return function
+
+        # Also add __grok_adapts__ attribute to the function so that
+        # you can manually register the subscriber with, say,
+        # provideHandler.
+        return zope.component.adapter(*self.subscribed)(function)
 
 class adapter(zope.component.adapter):
 
