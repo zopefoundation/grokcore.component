@@ -43,9 +43,10 @@ class subscribe:
 
 class adapter(zope.component.adapter):
 
+    # Override the z.c.adapter decorator to force sanity checking and
+    # have better error reporting.
+
     def __init__(self, *interfaces):
-        # Override the z.c.adapter decorator to force sanity checking
-        # and have better error reporting.
         if not interfaces:
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
