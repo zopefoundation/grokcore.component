@@ -114,8 +114,8 @@ class AdapterDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
         context = grokcore.component.context.bind().get(module=module)
-        implementers = module_info.getAnnotation('implementers', [])
-        for function in implementers:
+        adapters = module_info.getAnnotation('grok.adapters', [])
+        for function in adapters:
             interfaces = getattr(function, '__component_adapts__', None)
             if interfaces is None:
                 # There's no explicit interfaces defined, so we assume the

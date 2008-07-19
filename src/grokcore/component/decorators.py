@@ -61,8 +61,8 @@ class implementer(zope.interface.implementer):
         # XXX we do not have function grokkers (yet) so we put the annotation
         # on the module.
         frame = sys._getframe(1)
-        implementers = frame.f_locals.get('__implementers__', None)
-        if implementers is None:
-            frame.f_locals['__implementers__'] = implementers = []
-        implementers.append(ob)
+        adapters = frame.f_locals.get('__grok_adapters__', None)
+        if adapters is None:
+            frame.f_locals['__grok_adapters__'] = adapters = []
+        adapters.append(ob)
         return zope.interface.implementer.__call__(self, ob)
