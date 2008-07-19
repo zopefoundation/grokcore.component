@@ -15,8 +15,8 @@
 """
 import sys
 import types
-from zope.component._declaration import adapter as _adapter
-from zope.interface.declarations import implementer as _implementer
+import zope.component
+import zope.interface
 from martian.util import frame_is_module
 from martian.error import GrokImportError
 
@@ -41,7 +41,7 @@ class subscribe:
         subscribers.append((function, self.subscribed))
         return function
 
-class adapter(_adapter):
+class adapter(zope.component.adapter):
 
     def __init__(self, *interfaces):
         # Override the z.c.adapter decorator to force sanity checking
@@ -52,9 +52,10 @@ class adapter(_adapter):
         if type(interfaces[0]) is types.FunctionType:
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
-        self.interfaces = interfaces
 
-class implementer(_implementer):
+        zope.component.adapter.__init__(self, *interfaces)
+
+class implementer(zope.interface.implementer):
 
     def __call__(self, ob):
         # XXX we do not have function grokkers (yet) so we put the annotation
@@ -64,4 +65,4 @@ class implementer(_implementer):
         if implementers is None:
             frame.f_locals['__implementers__'] = implementers = []
         implementers.append(ob)
-        return _implementer.__call__(self, ob)
+        return zope.interface.implementer.__call__(self, ob)
