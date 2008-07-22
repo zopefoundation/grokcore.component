@@ -26,6 +26,6 @@ from grokcore.component.directive import (
 from grokcore.component.decorators import subscribe, adapter, implementer
 from martian.error import GrokError, GrokImportError
 
-# BBB These two functions are meant for test fixtures and should be
-# imported from grokcore.component.testing, not from grokcore.component.
-from grokcore.component.testing import grok, grok_component
+# Import this module so that it's available as soon as you import the
+# 'grokcore.component' package.  Useful for tests and interpreter # examples.
+import grokcore.component.testing
