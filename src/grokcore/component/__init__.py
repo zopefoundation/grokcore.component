@@ -29,3 +29,7 @@ from martian.error import GrokError, GrokImportError
 # Import this module so that it's available as soon as you import the
 # 'grokcore.component' package.  Useful for tests and interpreter examples.
 import grokcore.component.testing
+
+# Only export public API
+from grokcore.component.interfaces import IGrokcoreComponentAPI
+__all__ = list(IGrokcoreComponentAPI)

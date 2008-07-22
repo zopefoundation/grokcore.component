@@ -14,6 +14,14 @@ Changes
   is useful for unit tests where you may not want to grok a whole
   module.
 
+* Document grokcore.component's public API in an interface,
+  ``IGrokcoreComponentAPI``.  When you now do::
+
+    from grokcore.component import *
+
+  only the items documented in that interface will be imported into
+  your local namespace.
+
 1.4 (2008-06-11)
 ----------------
 

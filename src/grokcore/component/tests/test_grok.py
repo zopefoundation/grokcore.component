@@ -49,6 +49,9 @@ def test_suite():
                  'event']:
         suite.addTest(suiteFromPackage(name))
 
+    api = doctest.DocFileSuite('api.txt')
+    suite.addTest(api)
+
     # this test cannot follow the normal testing pattern, as the
     # bug it tests for is only exposed in the context of a doctest
     grok_component = doctest.DocFileSuite('grok_component.txt',
