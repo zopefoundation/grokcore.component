@@ -17,6 +17,7 @@ class IContext(Interface):
     it a candidate for auto-association.
     """
 
+
 class IBaseClasses(Interface):
 
     ClassGrokker = Attribute("Base class to define a class grokker.")
@@ -28,6 +29,7 @@ class IBaseClasses(Interface):
     Adapter = Attribute("Base class for adapters.")
     MultiAdapter = Attribute("Base class for multi-adapters.")
     GlobalUtility = Attribute("Base class for global utilities.")
+
 
 class IDirectives(Interface):
 
@@ -79,6 +81,7 @@ class IDirectives(Interface):
         utility, or an instance of it.
         """
 
+
 class IDecorators(Interface):
 
     def subscribe(*classes_or_interfaces):
@@ -95,6 +98,17 @@ class IDecorators(Interface):
         implements an interface or a number of interfaces.
         """
 
+
+class IGrokErrors(Interface):
+
+    def GrokError(message, component):
+        """Error indicating that a problem occurrend during the
+        grokking of a module (at "grok time")."""
+
+    def GrokImportError(*args):
+        """Error indicating a problem at import time."""
+
+
 class IMartianAPI(Interface):
     """Part of Martian's API exposed by grokcore.component."""
 
@@ -103,9 +117,8 @@ class IMartianAPI(Interface):
     ClassGrokker = Attribute("Grokker for classes.")
     InstanceGrokker = Attribute("Grokker for instances.")
     GlobalGrokker = Attribute("Grokker that's invoked for a module.")
-    GrokImportError = Attribute("Error that may while importing components.")
-    GrokError = Attribute("Error that may occur during the grokking process.")
 
-class IGrokcoreComponentAPI(IBaseClasses, IDirectives,
-                            IDecorators, IMartianAPI):
+
+class IGrokcoreComponentAPI(IBaseClasses, IDirectives, IDecorators,
+                            IGrokErrors, IMartianAPI):
     """grokcore.component's public API."""
