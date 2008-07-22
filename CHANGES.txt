@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.5 (unreleased)
+1.5 (2008-07-22)
 ----------------
 
 * Fix https://bugs.launchpad.net/grok/+bug/242353: grokcore.component
