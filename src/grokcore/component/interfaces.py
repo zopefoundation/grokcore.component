@@ -75,6 +75,20 @@ class IDirectives(Interface):
 
         This directive can only be used on class level."""
 
+    def title(title):
+        """Set a human-readable title for a component (e.g. a
+        permission, menu item, etc.).
+
+        This directive expects pure ASCII strings or Unicode and can
+        only be used on a class level."""
+
+    def description(description):
+        """Set a human-readable description for a component (e.g. a
+        permission, menu item, etc.).
+
+        This directive expects pure ASCII strings or Unicode and can
+        only be used on a class level."""
+
     def provides(interface):
         """Explicitly specify with which interface a component will be
         looked up."""

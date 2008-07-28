@@ -6,6 +6,12 @@ Changes
 
 * ...
 
+1.5.1 (2008-07-28)
+------------------
+
+* The ``IGrokcoreComponentAPI`` interface was missing declarations for
+  the ``title`` and ``description`` directives.
+
 1.5 (2008-07-22)
 ----------------
 
