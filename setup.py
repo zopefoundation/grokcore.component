@@ -16,7 +16,7 @@ setup(
     author='Grok Team',
     author_email='grok-dev@zope.org',
     url='http://grok.zope.org',
-    download_url='http://pypi.python.org/pypi/grok/',
+    download_url='http://pypi.python.org/pypi/grokcore.component',
     description='Grok-like configuration for basic components '
                 '(adapters, utilities, subscribers)',
     long_description=long_description,
