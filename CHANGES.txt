@@ -20,7 +20,7 @@ Changes
   method in grokcore.component.testing anymore. Use z3c.testsetup
   instead.
 
-* Allow functions that have been marked with @grok.subscriber also be
+* Allow functions that have been marked with @grok.subscribe also be
   registered with ``zope.component.provideHandler()`` manually.  This
   is useful for unit tests where you may not want to grok a whole
   module.
