@@ -11,21 +11,21 @@ In the following we assume you're writing or extending an application
 that does bootstrap configuration using ZCML.  There's always a single
 ZCML file that is executed when the application is started, which then
 includes everything else.  Let's assume this file is called
-``site.zcml`` (that's what it's called in Zope), so file is what we'll
-be editing.
+``site.zcml`` (that's what it's called in Zope), so that file is what
+we'll be editing.
 
 In order to register the components that you wrote using the base
-classes and directives available from ``grokcore.component``, we use
-the ``<grok:grok />`` ZCML directive.  But before we can use it, we
-need to include the necessary meta configuration from
-``grokcore.component``::
+classes and directives available from ``grokcore.component``, we'll
+use the ``<grok:grok />`` ZCML directive.  But before we can use it,
+we need to make sure it's available to the ZCML machinery.  We do this
+by including the meta configuration from ``grokcore.component``::
 
   <include package="grokcore.component" file="meta.zcml" />
 
-Put this line next to other meta configuration includes.  Now, further
-down the line, we can tell the machinery in ``grokcore.component`` to
-register all components in your package (let's say it's called
-``helloworld``)::
+Put this line somewhere to the top of ``site.zcml``, next to other
+meta configuration includes.  Now, further down the line, we can tell
+the machinery in ``grokcore.component`` to register all components in
+your package (let's say it's called ``helloworld``)::
 
   <grok:grok package="helloworld" />
 
