@@ -127,7 +127,7 @@ something::
           if target_language is None:
               preferred = IUserPreferredLanguages(context)
               target_language = preferred.getPreferredLanguages()[0]
-          
+
           translations = {'de': u'Hallo Welt',
                           'nl': u'Hallo Wereld'}
           return translations.get(target_language, u'Hello World')
@@ -170,7 +170,7 @@ invoked, it updates the Dublin Core 'Modified' property accordingly::
   def updateDublinCoreAfterModification(obj, event):
       """Updated the Dublin Core 'Modified' property when a modified
       event is sent for an object."""
-      IZopeDublinCore(obj).modified = datetime.datetime.now()
+      IZopeDublinCore(obj).modified = datetime.datetime.utcnow()
 
 
 API overview
