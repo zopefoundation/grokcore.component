@@ -36,6 +36,7 @@ setup(
                       'zope.component',
                       'zope.configuration',
                       'zope.interface',
-                      'zope.event', # for tests
+                      'zope.event', 
+                      'zope.testing',
                       ],
 )
