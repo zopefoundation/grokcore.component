@@ -48,17 +48,32 @@ class subscribe:
 class adapter(zope.component.adapter):
 
     # Override the z.c.adapter decorator to force sanity checking and
-    # have better error reporting.
+    # have better error reporting and add the ability to capture the name
 
-    def __init__(self, *interfaces):
+    def __init__(self, *interfaces, **kw):
         if not interfaces:
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
         if type(interfaces[0]) is types.FunctionType:
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
-
+        
+        self.name = u""
+        
+        if kw:
+            if 'name' in kw:
+                self.name = kw.pop('name')
+            if kw:
+                raise GrokImportError(
+                    "@grok.adapter got unexpected keyword arguments: %s" % ','.join(kw.keys()))
+        
         zope.component.adapter.__init__(self, *interfaces)
+    
+    def __call__(self, ob):
+        ob = zope.component.adapter.__call__(self, ob)
+        if self.name:
+            ob.__component_name__ = self.name
+        return ob
 
 class implementer(zope.interface.implementer):
 

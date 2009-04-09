@@ -123,11 +123,11 @@ class AdapterDecoratorGrokker(martian.GlobalGrokker):
                 check_module_component(function, context, 'context',
                                        grokcore.component.context)
                 interfaces = (context, )
-
+            name = getattr(function, '__component_name__', u"")
             config.action(
-                discriminator=('adapter', interfaces, function.__implemented__),
+                discriminator=('adapter', interfaces, function.__implemented__, name),
                 callable=component.provideAdapter,
-                args=(function, interfaces, function.__implemented__),
+                args=(function, interfaces, function.__implemented__, name),
                 )
         return True
 

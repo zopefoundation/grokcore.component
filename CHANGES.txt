@@ -4,7 +4,11 @@ Changes
 1.6 (unreleased)
 ----------------
 
-* ...
+* Add support for named adapters with the @adapter decorator::
+
+    @adapter(IAdaptedOne, IAdaptedTwo, name=u"foo")
+    def some_function(one, two):
+        ...
 
 1.5.1 (2008-07-28)
 ------------------

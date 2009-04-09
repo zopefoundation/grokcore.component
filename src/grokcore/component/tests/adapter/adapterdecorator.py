@@ -3,12 +3,16 @@
   >>>
   >>> cave = Cave()
   >>> home = IHome(cave)
+  >>> home.id
+  u'default'
   >>> IHome.providedBy(home)
   True
   >>>
   >>> isinstance(home, Home)
   True
   >>> morehome = IMoreHome(cave)
+  >>> morehome.id
+  u'default'
   >>> IHome.providedBy(morehome)
   True
   >>> isinstance(morehome, Home)
@@ -18,6 +22,8 @@
   True
   >>> isinstance(yetanotherhome, Home)
   True
+  >>> yetanotherhome.id
+  u'default'
 
   >>> from grokcore.component.tests.adapter import noarguments_fixture
   Traceback (most recent call last):
@@ -28,6 +34,11 @@
   Traceback (most recent call last):
   ...
   GrokImportError: @grok.adapter requires at least one argument.
+
+  >>> from zope.component import getAdapter
+  >>> home = getAdapter(cave, IHome, name='home')
+  >>> home.id
+  u'secondary'
 
 """
 
@@ -55,6 +66,9 @@ class Cave(grok.Context):
 
 class Home(object):
     grok.implements(IHome)
+    
+    def __init__(self, id=u"default"):
+        self.id = id
 
 @grok.adapter(Cave)
 @grok.implementer(IHome)
@@ -69,3 +83,8 @@ def more_home_for_cave(cave):
 @grok.implementer(IYetAnotherHome)
 def yet_another_home_for_cave(cave):
     return Home()
+
+@grok.adapter(Cave, name=u"home")
+@grok.implementer(IHome)
+def home_for_cave_named(cave):
+    return Home(u"secondary")
