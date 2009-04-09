@@ -14,7 +14,7 @@
 """Grok
 """
 
-from zope.interface import implements
+from zope.interface import implements, implementsOnly, classProvides
 from zope.component import adapts
 
 from martian import ClassGrokker, InstanceGrokker, GlobalGrokker

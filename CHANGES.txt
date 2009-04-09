@@ -4,6 +4,9 @@ Changes
 1.6 (unreleased)
 ----------------
 
+* Add convenience imports for implementsOnly() and classProvides() class
+  declarations form zope.interface.
+
 * Add support for registering global adapters at module level::
 
     grok.global_adapter(factory, (IAdapted1, IAdapted2,), IProvided, name=u"name")
