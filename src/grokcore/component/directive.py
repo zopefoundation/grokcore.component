@@ -36,6 +36,33 @@ class global_utility(martian.MultipleTimesDirective):
             name = grokcore.component.name.bind().get(factory)
         return (factory, provides, name, direct)
 
+class global_adapter(martian.MultipleTimesDirective):
+    scope = martian.MODULE
+
+    def factory(self, factory, adapts=None, provides=None, name=u''):
+        if provides is not None and not IInterface.providedBy(provides):
+            raise GrokImportError(
+                "You can only pass an interface to the "
+                "provides argument of %s." % self.name)
+
+        if provides is None:
+            provides = grokcore.component.provides.bind().get(factory)
+        
+        if adapts is None:
+            adapts = getattr(factory, '__component_adapts__', None)
+            if adapts is None:
+                adapts = grokcore.component.context.bind().get(factory)
+        
+        if not isinstance(adapts, (list, tuple,)):
+            adapts = (adapts,)
+        elif isinstance(adapts, list):
+            adapts = tuple(adapts)
+        
+        if not name:
+            name = grokcore.component.name.bind().get(factory)
+        
+        return (factory, adapts, provides, name)
+
 class name(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE

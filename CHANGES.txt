@@ -4,10 +4,19 @@ Changes
 1.6 (unreleased)
 ----------------
 
+* Add support for registering global adapters at module level::
+
+    grok.global_adapter(factory, (IAdapted1, IAdapted2,), IProvided, name=u"name")
+    
+  Only 'factory' is required. If only a single interface is adapted, the
+  second argument may be a single interface instead of a tuple. If the
+  component has declared adapted/provided interfaces, the second and third
+  arguments may be omitted.
+
 * Add support for an @provider decorator to let a function directly provide
   an interface::
   
-    @provider(IFoo, IBar)
+    @grok.provider(IFoo, IBar)
     def some_function():
         ...
         
@@ -15,7 +24,7 @@ Changes
 
 * Add support for named adapters with the @adapter decorator::
 
-    @adapter(IAdaptedOne, IAdaptedTwo, name=u"foo")
+    @grok.adapter(IAdaptedOne, IAdaptedTwo, name=u"foo")
     def some_function(one, two):
         ...
 

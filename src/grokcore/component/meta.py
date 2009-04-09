@@ -156,6 +156,19 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
         return True
 
+class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
+
+    def grok(self, name, module, module_info, config, **kw):
+        infos = grokcore.component.global_adapter.bind().get(module=module)
+
+        for factory, adapts, provides, name in infos:
+            config.action(
+                discriminator=('adapter', adapts, provides, name),
+                callable=component.provideAdapter,
+                args=(factory, adapts, provides, name),
+                )
+
+        return True
 
 class SubscriberGrokker(martian.GlobalGrokker):
 
