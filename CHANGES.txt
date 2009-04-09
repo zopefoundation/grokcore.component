@@ -4,6 +4,15 @@ Changes
 1.6 (unreleased)
 ----------------
 
+* Add support for an @provider decorator to let a function directly provide
+  an interface::
+  
+    @provider(IFoo, IBar)
+    def some_function():
+        ...
+        
+  This is equivalent to doing alsoProvides(some_function, IFoo, IBar).
+
 * Add support for named adapters with the @adapter decorator::
 
     @adapter(IAdaptedOne, IAdaptedTwo, name=u"foo")

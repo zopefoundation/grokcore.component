@@ -20,6 +20,8 @@ import zope.interface
 from martian.util import frame_is_module
 from martian.error import GrokImportError
 
+from zope.interface.declarations import DescriptorAwareMetaClasses
+
 class subscribe:
 
     def __init__(self, *args):
@@ -86,3 +88,16 @@ class implementer(zope.interface.implementer):
             frame.f_locals['__grok_adapters__'] = adapters = []
         adapters.append(ob)
         return zope.interface.implementer.__call__(self, ob)
+
+class provider:
+
+    def __init__(self, *interfaces):
+        self.interfaces = interfaces
+
+    def __call__(self, ob):
+        if isinstance(ob, DescriptorAwareMetaClasses):
+            raise TypeError("Can't use implementer with classes.  Use one of "
+                            "the class-declaration functions instead."
+                            )
+        zope.interface.alsoProvides(ob, *self.interfaces)
+        return ob
