@@ -159,8 +159,8 @@ factory. It may have come from some other framework that configured that
 adapter for you, say, or you may have a class that you instantiate many
 times to get different variations on a particular adapter factory. In these
 cases, subclassing grokcore.component.Adapter or MultiAdapter is not
-possible. Instead, you use the global_adapter() directive. Here is an
-example drawing on the 'z3c.form' library, which provides an adapter factory
+possible. Instead, you can use the global_adapter() directive. Here is an
+example drawing on the ``z3c.form`` library, which provides an adapter factory
 factory for named widget attributes::
 
   import zope.interface
@@ -180,8 +180,8 @@ factory for named widget attributes::
   
   grokcore.component.global_adapter(label_override, name=u"label")
   
-The example above can deduce the provided and adapted interfaces from the
-object returned by the 'StaticWidgetAttribute' factory. The full syntax
+In the example above, the provided and adapted interfaces are deduced from the
+object returned by the ``StaticWidgetAttribute`` factory. The full syntax
 for global_adapter is::
 
   global_adapter(factory, (IAdapted1, IAdapted2,), IProvided, name=u"name")
@@ -189,7 +189,7 @@ for global_adapter is::
 The factory must be a callable (the adapter factory). Adapted interfaces are
 given as a tuple. You may use a single interface instead of a one-element
 tuple for single adapters. The provided interface is given as shown. The name
-defaults to u"".
+defaults to u"" (an unnamed adapter).
 
 Subscriber
 ----------
@@ -259,6 +259,16 @@ Class-level directives
     ``iface2``, etc.  It is identical to
     ``zope.interface.implements``.
 
+``implementsOnly(iface1, iface2, ...)``
+    declares that a class *only* implements the interfaces ``iface1``,
+    ``iface2``, etc.  It is identical to
+    ``zope.interface.implementsOnly``.
+
+``classProvides(iface1, iface2, ...)``
+    declares that a class object (as opposed to instances of the class)
+    provides the interfaces ``iface1``, ``iface2``, etc.  It is identical to
+    ``zope.interface.classProvides``.
+
 ``context(iface_or_class)``
     declares the type of object that the adapter (or a similar
     context-dependent component) adapts.  This can either be an
@@ -299,17 +309,32 @@ Module-level directives
     This allows you to register global utilities that don't inherit
     from the ``GlobalUtility`` base class.
 
+``global_adapter(factory, [adapts=tuple_of_interfaces, provides=iface, name=ascii_or_unicode])``
+    registers the ``factory`` callable as a global adapter. The ``adapts``
+    argument may be a tuple of interfaces or a single interface, if this is
+    a single adapter. Both ``adapts`` and ``provides`` will be deduced from
+    information annotated onto the factory if necessary. If no adapted
+    interface can be determined, the current context will be assumed. The
+    name defaults to u"". This allows you to register global adapters that
+    don't inherit from the ``Adapter`` or ``MultiAdapter`` base classes.
 
 Function decorators
 -------------------
 
-``@adapter(iface_or_class1, iface_or_class2, ...)``
-    registers the function as an adapter for the specific interface.
+``@adapter(iface_or_class1, iface_or_class2, ..., name=u"name")``
+    registers the function as an adapter for the specific interface. The
+    ``name`` argument must be a keyword argument and is optional. If given,
+    a named adapter is registered.
 
-``@implementer(iface_or_class1, iface_or_class2, ...)```
+``@implementer(iface1, iface2, ...)```
     declares that the function implements a certain interface (or a
-    number of certain interfaces).  This is useful when a function
-    serves as an object factory, e.g. as an adapter.
+    number of interfaces).  This is useful when a function serves as an object
+    factory, e.g. as an adapter.
+
+``@provider(iface1, iface2, ...)```
+    declares that the function object provides a certain interface (or a
+    number of interfaces).  This is akin to calling directlyProvides() on
+    the function object.
 
 ``@subscribe(iface_or_class1, iface_or_class2, ...)``
     declares that a function is to be registered as an event handler
