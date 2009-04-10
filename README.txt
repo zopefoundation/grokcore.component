@@ -151,6 +151,45 @@ implementation and register an instance::
                                     name='helloworld',
                                     direct=True)
 
+Global adapter
+--------------
+
+Sometimes, you may have an object that should be registered as an adapter
+factory. It may have come from some other framework that configured that
+adapter for you, say, or you may have a class that you instantiate many
+times to get different variations on a particular adapter factory. In these
+cases, subclassing grokcore.component.Adapter or MultiAdapter is not
+possible. Instead, you use the global_adapter() directive. Here is an
+example drawing on the 'z3c.form' library, which provides an adapter factory
+factory for named widget attributes::
+
+  import zope.interface
+  import zope.schema
+  import grokcore.component
+  import z3c.form.widget import ComputedWidgetAttribute
+
+  class ISchema(Interface):
+      """This schema will be used to power a z3c.form form"""
+      
+      field = zope.schema.TextLine(title=u"Sample field")
+      
+  ...
+
+  label_override = z3c.form.widget.StaticWidgetAttribute(
+                        u"Override label", field=ISchema['field'])
+  
+  grokcore.component.global_adapter(label_override, name=u"label")
+  
+The example above can deduce the provided and adapted interfaces from the
+object returned by the 'StaticWidgetAttribute' factory. The full syntax
+for global_adapter is::
+
+  global_adapter(factory, (IAdapted1, IAdapted2,), IProvided, name=u"name")
+  
+The factory must be a callable (the adapter factory). Adapted interfaces are
+given as a tuple. You may use a single interface instead of a one-element
+tuple for single adapters. The provided interface is given as shown. The name
+defaults to u"".
 
 Subscriber
 ----------
