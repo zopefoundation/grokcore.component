@@ -112,6 +112,15 @@ class IDirectives(Interface):
         name - the name of the utility
         """
 
+    def global_adapter(factory, adapts=None, provides=None, name=u''):
+        """Register a global adapter.
+
+        factory - the adapter factory, a callable
+        adapts - an interface or list of interfaces adapted
+        provides - the interface provided by the adapter
+        name - the name of the adapter
+        """
+
     def direct():
         """Specify whether the class should be used for the component
         or whether it should be used to instantiate the component.
@@ -136,6 +145,11 @@ class IDecorators(Interface):
     def implementer(*interfaces):
         """Describes that a function that's used as an adapter
         implements an interface or a number of interfaces.
+        """
+    
+    def provider(*interfaces):
+        """Describes that a function directly provides an interface or a
+        number of interfaces.
         """
 
 
