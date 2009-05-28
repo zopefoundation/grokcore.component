@@ -57,6 +57,17 @@ class IDirectives(Interface):
 
     def implements(*interfaces):
         """Declare that a class implements the given interfaces."""
+    
+    def implementsOnly(*interfaces):
+        """Declare that a class implements only the given interfaces.
+        
+        Interfaces implemented by base classes are explicitly not inherited.
+        """
+    
+    def classProvides(*interfaces):
+        """Declare that a class (as opposed to instances of the class)
+        directly provides the given interfaces.
+        """
 
     def adapts(*classes_or_interfaces):
         """Declare that a class adapts objects of the given classes or
