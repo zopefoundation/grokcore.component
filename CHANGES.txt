@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.7 (unreleased)
+1.7 (2009-06-01)
 ----------------
 
 * Add missing provider, global_adapter, implementsOnly, classProvides() to
