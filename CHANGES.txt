@@ -4,7 +4,7 @@ Changes
 1.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
+* Bring versions.cfg in line with grok 1.0 release candidate versions.cfg.
 
 
 1.7 (2009-06-01)
