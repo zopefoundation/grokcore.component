@@ -17,7 +17,7 @@ Changes
   this during our refactoring to use the new Martian).
 
 * Use 1.0b1 versions.cfg in Grok's release info instead of a local
-  copy; a local copy for all grokcore.* packages is just too hard to
+  copy; a local copy for all grokcore packages is just too hard to
   maintain.
 
 1.7 (2009-06-01)
