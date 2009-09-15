@@ -4,7 +4,9 @@ Changes
 1.8 (unreleased)
 ----------------
 
-* Bring versions.cfg in line with grok 1.0 release candidate versions.cfg.
+* Use 1.0b1 versions.cfg in Grok's release info instead of a local
+  copy; a local copy for all grokcore.* packages is just too hard to
+  maintain.
 
 
 1.7 (2009-06-01)
