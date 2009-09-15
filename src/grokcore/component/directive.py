@@ -17,7 +17,6 @@ import martian
 import grokcore.component
 from zope.interface.interfaces import IInterface
 from martian.error import GrokImportError
-from grokcore.component.scan import UnambiguousComponentScope
 
 class global_utility(martian.MultipleTimesDirective):
     scope = martian.MODULE
@@ -27,13 +26,6 @@ class global_utility(martian.MultipleTimesDirective):
             raise GrokImportError(
                 "You can only pass an interface to the "
                 "provides argument of %s." % self.name)
-
-        if provides is None:
-            provides = grokcore.component.provides.bind().get(factory)
-        if direct is None:
-            direct = grokcore.component.direct.bind().get(factory)
-        if not name:
-            name = grokcore.component.name.bind().get(factory)
         return (factory, provides, name, direct)
 
 class global_adapter(martian.MultipleTimesDirective):
@@ -44,23 +36,11 @@ class global_adapter(martian.MultipleTimesDirective):
             raise GrokImportError(
                 "You can only pass an interface to the "
                 "provides argument of %s." % self.name)
-
-        if provides is None:
-            provides = grokcore.component.provides.bind().get(factory)
-        
-        if adapts is None:
-            adapts = getattr(factory, '__component_adapts__', None)
-            if adapts is None:
-                adapts = grokcore.component.context.bind().get(factory)
-        
         if not isinstance(adapts, (list, tuple,)):
             adapts = (adapts,)
         elif isinstance(adapts, list):
             adapts = tuple(adapts)
-        
-        if not name:
-            name = grokcore.component.name.bind().get(factory)
-        
+
         return (factory, adapts, provides, name)
 
 class name(martian.Directive):
@@ -70,7 +50,7 @@ class name(martian.Directive):
     validate = martian.validateText
 
 class context(martian.Directive):
-    scope = UnambiguousComponentScope('context')
+    scope = martian.CLASS_OR_MODULE
     store = martian.ONCE
     validate = martian.validateInterfaceOrClass
 

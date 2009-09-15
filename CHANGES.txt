@@ -4,10 +4,21 @@ Changes
 1.8 (unreleased)
 ----------------
 
+* Use a newer version of Martian that has better support for
+  inheritance.  This is demonstrated in ``tests/inherit``.
+
+* The ``ContextGrokker`` and the ``scan.py`` module have gone away
+  thanks the newer Martian.
+
+* Directive implementations (in their factory method) should *not*
+  bind directives. Directive binding cannot take place at import time,
+  but only at grok time. Binding directives during import time (when
+  directives are executed) can lead to change problems. (we noticed
+  this during our refactoring to use the new Martian).
+
 * Use 1.0b1 versions.cfg in Grok's release info instead of a local
   copy; a local copy for all grokcore.* packages is just too hard to
   maintain.
-
 
 1.7 (2009-06-01)
 ----------------

@@ -46,7 +46,7 @@ def suiteFromPackage(name):
 def test_suite():
     suite = unittest.TestSuite()
     for name in ['adapter', 'directive', 'grokker', 'utility', 'view',
-                 'event']:
+                 'event', 'inherit']:
         suite.addTest(suiteFromPackage(name))
 
     api = doctest.DocFileSuite('api.txt')

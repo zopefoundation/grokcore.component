@@ -20,8 +20,8 @@ import zope.component.interface
 
 from zope import component, interface
 from martian.error import GrokError
-from grokcore.component.scan import check_module_component
-from grokcore.component.scan import determine_module_component
+from martian.util import scan_for_classes
+
 from grokcore.component.interfaces import IContext
 
 
@@ -35,23 +35,26 @@ def default_global_utility_provides(factory, module, direct, **data):
         return list(interface.providedBy(factory))[0]
     return default_provides(factory)
 
-
-class ContextGrokker(martian.GlobalGrokker):
-
-    martian.priority(1001)
-
-    def grok(self, name, module, module_info, config, **kw):
-        context = determine_module_component(module_info,
-                                             grokcore.component.context,
-                                             IContext)
-        grokcore.component.context.set(module, context)
-        return True
-
+def default_context(factory, module, **data):
+    components = list(scan_for_classes(module, IContext))
+    if len(components) == 0:
+        raise GrokError(
+            "No module-level context for %r, please use the 'context' "
+            "directive." % (factory), factory)
+    elif len(components) == 1:
+        component = components[0]
+    else:
+        raise GrokError(
+            "Multiple possible contexts for %r, please use the 'context' "
+            "directive."
+            % (factory), factory)
+    return component
 
 class AdapterGrokker(martian.ClassGrokker):
     martian.component(grokcore.component.Adapter)
 
-    martian.directive(grokcore.component.context)
+    martian.directive(grokcore.component.context,
+                      get_default=default_context)
     martian.directive(grokcore.component.provides,
                       get_default=default_provides)
     martian.directive(grokcore.component.name)
@@ -113,15 +116,12 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
 class AdapterDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        context = grokcore.component.context.bind().get(module=module)
         adapters = module_info.getAnnotation('grok.adapters', [])
         for function in adapters:
             interfaces = getattr(function, '__component_adapts__', None)
             if interfaces is None:
-                # There's no explicit interfaces defined, so we assume the
-                # module context to be the thing adapted.
-                check_module_component(function, context, 'context',
-                                       grokcore.component.context)
+                context = grokcore.component.context.bind(
+                    get_default=default_context).get(module)
                 interfaces = (context, )
             name = getattr(function, '__component_name__', u"")
             config.action(
@@ -135,9 +135,16 @@ class AdapterDecoratorGrokker(martian.GlobalGrokker):
 class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        infos = grokcore.component.global_utility.bind().get(module=module)
+        infos = grokcore.component.global_utility.bind().get(module)
 
         for factory, provides, name, direct in infos:
+            if direct is None:
+                direct = grokcore.component.direct.bind().get(factory)
+            if provides is None:
+                provides = grokcore.component.provides.bind().get(factory)
+            if not name:
+                name = grokcore.component.name.bind().get(factory)
+
             if direct:
                 obj = factory
                 if provides is None:
@@ -159,9 +166,18 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
-        infos = grokcore.component.global_adapter.bind().get(module=module)
-
+        infos = grokcore.component.global_adapter.bind().get(module)
         for factory, adapts, provides, name in infos:
+            if provides is None:
+                provides = grokcore.component.provides.bind().get(factory)
+            if adapts is None:
+                adapts = getattr(factory, '__component_adapts__', None)
+                if adapts is None:
+                    adapts = grokcore.component.context.bind(
+                        get_default=default_context).get(factory)
+            if not name:
+                name = grokcore.component.name.bind().get(factory)
+            
             config.action(
                 discriminator=('adapter', adapts, provides, name),
                 callable=component.provideAdapter,
