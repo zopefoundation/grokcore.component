@@ -33,6 +33,7 @@
 
 import grokcore.component as grok
 from zope import interface
+from zope.interface import implementer
 
 class Cave(grok.Context):
     pass
@@ -74,10 +75,10 @@ factory6 = CaveFireplaceHomeFactory(u"six")
 
 # make some direct assertions
 
-grok.implementer(IHome)(factory3)
-grok.implementer(IHome)(factory4)
-grok.implementer(IHome)(factory5)
-grok.implementer(IHome)(factory6)
+implementer(IHome)(factory3)
+implementer(IHome)(factory4)
+implementer(IHome)(factory5)
+implementer(IHome)(factory6)
 
 grok.adapter(Fireplace)(factory5)
 
