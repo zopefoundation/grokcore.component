@@ -1,7 +1,7 @@
 Changes
 =======
 
-1.8 (unreleased)
+2.0 (2009-09-16)
 ----------------
 
 * Use a newer version of Martian that has better support for
