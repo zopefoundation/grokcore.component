@@ -36,7 +36,8 @@ setup(
                       'zope.component',
                       'zope.configuration',
                       'zope.interface',
-                      'zope.event', 
                       'zope.testing',
+                      # The following can move to [test] extras
+                      'zope.event',
                       ],
 )
