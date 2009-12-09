@@ -4,7 +4,7 @@ Changes
 2.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Tiny dependency adjustment: moved zope.event to test dependencies.
 
 
 2.0 (2009-09-16)
