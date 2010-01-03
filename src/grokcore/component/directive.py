@@ -14,9 +14,9 @@
 """Grok directives.
 """
 import martian
-import grokcore.component
 from zope.interface.interfaces import IInterface
 from martian.error import GrokImportError
+
 
 class global_utility(martian.MultipleTimesDirective):
     scope = martian.MODULE
@@ -64,6 +64,22 @@ class description(title):
 
 class direct(martian.MarkerDirective):
     scope = martian.CLASS
+
+class order(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    default = 0, 0
+
+    _order = 0
+
+    def factory(self, value=0):
+        order._order += 1
+        return value, order._order
+
+class path(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    validate = martian.validateText
 
 class provides(martian.Directive):
     scope = martian.CLASS

@@ -14,17 +14,22 @@
 """Grok
 """
 
-from zope.interface import implements, implementsOnly, classProvides
 from zope.component import adapts
-
-from martian import ClassGrokker, InstanceGrokker, GlobalGrokker
-from grokcore.component.components import Adapter, GlobalUtility, MultiAdapter, Context
+from zope.interface import implements, implementsOnly, classProvides
 
 from martian import baseclass
-from grokcore.component.directive import (
-    context, name, title, description, provides, global_utility, global_adapter, direct)
-from grokcore.component.decorators import subscribe, adapter, implementer, provider
 from martian.error import GrokError, GrokImportError
+from martian import ClassGrokker, InstanceGrokker, GlobalGrokker
+
+from grokcore.component.components import (
+    Adapter, GlobalUtility, MultiAdapter, Context)
+
+from grokcore.component.directive import (
+    context, description, direct, name, order, path, provides, title,
+    global_utility, global_adapter)
+
+from grokcore.component.decorators import (
+    subscribe, adapter, implementer, provider)
 
 # Import this module so that it's available as soon as you import the
 # 'grokcore.component' package.  Useful for tests and interpreter examples.

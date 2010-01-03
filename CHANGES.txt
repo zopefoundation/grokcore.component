@@ -4,7 +4,10 @@ Changes
 2.1 (unreleased)
 ----------------
 
-- Tiny dependency adjustment: moved zope.event to test dependencies.
+* Moved directives 'order' from grokcore.viewlet and 'path' from
+  grokcore.view to this very package. 
+
+* Tiny dependency adjustment: moved zope.event to test dependencies.
 
 
 2.0 (2009-09-16)
