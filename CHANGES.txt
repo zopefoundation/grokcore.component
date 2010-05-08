@@ -4,6 +4,8 @@ Changes
 2.1 (unreleased)
 ----------------
 
+* Made package comply to zope.org repository policy.
+
 * Moved directives 'order' from grokcore.viewlet and 'path' from
   grokcore.view to this very package. 
 
