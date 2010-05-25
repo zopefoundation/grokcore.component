@@ -1,14 +1,20 @@
+import doctest
 import re
-import unittest, traceback
+import traceback
+import unittest
+
 from pkg_resources import resource_listdir
-from zope.testing import doctest, cleanup, renormalizing
+from zope.testing import cleanup, renormalizing
 import zope.component.eventtesting
+
 
 def setUpZope(test):
     zope.component.eventtesting.setUp(test)
 
+
 def cleanUpZope(test):
     cleanup.cleanUp()
+
 
 checker = renormalizing.RENormalizing([
     # str(Exception) has changed from Python 2.4 to 2.5 (due to
@@ -17,6 +23,7 @@ checker = renormalizing.RENormalizing([
     (re.compile(r"ConfigurationExecutionError: <class '([\w.]+)'>:"),
                 r'ConfigurationExecutionError: \1:'),
     ])
+
 
 def suiteFromPackage(name):
     files = resource_listdir(__name__, name)
@@ -35,13 +42,14 @@ def suiteFromPackage(name):
                                         setUp=setUpZope,
                                         tearDown=cleanUpZope,
                                         checker=checker,
-                                        optionflags=doctest.ELLIPSIS+
-                                        doctest.NORMALIZE_WHITESPACE)
+                                        optionflags=doctest.ELLIPSIS + \
+                                            doctest.NORMALIZE_WHITESPACE)
         except ImportError, e:  # or should this accept anything?
             traceback.print_exc()
             raise
         suite.addTest(test)
     return suite
+
 
 def test_suite():
     suite = unittest.TestSuite()
