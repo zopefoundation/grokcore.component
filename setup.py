@@ -40,6 +40,7 @@ setup(
                       'zope.component',
                       'zope.configuration',
                       'zope.interface',
+                      'zope.schema',
                       'zope.testing',
                       ],
     tests_require=tests_require,

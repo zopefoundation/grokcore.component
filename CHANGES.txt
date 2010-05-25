@@ -4,7 +4,10 @@ Changes
 1.9 (unreleased)
 ----------------
 
-- Nothing changed yet.
+* Add ``testing`` to the default exclude_filter.
+
+* Add the possiblity to extend the exclude filter from the ZCML with
+  the attribute ``exclude``.
 
 
 1.8 (2009-12-13)
@@ -27,7 +30,7 @@ Changes
 * Add support for registering global adapters at module level::
 
     grok.global_adapter(factory, (IAdapted1, IAdapted2,), IProvided, name=u"name")
-    
+
   Only 'factory' is required. If only a single interface is adapted, the
   second argument may be a single interface instead of a tuple. If the
   component has declared adapted/provided interfaces, the second and third
@@ -35,11 +38,11 @@ Changes
 
 * Add support for an @provider decorator to let a function directly provide
   an interface::
-  
+
     @grok.provider(IFoo, IBar)
     def some_function():
         ...
-        
+
   This is equivalent to doing alsoProvides(some_function, IFoo, IBar).
 
 * Add support for named adapters with the @adapter decorator::
@@ -78,7 +81,7 @@ Changes
 1.4 (2008-06-11)
 ----------------
 
-* Ported class grokkers to make use of further improvements in Martian. 
+* Ported class grokkers to make use of further improvements in Martian.
   This requires Martian 0.10.
 
 1.3 (2008-05-14)

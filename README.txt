@@ -170,22 +170,22 @@ factory for named widget attributes::
 
   class ISchema(Interface):
       """This schema will be used to power a z3c.form form"""
-      
+
       field = zope.schema.TextLine(title=u"Sample field")
-      
+
   ...
 
   label_override = z3c.form.widget.StaticWidgetAttribute(
                         u"Override label", field=ISchema['field'])
-  
+
   grokcore.component.global_adapter(label_override, name=u"label")
-  
+
 In the example above, the provided and adapted interfaces are deduced from the
 object returned by the ``StaticWidgetAttribute`` factory. The full syntax
 for global_adapter is::
 
   global_adapter(factory, (IAdapted1, IAdapted2,), IProvided, name=u"name")
-  
+
 The factory must be a callable (the adapter factory). Adapted interfaces are
 given as a tuple. You may use a single interface instead of a one-element
 tuple for single adapters. The provided interface is given as shown. The name
@@ -342,3 +342,15 @@ Function decorators
     registered as a subscriber for the event interface.  In case of
     object events, the event handler is registered as a subscriber for
     the object type and the event interface.
+
+
+ZCML directive
+--------------
+
+``<grok:grok package="." exclude="mythings" />``
+
+  The ``grok`` directive located in the namespace
+  ``http://namespaces.zope.org/grok`` will grok the package pointed by
+  the ``package`` attribute. The optional ``exclude`` attribute can
+  specify a name of a package or module that if encountered won't be
+  grokked.
