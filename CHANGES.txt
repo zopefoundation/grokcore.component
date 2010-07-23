@@ -11,6 +11,10 @@ Changes
 
 * Tiny dependency adjustment: moved zope.event to test dependencies.
 
+* Port from 1.x branch exclude parameter to the Grok ZCML directive.
+
+* Port from 1.x branch the ignore of testing.py modules.
+
 
 2.0 (2009-09-16)
 ----------------
