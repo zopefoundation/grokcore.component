@@ -98,6 +98,9 @@ supposed to be a part of::
       grokcore.component.adapts(Interface, IBrowserRequest, IBrowserPage)
       grokcore.component.implements(IContentProvider)
 
+      def __init__(self, context, request, view):
+          pass
+
       def update(self):
           pass
 
