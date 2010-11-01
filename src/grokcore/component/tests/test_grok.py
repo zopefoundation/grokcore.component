@@ -1,7 +1,9 @@
 import re
-import unittest, traceback
+import unittest
+import traceback
+import doctest
 from pkg_resources import resource_listdir
-from zope.testing import doctest, cleanup, renormalizing
+from zope.testing import cleanup, renormalizing
 import zope.component.eventtesting
 
 def setUpZope(test):
@@ -46,7 +48,7 @@ def suiteFromPackage(name):
 def test_suite():
     suite = unittest.TestSuite()
     for name in ['adapter', 'directive', 'grokker', 'utility', 'view',
-                 'event', 'inherit']:
+                 'event', 'inherit', 'order']:
         suite.addTest(suiteFromPackage(name))
 
     api = doctest.DocFileSuite('api.txt')
