@@ -26,7 +26,7 @@ from grokcore.component.components import (
 
 from grokcore.component.directive import (
     context, description, direct, name, order, path, provides, title,
-    global_utility, global_adapter)
+    global_utility, global_adapter, order)
 
 from grokcore.component.decorators import (
     subscribe, adapter, implementer, provider)
