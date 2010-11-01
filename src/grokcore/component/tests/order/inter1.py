@@ -12,7 +12,7 @@ The ordering works like so:
   >>> from inter2 import Four, Five, Six
   >>> components = [One(), Two(), Three(), Four(), Five(), Six()]
 
-  >>> from grokcore.viewlet.util import sort_components
+  >>> from grokcore.component.util import sort_components
   >>> sort_components(components)
   [<...Three object at ...>,
    <...One object at ...>,
@@ -23,7 +23,7 @@ The ordering works like so:
 
 """
 
-import grokcore.viewlet as grok
+import grokcore.component as grok
 
 class One(object):
     grok.order()

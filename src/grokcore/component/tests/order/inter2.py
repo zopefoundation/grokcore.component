@@ -2,7 +2,7 @@
 This module used by inter1 tests
 """
 
-import grokcore.viewlet as grok
+import grokcore.component as grok
 
 class Four(object):
     grok.order(1)

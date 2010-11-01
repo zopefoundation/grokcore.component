@@ -18,12 +18,15 @@ from zope.interface import implements, implementsOnly, classProvides
 from zope.component import adapts
 
 from martian import ClassGrokker, InstanceGrokker, GlobalGrokker
-from grokcore.component.components import Adapter, GlobalUtility, MultiAdapter, Context
+from grokcore.component.components import (
+    Adapter, GlobalUtility, MultiAdapter, Context)
 
 from martian import baseclass
 from grokcore.component.directive import (
-    context, name, title, description, provides, global_utility, global_adapter, direct)
-from grokcore.component.decorators import subscribe, adapter, implementer, provider
+    context, name, title, description, provides, global_utility,
+    global_adapter, direct, order)
+from grokcore.component.decorators import (
+    subscribe, adapter, implementer, provider)
 from martian.error import GrokError, GrokImportError
 
 # Import this module so that it's available as soon as you import the

@@ -5,7 +5,7 @@ done by the order specified.
 
   >>> components = [First(), Second(), Third(), Fourth(), Fifth()]
 
-  >>> from grokcore.viewlet.util import sort_components
+  >>> from grokcore.component.util import sort_components
   >>> sort_components(components)
   [<...Fifth object at ...>,
    <...Fourth object at ...>,
@@ -15,7 +15,7 @@ done by the order specified.
 
 """
 
-import grokcore.viewlet as grok
+import grokcore.component as grok
 
 class First(object):
     grok.order(5)

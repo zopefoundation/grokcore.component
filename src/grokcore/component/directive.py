@@ -19,6 +19,7 @@ from zope.interface.interfaces import IInterface
 from martian.error import GrokImportError
 from grokcore.component.scan import UnambiguousComponentScope
 
+
 class global_utility(martian.MultipleTimesDirective):
     scope = martian.MODULE
 
@@ -36,6 +37,7 @@ class global_utility(martian.MultipleTimesDirective):
             name = grokcore.component.name.bind().get(factory)
         return (factory, provides, name, direct)
 
+
 class global_adapter(martian.MultipleTimesDirective):
     scope = martian.MODULE
 
@@ -47,21 +49,22 @@ class global_adapter(martian.MultipleTimesDirective):
 
         if provides is None:
             provides = grokcore.component.provides.bind().get(factory)
-        
+
         if adapts is None:
             adapts = getattr(factory, '__component_adapts__', None)
             if adapts is None:
                 adapts = grokcore.component.context.bind().get(factory)
-        
+
         if not isinstance(adapts, (list, tuple,)):
             adapts = (adapts,)
         elif isinstance(adapts, list):
             adapts = tuple(adapts)
-        
+
         if not name:
             name = grokcore.component.name.bind().get(factory)
-        
+
         return (factory, adapts, provides, name)
+
 
 class name(martian.Directive):
     scope = martian.CLASS
@@ -69,23 +72,40 @@ class name(martian.Directive):
     default = u''
     validate = martian.validateText
 
+
 class context(martian.Directive):
     scope = UnambiguousComponentScope('context')
     store = martian.ONCE
     validate = martian.validateInterfaceOrClass
+
 
 class title(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE
     validate = martian.validateText
 
+
 class description(title):
     pass
 
+
 class direct(martian.MarkerDirective):
     scope = martian.CLASS
+
 
 class provides(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE
     validate = martian.validateInterface
+
+
+class order(martian.Directive):
+    scope = martian.CLASS
+    store = martian.ONCE
+    default = 0, 0
+
+    _order = 0
+
+    def factory(self, value=0):
+        order._order += 1
+        return value, order._order

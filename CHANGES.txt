@@ -4,7 +4,7 @@ Changes
 1.10 (unreleased)
 -----------------
 
-* ...
+* Move the order directive from the package grokcore.viewlet into this one.
 
 1.9 (2010-07-15)
 ----------------

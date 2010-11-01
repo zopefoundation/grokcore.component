@@ -40,7 +40,7 @@ class IBaseClasses(Interface):
     GlobalGrokker = Attribute("Base class to define a module grokker.")
 
     Context = Attribute("Base class for automatically associated contexts.")
- 
+
     Adapter = Attribute("Base class for adapters.")
     MultiAdapter = Attribute("Base class for multi-adapters.")
     GlobalUtility = Attribute("Base class for global utilities.")
@@ -57,13 +57,13 @@ class IDirectives(Interface):
 
     def implements(*interfaces):
         """Declare that a class implements the given interfaces."""
-    
+
     def implementsOnly(*interfaces):
         """Declare that a class implements only the given interfaces.
-        
+
         Interfaces implemented by base classes are explicitly not inherited.
         """
-    
+
     def classProvides(*interfaces):
         """Declare that a class (as opposed to instances of the class)
         directly provides the given interfaces.
@@ -130,6 +130,25 @@ class IDirectives(Interface):
         utility, or an instance of it.
         """
 
+    def order(value=None):
+        """Control the ordering of components.
+
+        If the value is specified, the order will be determined by sorting on
+        it.
+        If no value is specified, the order will be determined by definition
+        order within the module.
+        If the directive is absent, the order will be determined by class name.
+        (unfortunately our preferred default behavior on absence which would
+        be like grok.order() without argument is hard to implement in Python)
+
+        Inter-module order is by dotted name of the module the
+        components are in; unless an explicit argument is specified to
+        ``grok.order()``, components are grouped by module.
+
+        The function grok.util.sort_components can be used to sort
+        components according to these rules.
+        """
+
 
 class IDecorators(Interface):
 
@@ -146,7 +165,7 @@ class IDecorators(Interface):
         """Describes that a function that's used as an adapter
         implements an interface or a number of interfaces.
         """
-    
+
     def provider(*interfaces):
         """Describes that a function directly provides an interface or a
         number of interfaces.
