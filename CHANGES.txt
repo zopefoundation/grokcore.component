@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.2 (unreleased)
+2.2 (2010-11-03)
 ----------------
 
 - The default values computation for the context directive and the provides
