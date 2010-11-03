@@ -14,9 +14,12 @@
 """Grok directives.
 """
 import martian
+import martian.util
+from martian.error import GrokError, GrokImportError
+from martian.util import scan_for_classes
+from zope import interface
 from zope.interface.interfaces import IInterface
-from martian.error import GrokImportError
-
+from grokcore.component.interfaces import IContext
 
 class global_utility(martian.MultipleTimesDirective):
     scope = martian.MODULE
@@ -46,13 +49,29 @@ class global_adapter(martian.MultipleTimesDirective):
 class name(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE
-    default = u''
     validate = martian.validateText
+    default = u''
 
 class context(martian.Directive):
     scope = martian.CLASS_OR_MODULE
     store = martian.ONCE
     validate = martian.validateInterfaceOrClass
+
+    @classmethod
+    def get_default(cls, component, module=None, **data):
+        components = list(scan_for_classes(module, IContext))
+        if len(components) == 0:
+            raise GrokError(
+                "No module-level context for %r, please use the 'context' "
+                "directive." % (component), component)
+        elif len(components) == 1:
+            component = components[0]
+        else:
+            raise GrokError(
+                "Multiple possible contexts for %r, please use the 'context' "
+                "directive."
+                % (component), component)
+        return component
 
 class title(martian.Directive):
     scope = martian.CLASS
@@ -85,3 +104,8 @@ class provides(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE
     validate = martian.validateInterface
+
+    @classmethod
+    def get_default(cls, component, module, **data):
+        martian.util.check_implements_one(component)
+        return list(interface.implementedBy(component))[0]
