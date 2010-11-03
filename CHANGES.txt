@@ -4,8 +4,14 @@ Changes
 2.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- The default values computation for the context directive and the provides
+  directive is now defined in the directives themselves. This mean that where
+  the values for these directives is being retrieved, the "default_context"
+  function does not need to be passed along anymore for general cases.
 
+  Analogous to this, when getting values for the provides directive the
+  "default_provides" function does not need to be passed along in the general
+  case.
 
 2.1 (2010-11-01)
 ----------------
@@ -13,7 +19,7 @@ Changes
 * Made package comply to zope.org repository policy.
 
 * Moved directives 'order' from grokcore.viewlet and 'path' from
-  grokcore.view to this very package. 
+  grokcore.view to this very package.
 
 * Tiny dependency adjustment: moved zope.event to test dependencies.
 
@@ -57,7 +63,7 @@ Changes
 * Add support for registering global adapters at module level::
 
     grok.global_adapter(factory, (IAdapted1, IAdapted2,), IProvided, name=u"name")
-    
+
   Only 'factory' is required. If only a single interface is adapted, the
   second argument may be a single interface instead of a tuple. If the
   component has declared adapted/provided interfaces, the second and third
@@ -65,11 +71,11 @@ Changes
 
 * Add support for an @provider decorator to let a function directly provide
   an interface::
-  
+
     @grok.provider(IFoo, IBar)
     def some_function():
         ...
-        
+
   This is equivalent to doing alsoProvides(some_function, IFoo, IBar).
 
 * Add support for named adapters with the @adapter decorator::
@@ -108,7 +114,7 @@ Changes
 1.4 (2008-06-11)
 ----------------
 
-* Ported class grokkers to make use of further improvements in Martian. 
+* Ported class grokkers to make use of further improvements in Martian.
   This requires Martian 0.10.
 
 1.3 (2008-05-14)
