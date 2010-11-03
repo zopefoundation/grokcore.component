@@ -5,7 +5,7 @@ Changes
 ----------------
 
 - The default values computation for the context directive and the provides
-  directive is now defined in the directives themselves. This mean that where
+  directive is now defined in the directives themselves. This means that where
   the values for these directives is being retrieved, the "default_context"
   function does not need to be passed along anymore for general cases.
 
