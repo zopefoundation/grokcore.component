@@ -34,6 +34,8 @@ class GlobalUtility(object):
     pass
 
 class MultiAdapter(object):
+    """Base class to define a Multi Adapter.
+    """
     pass
 
 class Context(object):
