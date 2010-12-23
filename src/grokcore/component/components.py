@@ -18,6 +18,15 @@ from zope.interface import implements
 from grokcore.component.interfaces import IContext
 
 class Adapter(object):
+    """Base class to define an adapter.
+
+    Adapters are automatically registered when a module is "grokked".
+
+    .. attribute:: context
+
+       The adapted object.
+    
+    """
     def __init__(self, context):
         self.context = context
 
