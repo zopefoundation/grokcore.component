@@ -31,6 +31,10 @@ class Adapter(object):
         self.context = context
 
 class GlobalUtility(object):
+    """Base class to define a globally registered utility.
+
+    Global utilities are automatically registered when a module is "grokked".
+    """
     pass
 
 class MultiAdapter(object):
