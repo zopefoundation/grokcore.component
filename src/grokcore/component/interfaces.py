@@ -40,10 +40,12 @@ class IBaseClasses(Interface):
     GlobalGrokker = Attribute("Base class to define a module grokker.")
 
     Context = Attribute("Base class for automatically associated contexts.")
- 
+
     Adapter = Attribute("Base class for adapters.")
     MultiAdapter = Attribute("Base class for multi-adapters.")
     GlobalUtility = Attribute("Base class for global utilities.")
+    Subscriber = Attribute("Base class for subscribers.")
+    MultiSubscriber = Attribute("Base class for multi-subscribers.")
 
 
 class IDirectives(Interface):
@@ -57,13 +59,13 @@ class IDirectives(Interface):
 
     def implements(*interfaces):
         """Declare that a class implements the given interfaces."""
-    
+
     def implementsOnly(*interfaces):
         """Declare that a class implements only the given interfaces.
-        
+
         Interfaces implemented by base classes are explicitly not inherited.
         """
-    
+
     def classProvides(*interfaces):
         """Declare that a class (as opposed to instances of the class)
         directly provides the given interfaces.
@@ -165,7 +167,7 @@ class IDecorators(Interface):
         """Describes that a function that's used as an adapter
         implements an interface or a number of interfaces.
         """
-    
+
     def provider(*interfaces):
         """Describes that a function directly provides an interface or a
         number of interfaces.
@@ -195,3 +197,6 @@ class IMartianAPI(Interface):
 class IGrokcoreComponentAPI(IBaseClasses, IDirectives, IDecorators,
                             IGrokErrors, IMartianAPI):
     """grokcore.component's public API."""
+
+    querySubscribers = Attribute("Function to query subscribers.")
+    queryOrderedSubscribers = Attribute("Function to query and order subscribers.")

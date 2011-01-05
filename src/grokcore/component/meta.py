@@ -30,6 +30,7 @@ def default_global_utility_provides(component, module, direct, **data):
         return list(interface.providedBy(component))[0]
     return _provides(component)
 
+
 class AdapterGrokker(martian.ClassGrokker):
     martian.component(grokcore.component.Adapter)
     martian.directive(grokcore.component.context)
@@ -44,17 +45,18 @@ class AdapterGrokker(martian.ClassGrokker):
             )
         return True
 
+
 class MultiAdapterGrokker(martian.ClassGrokker):
     martian.component(grokcore.component.MultiAdapter)
     martian.directive(grokcore.component.provides)
     martian.directive(grokcore.component.name)
 
     def execute(self, factory, config, provides, name, **kw):
-        if component.adaptedBy(factory) is None:
+        for_ = component.adaptedBy(factory)
+        if for_ is None:
             raise GrokError("%r must specify which contexts it adapts "
                             "(use the 'adapts' directive to specify)."
                             % factory, factory)
-        for_ = component.adaptedBy(factory)
 
         config.action(
             discriminator=('adapter', for_, provides, name),
@@ -62,6 +64,42 @@ class MultiAdapterGrokker(martian.ClassGrokker):
             args=(factory, None, provides, name),
             )
         return True
+
+
+class SubscriberGrokker(martian.ClassGrokker):
+    martian.component(grokcore.component.Subscriber)
+    martian.directive(grokcore.component.context)
+    martian.directive(grokcore.component.provides)
+    martian.directive(grokcore.component.name)
+
+    def execute(self, factory, config, context, provides, name, **kw):
+        config.action(
+            discriminator=None,
+            callable=component.provideSubscriptionAdapter,
+            args=(factory, (context,), provides),
+            )
+        return True
+
+
+class MultiSubscriberGrokker(martian.ClassGrokker):
+    martian.component(grokcore.component.MultiSubscriber)
+    martian.directive(grokcore.component.provides)
+    martian.directive(grokcore.component.name)
+
+    def execute(self, factory, config, provides, name, **kw):
+        adapts = component.adaptedBy(factory)
+        if adapts is None:
+            raise GrokError("%r must specify which contexts it adapts "
+                            "(use the 'adapts' directive to specify)."
+                            % factory, factory)
+
+        config.action(
+            discriminator=None,
+            callable=component.provideAdapter,
+            args=(factory, adapts, provides),
+            )
+        return True
+
 
 class GlobalUtilityGrokker(martian.ClassGrokker):
     martian.component(grokcore.component.GlobalUtility)
@@ -85,6 +123,7 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
             args=(factory, provides, name),
             )
         return True
+
 
 class AdapterDecoratorGrokker(martian.GlobalGrokker):
 
@@ -135,6 +174,7 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
         return True
 
+
 class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
@@ -158,7 +198,8 @@ class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
 
         return True
 
-class SubscriberGrokker(martian.GlobalGrokker):
+
+class SubscriberDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
         subscribers = module_info.getAnnotation('grok.subscribers', [])

@@ -14,7 +14,7 @@
 """Grok utility functions.
 """
 from grokcore.component import directive
-
+from zope import component
 
 def _sort_key(component):
     # If components have a grok.order directive, sort by that.
@@ -27,3 +27,9 @@ def _sort_key(component):
 
 def sort_components(components):
     return sorted(components, key=_sort_key)
+
+
+def queryOrderedSubscribers(objects, interface):
+    return sort_components(component.subscribers(objects, interface))
+
+querySubscribers = component.subscribers
