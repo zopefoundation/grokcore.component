@@ -95,7 +95,7 @@ class MultiSubscriberGrokker(martian.ClassGrokker):
 
         config.action(
             discriminator=None,
-            callable=component.provideAdapter,
+            callable=component.provideSubscriptionAdapter,
             args=(factory, adapts, provides),
             )
         return True
