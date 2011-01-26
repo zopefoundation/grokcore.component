@@ -329,12 +329,12 @@ Function decorators
     ``name`` argument must be a keyword argument and is optional. If given,
     a named adapter is registered.
 
-``@implementer(iface1, iface2, ...)```
+``@implementer(iface1, iface2, ...)``
     declares that the function implements a certain interface (or a
     number of interfaces).  This is useful when a function serves as an object
     factory, e.g. as an adapter.
 
-``@provider(iface1, iface2, ...)```
+``@provider(iface1, iface2, ...)``
     declares that the function object provides a certain interface (or a
     number of interfaces).  This is akin to calling directlyProvides() on
     the function object.
