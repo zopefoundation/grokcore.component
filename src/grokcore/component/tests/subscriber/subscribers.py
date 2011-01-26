@@ -14,10 +14,14 @@
   Saturday cleaning sweet home!
   Wednesday cleaning sweet home!
 
+  Subscribers are not registered as adapters:
+
+  >>> component.queryAdapter(cave, ICleaner)
+
 """
 
 import grokcore.component as grok
-from zope import interface
+from zope import interface, component
 
 
 class Cave(grok.Context):

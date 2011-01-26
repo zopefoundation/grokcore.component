@@ -37,14 +37,17 @@ class subscribe:
             raise GrokImportError("@grok.subscribe requires at least one "
                                   "argument.")
 
+        # Add the function and subscribed interfaces to the
+        # grok.subscribers module annotation.
         subscribers = frame.f_locals.get('__grok_subscribers__', None)
         if subscribers is None:
             frame.f_locals['__grok_subscribers__'] = subscribers = []
         subscribers.append((function, self.subscribed))
 
-        # Also add __grok_adapts__ attribute to the function so that
-        # you can manually register the subscriber with, say,
-        # provideHandler.
+        # Also store the subscribed interfaces on the
+        # attribute__component_adapts__ for provideHandler to register
+        # the subscriber (in case you don't grok your package and
+        # register it manually)
         return zope.component.adapter(*self.subscribed)(function)
 
 class adapter(zope.component.adapter):
@@ -59,18 +62,18 @@ class adapter(zope.component.adapter):
         if type(interfaces[0]) is types.FunctionType:
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
-        
+
         self.name = u""
-        
+
         if kw:
             if 'name' in kw:
                 self.name = kw.pop('name')
             if kw:
                 raise GrokImportError(
                     "@grok.adapter got unexpected keyword arguments: %s" % ','.join(kw.keys()))
-        
+
         zope.component.adapter.__init__(self, *interfaces)
-    
+
     def __call__(self, ob):
         ob = zope.component.adapter.__call__(self, ob)
         if self.name:
@@ -87,6 +90,7 @@ class implementer(zope.interface.implementer):
         if adapters is None:
             frame.f_locals['__grok_adapters__'] = adapters = []
         adapters.append(ob)
+
         return zope.interface.implementer.__call__(self, ob)
 
 class provider:

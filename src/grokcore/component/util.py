@@ -38,6 +38,10 @@ def queryOrderedSubscribers(components, interface):
 
 def querySubscribers(components, interface):
     """Query a list of subscribers on `component` which implements
-    `interface`
+    `interface`.
+
+    :parameter components: list of components to look the subscribers for.
+    :parameter interface: interface that the subscribers should provides.
+    :return: a list of subscribers.
     """
     return component.subscribers(components, interface)

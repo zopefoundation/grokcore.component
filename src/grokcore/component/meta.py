@@ -13,12 +13,15 @@
 ##############################################################################
 """Grokkers for the various components."""
 
+import operator
+
 import martian
 import martian.util
 import grokcore.component
 import zope.component.interface
 from zope import component, interface
 from martian.error import GrokError
+from zope.interface import implementedBy
 
 def _provides(component, module=None, **data):
     martian.util.check_implements_one(component)
@@ -125,11 +128,18 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
         return True
 
 
-class AdapterDecoratorGrokker(martian.GlobalGrokker):
+class ImplementerDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
         adapters = module_info.getAnnotation('grok.adapters', [])
+        subscribers = set(map(operator.itemgetter(0),
+                              module_info.getAnnotation('grok.subscribers', [])))
+
         for function in adapters:
+            if function in subscribers:
+                # We don't register function that uses the
+                # grok.subscribe directive with grok.implementer.
+                continue
             interfaces = getattr(function, '__component_adapts__', None)
             if interfaces is None:
                 context = grokcore.component.context.bind().get(module)
@@ -205,16 +215,29 @@ class SubscriberDirectiveGrokker(martian.GlobalGrokker):
         subscribers = module_info.getAnnotation('grok.subscribers', [])
 
         for factory, subscribed in subscribers:
-            config.action(
-                discriminator=None,
-                callable=component.provideHandler,
-                args=(factory, subscribed),
-                )
+            provides = None
+            implemented = list(implementedBy(factory))
+            if len(implemented) == 1:
+                provides = implemented[0]
+
+            # provideHandler is the same as
+            # provideSubscriptionAdapter, where provides=None.  You
+            # can't use provideSubscriptionAdapter with provides=None
+            # since None is used as a marker value.
+            if provides is None:
+                config.action(
+                    discriminator=None,
+                    callable=component.provideHandler,
+                    args=(factory, subscribed))
+            else:
+                config.action(
+                    discriminator=None,
+                    callable=component.provideSubscriptionAdapter,
+                    args=(factory, subscribed, provides))
 
             for iface in subscribed:
                 config.action(
                     discriminator=None,
                     callable=zope.component.interface.provideInterface,
-                    args=('', iface)
-                    )
+                    args=('', iface))
         return True

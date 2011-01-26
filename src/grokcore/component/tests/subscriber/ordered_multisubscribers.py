@@ -7,16 +7,34 @@
   You can query a subscribers using multiple components and sort them
   using `grok.order` information:
 
-  >>> subscribers = grok.queryOrderedSubscribers((cave, martijn), IActivity)
-  >>> subscribers
+  >>> ordered_subscribers = grok.queryOrderedSubscribers((cave, martijn), IActivity)
+  >>> ordered_subscribers
   [<grokcore.component.tests.subscriber.ordered_multisubscribers.Cooking object at ...>,
    <grokcore.component.tests.subscriber.ordered_multisubscribers.Gardening object at ...>,
    <grokcore.component.tests.subscriber.ordered_multisubscribers.Cleaning object at ...>]
 
-  >>> _ = map(lambda a: a.do(), subscribers)
+  >>> _ = map(lambda a: a.do(), ordered_subscribers)
   Martijn is cooking in Tilburg cave!
   Martijn is growing pumpkins in Tilburg cave!
   Martijn is cleaning the Tilburg cave.
+
+  Or choose not to:
+
+  >>> subscribers = grok.querySubscribers((cave, martijn), IActivity)
+
+  (still need to sort them on class name in order to have a working doctest)
+
+  >>> subscribers = sorted(subscribers, key=lambda s: s.__class__.__name__)
+  >>> subscribers
+  [<grokcore.component.tests.subscriber.ordered_multisubscribers.Cleaning object at ...>,
+   <grokcore.component.tests.subscriber.ordered_multisubscribers.Cooking object at ...>,
+   <grokcore.component.tests.subscriber.ordered_multisubscribers.Gardening object at ...>]
+
+  >>> _ = map(lambda a: a.do(), subscribers)
+  Martijn is cleaning the Tilburg cave.
+  Martijn is cooking in Tilburg cave!
+  Martijn is growing pumpkins in Tilburg cave!
+
 
 """
 
