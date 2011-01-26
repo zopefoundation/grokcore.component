@@ -26,10 +26,18 @@ def _sort_key(component):
 
 
 def sort_components(components):
+    """Sort a list of components using the information provided by
+    `grok.order`.
+    """
     return sorted(components, key=_sort_key)
 
 
-def queryOrderedSubscribers(objects, interface):
-    return sort_components(component.subscribers(objects, interface))
+def queryOrderedSubscribers(components, interface):
+    return sort_components(component.subscribers(components, interface))
 
-querySubscribers = component.subscribers
+
+def querySubscribers(components, interface):
+    """Query a list of subscribers on `component` which implements
+    `interface`
+    """
+    return component.subscribers(components, interface)
