@@ -47,16 +47,16 @@ class MultiAdapter(object):
     pass
 
 
-class Subscriber(object):
-    """Base class for a subscriber.
+class Subscription(object):
+    """Base class for a subscription adapter.
     """
 
     def __init__(self, context):
         self.context = context
 
 
-class MultiSubscriber(object):
-    """Base class for a multi-subcriber.
+class MultiSubscription(object):
+    """Base class for a subscription multi-adapter.
     """
 
 

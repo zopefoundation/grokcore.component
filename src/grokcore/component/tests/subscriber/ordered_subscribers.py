@@ -46,7 +46,7 @@ class ICleaner(interface.Interface):
         """Clean that cave.
         """
 
-class MondayCleaner(grok.Subscriber):
+class MondayCleaner(grok.Subscription):
     grok.implements(ICleaner)
     grok.order(1)
 
@@ -54,7 +54,7 @@ class MondayCleaner(grok.Subscriber):
         print 'Monday cleaning!'
 
 
-class WednesdayCleaner(grok.Subscriber):
+class WednesdayCleaner(grok.Subscription):
     grok.implements(ICleaner)
     grok.order(3)
 
@@ -62,7 +62,7 @@ class WednesdayCleaner(grok.Subscriber):
         print 'Wednesday cleaning!'
 
 
-class SaturdayCleaner(grok.Subscriber):
+class SaturdayCleaner(grok.Subscription):
     grok.implements(ICleaner)
     grok.order(6)
 

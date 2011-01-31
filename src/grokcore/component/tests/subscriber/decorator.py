@@ -7,7 +7,7 @@
   >>> subscribers
   [<grokcore.component.tests.subscriber.decorator.DebuggingGrokcore object at ...>]
 
-  Subscribers are not registered as adapters:
+  Subscripotion adapters are not registered as regular adapters:
 
   >>> component.queryAdapter(cave, IActivity)
 

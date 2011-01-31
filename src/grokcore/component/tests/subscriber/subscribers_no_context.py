@@ -16,5 +16,5 @@ class ITask(interface.Interface):
     def finish():
         pass
 
-class CaveProcessor(grok.Subscriber):
+class CaveProcessor(grok.Subscription):
     grok.provides(ITask)

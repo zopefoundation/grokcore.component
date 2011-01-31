@@ -14,7 +14,7 @@
   Saturday cleaning sweet home!
   Wednesday cleaning sweet home!
 
-  Subscribers are not registered as adapters:
+  Subscription adapters are not registered as regular adapters:
 
   >>> component.queryAdapter(cave, ICleaner)
 
@@ -36,21 +36,21 @@ class ICleaner(interface.Interface):
         """Clean that cave.
         """
 
-class MondayCleaner(grok.Subscriber):
+class MondayCleaner(grok.Subscription):
     grok.implements(ICleaner)
 
     def work(self):
         print 'Monday cleaning %s!' % self.context.name
 
 
-class WednesdayCleaner(grok.Subscriber):
+class WednesdayCleaner(grok.Subscription):
     grok.provides(ICleaner)
 
     def work(self):
         print 'Wednesday cleaning %s!' % self.context.name
 
 
-class SaturdayCleaner(grok.Subscriber):
+class SaturdayCleaner(grok.Subscription):
     grok.implements(ICleaner)
 
     def work(self):

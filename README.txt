@@ -173,34 +173,34 @@ factory for named widget attributes::
 
   class ISchema(Interface):
       """This schema will be used to power a z3c.form form"""
-      
+
       field = zope.schema.TextLine(title=u"Sample field")
-      
+
   ...
 
   label_override = z3c.form.widget.StaticWidgetAttribute(
                         u"Override label", field=ISchema['field'])
-  
+
   grokcore.component.global_adapter(label_override, name=u"label")
-  
+
 In the example above, the provided and adapted interfaces are deduced from the
 object returned by the ``StaticWidgetAttribute`` factory. The full syntax
 for global_adapter is::
 
   global_adapter(factory, (IAdapted1, IAdapted2,), IProvided, name=u"name")
-  
+
 The factory must be a callable (the adapter factory). Adapted interfaces are
 given as a tuple. You may use a single interface instead of a one-element
 tuple for single adapters. The provided interface is given as shown. The name
 defaults to u"" (an unnamed adapter).
 
-Subscriber
-----------
+Handling events
+---------------
 
-Here we see a subscriber much like it occurs within Zope itself.  It
-subscribes to the modified event for all annotatable objects (in other
-words, objects that can have metadata associated with them).  When
-invoked, it updates the Dublin Core 'Modified' property accordingly::
+Here we see an event handler much like it occurs within Zope itself. It
+subscribes to the modified event for all annotatable objects (in other words,
+objects that can have metadata associated with them). When invoked, it updates
+the Dublin Core 'Modified' property accordingly::
 
   import datetime
   import grokcore.component

@@ -22,8 +22,8 @@ from martian.error import GrokError, GrokImportError
 from martian import ClassGrokker, InstanceGrokker, GlobalGrokker
 
 from grokcore.component.components import (
-    Adapter, GlobalUtility, MultiAdapter, Context, Subscriber,
-    MultiSubscriber)
+    Adapter, GlobalUtility, MultiAdapter, Context, Subscription,
+    MultiSubscription)
 
 from grokcore.component.directive import (
     context, description, direct, name, order, path, provides, title,

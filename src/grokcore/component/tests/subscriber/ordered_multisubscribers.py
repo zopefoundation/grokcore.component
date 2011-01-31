@@ -61,7 +61,7 @@ class IActivity(interface.Interface):
         """
 
 
-class DayTimeActivity(grok.MultiSubscriber):
+class DayTimeActivity(grok.MultiSubscription):
     grok.provides(IActivity)
     grok.adapts(Cave, Mammoth)
     grok.baseclass()

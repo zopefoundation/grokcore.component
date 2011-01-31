@@ -69,8 +69,8 @@ class MultiAdapterGrokker(martian.ClassGrokker):
         return True
 
 
-class SubscriberGrokker(martian.ClassGrokker):
-    martian.component(grokcore.component.Subscriber)
+class SubscriptionGrokker(martian.ClassGrokker):
+    martian.component(grokcore.component.Subscription)
     martian.directive(grokcore.component.context)
     martian.directive(grokcore.component.provides)
     martian.directive(grokcore.component.name)
@@ -84,8 +84,8 @@ class SubscriberGrokker(martian.ClassGrokker):
         return True
 
 
-class MultiSubscriberGrokker(martian.ClassGrokker):
-    martian.component(grokcore.component.MultiSubscriber)
+class MultiSubscriptionGrokker(martian.ClassGrokker):
+    martian.component(grokcore.component.MultiSubscription)
     martian.directive(grokcore.component.provides)
     martian.directive(grokcore.component.name)
 
@@ -222,10 +222,10 @@ class SubscriberDirectiveGrokker(martian.GlobalGrokker):
             if len(implemented) == 1:
                 provides = implemented[0]
             # provideHandler is essentially the same as
-            # provideSubscriptionAdapter, where
-            # provided=None. However, handlers and subscription
-            # adapters are tracked in separately so we cannot exchange
-            # one registration call for the the other.
+            # provideSubscriptionAdapter, where provided=None. However,
+            # handlers and subscription adapters are tracked in
+            # separately so we cannot exchange one registration call
+            # for the the other.
             if provides is None:
                 config.action(
                     discriminator=None,

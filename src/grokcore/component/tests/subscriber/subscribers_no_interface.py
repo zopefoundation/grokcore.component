@@ -13,5 +13,5 @@ import grokcore.component as grok
 class Cave(grok.Context):
     pass
 
-class CaveProcessor(grok.Subscriber):
+class CaveProcessor(grok.Subscription):
     pass

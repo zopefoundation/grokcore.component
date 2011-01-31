@@ -44,8 +44,9 @@ class IBaseClasses(Interface):
     Adapter = Attribute("Base class for adapters.")
     MultiAdapter = Attribute("Base class for multi-adapters.")
     GlobalUtility = Attribute("Base class for global utilities.")
-    Subscriber = Attribute("Base class for subscribers.")
-    MultiSubscriber = Attribute("Base class for multi-subscribers.")
+    Subscription = Attribute("Base class for subscription adapters.")
+    MultiSubscription = Attribute(
+        "Base class for subscription mult-adapters.")
 
 
 class IDirectives(Interface):
