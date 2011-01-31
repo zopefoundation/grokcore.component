@@ -137,8 +137,10 @@ class ImplementerDecoratorGrokker(martian.GlobalGrokker):
 
         for function in adapters:
             if function in subscribers:
-                # We don't register function that uses the
-                # grok.subscribe directive with grok.implementer.
+                # We don't register functions that are decorated with
+                # grok.implementer() *and* the grok.subscribe()
+                # decorator. These are registered as so called
+                # subcribers and not as regular adapters.
                 continue
             interfaces = getattr(function, '__component_adapts__', None)
             if interfaces is None:
@@ -219,11 +221,11 @@ class SubscriberDirectiveGrokker(martian.GlobalGrokker):
             implemented = list(implementedBy(factory))
             if len(implemented) == 1:
                 provides = implemented[0]
-
-            # provideHandler is the same as
-            # provideSubscriptionAdapter, where provides=None.  You
-            # can't use provideSubscriptionAdapter with provides=None
-            # since None is used as a marker value.
+            # provideHandler is essentially the same as
+            # provideSubscriptionAdapter, where
+            # provided=None. However, handlers and subscription
+            # adapters are tracked in separately so we cannot exchange
+            # one registration call for the the other.
             if provides is None:
                 config.action(
                     discriminator=None,
