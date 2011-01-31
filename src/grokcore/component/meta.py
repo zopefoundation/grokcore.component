@@ -13,12 +13,15 @@
 ##############################################################################
 """Grokkers for the various components."""
 
+import operator
+
 import martian
 import martian.util
 import grokcore.component
 import zope.component.interface
 from zope import component, interface
 from martian.error import GrokError
+from zope.interface import implementedBy
 
 def _provides(component, module=None, **data):
     martian.util.check_implements_one(component)
@@ -29,6 +32,7 @@ def default_global_utility_provides(component, module, direct, **data):
         martian.util.check_provides_one(component)
         return list(interface.providedBy(component))[0]
     return _provides(component)
+
 
 class AdapterGrokker(martian.ClassGrokker):
     martian.component(grokcore.component.Adapter)
@@ -44,17 +48,18 @@ class AdapterGrokker(martian.ClassGrokker):
             )
         return True
 
+
 class MultiAdapterGrokker(martian.ClassGrokker):
     martian.component(grokcore.component.MultiAdapter)
     martian.directive(grokcore.component.provides)
     martian.directive(grokcore.component.name)
 
     def execute(self, factory, config, provides, name, **kw):
-        if component.adaptedBy(factory) is None:
+        for_ = component.adaptedBy(factory)
+        if for_ is None:
             raise GrokError("%r must specify which contexts it adapts "
                             "(use the 'adapts' directive to specify)."
                             % factory, factory)
-        for_ = component.adaptedBy(factory)
 
         config.action(
             discriminator=('adapter', for_, provides, name),
@@ -62,6 +67,42 @@ class MultiAdapterGrokker(martian.ClassGrokker):
             args=(factory, None, provides, name),
             )
         return True
+
+
+class SubscriptionGrokker(martian.ClassGrokker):
+    martian.component(grokcore.component.Subscription)
+    martian.directive(grokcore.component.context)
+    martian.directive(grokcore.component.provides)
+    martian.directive(grokcore.component.name)
+
+    def execute(self, factory, config, context, provides, name, **kw):
+        config.action(
+            discriminator=None,
+            callable=component.provideSubscriptionAdapter,
+            args=(factory, (context,), provides),
+            )
+        return True
+
+
+class MultiSubscriptionGrokker(martian.ClassGrokker):
+    martian.component(grokcore.component.MultiSubscription)
+    martian.directive(grokcore.component.provides)
+    martian.directive(grokcore.component.name)
+
+    def execute(self, factory, config, provides, name, **kw):
+        adapts = component.adaptedBy(factory)
+        if adapts is None:
+            raise GrokError("%r must specify which contexts it adapts "
+                            "(use the 'adapts' directive to specify)."
+                            % factory, factory)
+
+        config.action(
+            discriminator=None,
+            callable=component.provideSubscriptionAdapter,
+            args=(factory, adapts, provides),
+            )
+        return True
+
 
 class GlobalUtilityGrokker(martian.ClassGrokker):
     martian.component(grokcore.component.GlobalUtility)
@@ -86,11 +127,21 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
             )
         return True
 
-class AdapterDecoratorGrokker(martian.GlobalGrokker):
+
+class ImplementerDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
         adapters = module_info.getAnnotation('grok.adapters', [])
+        subscribers = set(map(operator.itemgetter(0),
+                              module_info.getAnnotation('grok.subscribers', [])))
+
         for function in adapters:
+            if function in subscribers:
+                # We don't register functions that are decorated with
+                # grok.implementer() *and* the grok.subscribe()
+                # decorator. These are registered as so called
+                # subcribers and not as regular adapters.
+                continue
             interfaces = getattr(function, '__component_adapts__', None)
             if interfaces is None:
                 context = grokcore.component.context.bind().get(module)
@@ -135,6 +186,7 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
         return True
 
+
 class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
@@ -158,22 +210,36 @@ class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
 
         return True
 
-class SubscriberGrokker(martian.GlobalGrokker):
+
+class SubscriberDirectiveGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
         subscribers = module_info.getAnnotation('grok.subscribers', [])
 
         for factory, subscribed in subscribers:
-            config.action(
-                discriminator=None,
-                callable=component.provideHandler,
-                args=(factory, subscribed),
-                )
+            provides = None
+            implemented = list(implementedBy(factory))
+            if len(implemented) == 1:
+                provides = implemented[0]
+            # provideHandler is essentially the same as
+            # provideSubscriptionAdapter, where provided=None. However,
+            # handlers and subscription adapters are tracked in
+            # separately so we cannot exchange one registration call
+            # for the the other.
+            if provides is None:
+                config.action(
+                    discriminator=None,
+                    callable=component.provideHandler,
+                    args=(factory, subscribed))
+            else:
+                config.action(
+                    discriminator=None,
+                    callable=component.provideSubscriptionAdapter,
+                    args=(factory, subscribed, provides))
 
             for iface in subscribed:
                 config.action(
                     discriminator=None,
                     callable=zope.component.interface.provideInterface,
-                    args=('', iface)
-                    )
+                    args=('', iface))
         return True

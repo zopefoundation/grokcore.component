@@ -17,6 +17,7 @@ from zope.interface import implements
 
 from grokcore.component.interfaces import IContext
 
+
 class Adapter(object):
     """Base class to define an adapter.
 
@@ -25,10 +26,12 @@ class Adapter(object):
     .. attribute:: context
 
        The adapted object.
-    
+
     """
+
     def __init__(self, context):
         self.context = context
+
 
 class GlobalUtility(object):
     """Base class to define a globally registered utility.
@@ -37,10 +40,25 @@ class GlobalUtility(object):
     """
     pass
 
+
 class MultiAdapter(object):
     """Base class to define a Multi Adapter.
     """
     pass
+
+
+class Subscription(object):
+    """Base class for a subscription adapter.
+    """
+
+    def __init__(self, context):
+        self.context = context
+
+
+class MultiSubscription(object):
+    """Base class for a subscription multi-adapter.
+    """
+
 
 class Context(object):
     implements(IContext)

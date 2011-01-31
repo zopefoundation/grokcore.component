@@ -39,7 +39,7 @@ def suiteFromPackage(name):
                                         checker=checker,
                                         optionflags=doctest.ELLIPSIS+
                                         doctest.NORMALIZE_WHITESPACE)
-        except ImportError, e:  # or should this accept anything?
+        except ImportError:  # or should this accept anything?
             traceback.print_exc()
             raise
         suite.addTest(test)
@@ -48,7 +48,7 @@ def suiteFromPackage(name):
 def test_suite():
     suite = unittest.TestSuite()
     for name in ['adapter', 'directive', 'grokker', 'utility', 'view',
-                 'event', 'inherit', 'order']:
+                 'event', 'inherit', 'order', 'subscriber']:
         suite.addTest(suiteFromPackage(name))
 
     api = doctest.DocFileSuite('api.txt')

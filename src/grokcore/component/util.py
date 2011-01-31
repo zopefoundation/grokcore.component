@@ -15,7 +15,6 @@
 """
 from grokcore.component import directive
 
-
 def _sort_key(component):
     # If components have a grok.order directive, sort by that.
     explicit_order, implicit_order = directive.order.bind().get(component)
@@ -26,4 +25,7 @@ def _sort_key(component):
 
 
 def sort_components(components):
+    """Sort a list of components using the information provided by
+    `grok.order`.
+    """
     return sorted(components, key=_sort_key)
