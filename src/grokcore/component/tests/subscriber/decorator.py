@@ -3,7 +3,7 @@
 
   >>> cave = Cave('sweet home')
 
-  >>> subscribers = grok.querySubscribers((cave,), IActivity)
+  >>> subscribers = grok.querySubscriptions(cave, IActivity)
   >>> subscribers
   [<grokcore.component.tests.subscriber.decorator.DebuggingGrokcore object at ...>]
 

@@ -7,7 +7,8 @@
   You can query a subscribers using multiple components and sort them
   using `grok.order` information:
 
-  >>> ordered_subscribers = grok.queryOrderedSubscribers((cave, martijn), IActivity)
+  >>> ordered_subscribers = grok.queryOrderedMultiSubscriptions(
+  ...     (cave, martijn), IActivity)
   >>> ordered_subscribers
   [<grokcore.component.tests.subscriber.ordered_multisubscribers.Cooking object at ...>,
    <grokcore.component.tests.subscriber.ordered_multisubscribers.Gardening object at ...>,
@@ -20,7 +21,8 @@
 
   Or choose not to:
 
-  >>> subscribers = grok.querySubscribers((cave, martijn), IActivity)
+  >>> subscribers = grok.queryMultiSubscriptions(
+  ...     (cave, martijn), IActivity)
 
   (still need to sort them on class name in order to have a working doctest)
 

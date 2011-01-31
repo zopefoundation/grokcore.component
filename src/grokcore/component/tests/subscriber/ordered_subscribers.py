@@ -6,7 +6,7 @@
   You can query the subscribers and sort them with the information
   provided by grok.order:
 
-  >>> ordered_subscribers = grok.queryOrderedSubscribers((cave,), ICleaner)
+  >>> ordered_subscribers = grok.queryOrderedSubscriptions(cave, ICleaner)
   >>> ordered_subscribers
   [<grokcore.component.tests.subscriber.ordered_subscribers.MondayCleaner object at ...>,
    <grokcore.component.tests.subscriber.ordered_subscribers.WednesdayCleaner object at ...>,
@@ -19,7 +19,7 @@
 
   If you use the regular query method, they won't be sorted:
 
-  >>> subscribers = grok.querySubscribers((cave,), ICleaner)
+  >>> subscribers = grok.querySubscriptions(cave, ICleaner)
   >>> subscribers
   [<grokcore.component.tests.subscriber.ordered_subscribers.MondayCleaner object at ...>,
    <grokcore.component.tests.subscriber.ordered_subscribers.SaturdayCleaner object at ...>,

@@ -3,7 +3,7 @@
 
   >>> cave = Cave('sweet home')
 
-  >>> subscribers = grok.querySubscribers((cave,), ICleaner)
+  >>> subscribers = grok.querySubscriptions(cave, ICleaner)
   >>> subscribers
   [<grokcore.component.tests.subscriber.subscribers.MondayCleaner object at ...>,
    <grokcore.component.tests.subscriber.subscribers.SaturdayCleaner object at ...>,

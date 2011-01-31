@@ -8,7 +8,7 @@
   all subscribers registered for office and cave (since office is a
   base class of cave):
 
-  >>> subscribers = grok.querySubscribers((cave, martijn), IActivity)
+  >>> subscribers = grok.queryMultiSubscriptions((cave, martijn), IActivity)
   >>> subscribers
   [<grokcore.component.tests.subscriber.multisubscribers.Sleep object at ...>,
    <grokcore.component.tests.subscriber.multisubscribers.Food object at ...>,
@@ -24,7 +24,8 @@
   registered for office:
 
   >>> office = Office('Grok corp(r)(tm) headquarters')
-  >>> office_subscribers = grok.querySubscribers((office, martijn), IActivity)
+  >>> office_subscribers = grok.queryMultiSubscriptions(
+  ...     (office, martijn), IActivity)
   >>> office_subscribers
   [<grokcore.component.tests.subscriber.multisubscribers.Sleep object at ...>]
 

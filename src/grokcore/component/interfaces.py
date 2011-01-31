@@ -199,5 +199,9 @@ class IGrokcoreComponentAPI(IBaseClasses, IDirectives, IDecorators,
                             IGrokErrors, IMartianAPI):
     """grokcore.component's public API."""
 
-    querySubscribers = Attribute("Function to query subscribers.")
-    queryOrderedSubscribers = Attribute("Function to query and order subscribers.")
+    querySubscriptions = Attribute("Function to query subscriptions.")
+    queryOrderedSubscriptions = Attribute(
+        "Function to query subscription in order.")
+    queryMultiSubscriptions = Attribute("Function to query subscriptions.")
+    queryOrderedMultiSubscriptions = Attribute(
+        "Function to query subscriptions in order.")

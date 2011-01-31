@@ -32,8 +32,9 @@ from grokcore.component.directive import (
 from grokcore.component.decorators import (
     subscribe, adapter, implementer, provider)
 
-from grokcore.component.util import (
-    querySubscribers, queryOrderedSubscribers)
+from grokcore.component.subscription import (
+    querySubscriptions, queryMultiSubscriptions,
+    queryOrderedSubscriptions, queryOrderedMultiSubscriptions)
 
 # Import this module so that it's available as soon as you import the
 # 'grokcore.component' package.  Useful for tests and interpreter examples.
