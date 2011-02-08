@@ -4,8 +4,7 @@ Changes
 2.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Implement the generic (Multi)Subscriptions components.
 
 2.2 (2010-11-03)
 ----------------
@@ -33,7 +32,6 @@ Changes
 
 * Port from 1.x branch the ignore of testing.py modules.
 
-
 2.0 (2009-09-16)
 ----------------
 
@@ -58,7 +56,6 @@ Changes
 
 * Add missing provider, global_adapter, implementsOnly, classProvides() to
   the module interface so that they are included in __all__
-
 
 1.6 (2009-04-10)
 ----------------
