@@ -55,7 +55,7 @@ class global_adapter(martian.MultipleTimesDirective):
     :param adapts: Optionally, a single interface or a tuple of multiple
                    interfaces to adapts from. If omitted, this information is
                    deduced from the annotation on the factory. If no adapted
-                   interface can be determinedm the current context will be
+                   interface can be determined the current context will be
                    assumed.
     :param provides: Optionally, the interface the adapter will provide. If
                      omitted, this information is deduced from the annotations

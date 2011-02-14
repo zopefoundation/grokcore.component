@@ -27,8 +27,6 @@ class Adapter(object):
     provide. If it's a named adapter, you may use the ``name`` directive to
     specify the name.
 
-    Adapters are automatically registered when a module is "grokked".
-
     .. attribute:: context
 
        The adapted object.
@@ -51,8 +49,6 @@ class MultiAdapter(object):
     provide an `__init__` method. An `__init__` needs to accept the same number
     of arguments as are used in the `adapts` directive.
 
-    MultiAdapters are automatically registered when a module is "grokked".
-
     """
     pass
 
@@ -69,9 +65,6 @@ class GlobalUtility(object):
     implemented interfaces should be used when registering the utility. If it's
     a named utility, you may use the ``name`` directive to specify the name.
 
-
-    Global utilities are automatically registered when a module is "grokked".
-
     """
     pass
 
@@ -83,7 +76,11 @@ class Subscription(object):
     register multiple unnamed subscriptions for identical ``context`` and
     ``provides``.
 
-    Use the ``adapts`` directive
+    Use the ``context`` directive to explicitly set the interface to adapt
+    from. When omitted the current context is assumed. Use the ``implements``
+    directive to specify which interface the subscription provides, or if that
+    is not unambiguous, also use the ``provides`` directive to specify which of
+    the implemented interfaces should be used when registering the subscription.
 
     """
 
@@ -93,6 +90,17 @@ class Subscription(object):
 
 class MultiSubscription(object):
     """Base class for a subscription multi-adapter.
+
+    MultiSubscriptions are similar to multi adapters, except that it is
+    possible to register multiple unnamed subscriptions for identical
+    ``adapts`` and ``provides``.
+
+    Use the ``adapts`` directive to explicitly set the multiple interfaces to
+    adapt from. Use the ``implements`` directive to specify which interface the
+    subscription provides, or if that is not unambiguous, also use the
+    ``provides`` directive to specify which of the implemented interfaces
+    should be used when registering the multi subscription.
+
     """
 
 
