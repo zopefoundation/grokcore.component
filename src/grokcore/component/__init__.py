@@ -1,4 +1,4 @@
-##############################################################################
+j pa##############################################################################
 #
 # Copyright (c) 2006-2007 Zope Foundation and Contributors.
 # All Rights Reserved.
@@ -15,6 +15,8 @@
 """
 
 from zope.component import adapts
+adapts.__doc__ = "Declares the types of objects that a multi-adapter adapts."
+
 from zope.interface import implements, implementsOnly, classProvides
 
 from martian import baseclass

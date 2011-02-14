@@ -23,7 +23,14 @@ from martian.error import GrokImportError
 from zope.interface.declarations import DescriptorAwareMetaClasses
 
 class subscribe:
+    """Declares that a function is to be registered as an event handler for the
+    specified objects.
 
+    Normally, an event handler is simply registered as a subscriber for the
+    event interface. In case of object events, the event handler is registered
+    as a subscriber for the object type and the event interface.
+
+    """
     def __init__(self, *args):
         self.subscribed = args
 
@@ -51,6 +58,11 @@ class subscribe:
         return zope.component.adapter(*self.subscribed)(function)
 
 class adapter(zope.component.adapter):
+    """Registers the function as an adapter for the specific interface.
+
+    The ``name`` argument must be a keyword argument and is optional. If given,
+    a named adapter is registered.
+    """
 
     # Override the z.c.adapter decorator to force sanity checking and
     # have better error reporting and add the ability to capture the name
@@ -81,6 +93,13 @@ class adapter(zope.component.adapter):
         return ob
 
 class implementer(zope.interface.implementer):
+    """Declares that the function implements a certain interface (or a number
+    of interfaces).
+
+    This is useful when a function serves as an object factory, e.g. as an
+    adapter.
+
+    """
 
     def __call__(self, ob):
         # XXX we do not have function grokkers (yet) so we put the annotation
@@ -94,7 +113,12 @@ class implementer(zope.interface.implementer):
         return zope.interface.implementer.__call__(self, ob)
 
 class provider:
+    """Declares that the function object provides a certain interface (or a
+    number of interfaces).
 
+    This is akin to calling directlyProvides() on the function object.
+
+    """
     def __init__(self, *interfaces):
         self.interfaces = interfaces
 
