@@ -60,25 +60,31 @@ class MultiAdapter(object):
 class GlobalUtility(object):
     """Base class to define a globally registered utility.
 
-    Base class for a globally registered utility.  Unless you use the
-    ``direct`` directive to indicate that the class itself should be
-    registered as a utility, the class will automatically be
-    instantiated, therefore the constructor may not take any
-    arguments.  Use the ``implements`` directive to specify which
-    interface the utility provides, or if that is not unambiguous,
-    also use the ``provides`` directive to specify which of the
-    implemented interfaces should be used when registering the
-    utility.  If it's a named utility, you may use the ``name``
-    directive to specify the name.
+    Base class for a globally registered utility. Unless you use the ``direct``
+    directive to indicate that the class itself should be registered as a
+    utility, the class will automatically be instantiated, therefore the
+    constructor may not take any arguments. Use the ``implements`` directive to
+    specify which interface the utility provides, or if that is not
+    unambiguous, also use the ``provides`` directive to specify which of the
+    implemented interfaces should be used when registering the utility. If it's
+    a named utility, you may use the ``name`` directive to specify the name.
 
 
     Global utilities are automatically registered when a module is "grokked".
+
     """
     pass
 
 
 class Subscription(object):
     """Base class for a subscription adapter.
+
+    Subscriptions are similar to adapters, except that it is possible to
+    register multiple unnamed subscriptions for identical ``context`` and
+    ``provides``.
+
+    Use the ``adapts`` directive
+
     """
 
     def __init__(self, context):
