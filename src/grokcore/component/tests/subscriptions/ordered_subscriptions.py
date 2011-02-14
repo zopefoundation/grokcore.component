@@ -3,29 +3,29 @@
 
   >>> cave = Cave()
 
-  You can query the subscribers and sort them with the information
+  You can query the subscriptions and sort them with the information
   provided by grok.order:
 
-  >>> ordered_subscribers = grok.queryOrderedSubscriptions(cave, ICleaner)
-  >>> ordered_subscribers
-  [<grokcore.component.tests.subscriber.ordered_subscribers.MondayCleaner object at ...>,
-   <grokcore.component.tests.subscriber.ordered_subscribers.WednesdayCleaner object at ...>,
-   <grokcore.component.tests.subscriber.ordered_subscribers.SaturdayCleaner object at ...>]
+  >>> ordered_subscriptions = grok.queryOrderedSubscriptions(cave, ICleaner)
+  >>> ordered_subscriptions
+  [<grokcore.component.tests.subscriptions.ordered_subscriptions.MondayCleaner object at ...>,
+   <grokcore.component.tests.subscriptions.ordered_subscriptions.WednesdayCleaner object at ...>,
+   <grokcore.component.tests.subscriptions.ordered_subscriptions.SaturdayCleaner object at ...>]
 
-  >>> _ = map(lambda s: s.work(), ordered_subscribers)
+  >>> _ = map(lambda s: s.work(), ordered_subscriptions)
   Monday cleaning!
   Wednesday cleaning!
   Saturday cleaning!
 
   If you use the regular query method, they won't be sorted:
 
-  >>> subscribers = grok.querySubscriptions(cave, ICleaner)
-  >>> subscribers
-  [<grokcore.component.tests.subscriber.ordered_subscribers.MondayCleaner object at ...>,
-   <grokcore.component.tests.subscriber.ordered_subscribers.SaturdayCleaner object at ...>,
-   <grokcore.component.tests.subscriber.ordered_subscribers.WednesdayCleaner object at ...>]
+  >>> subscriptions = grok.querySubscriptions(cave, ICleaner)
+  >>> subscriptions
+  [<grokcore.component.tests.subscriptions.ordered_subscriptions.MondayCleaner object at ...>,
+   <grokcore.component.tests.subscriptions.ordered_subscriptions.SaturdayCleaner object at ...>,
+   <grokcore.component.tests.subscriptions.ordered_subscriptions.WednesdayCleaner object at ...>]
 
-  >>> _ = map(lambda s: s.work(), subscribers)
+  >>> _ = map(lambda s: s.work(), subscriptions)
   Monday cleaning!
   Saturday cleaning!
   Wednesday cleaning!

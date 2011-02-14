@@ -2,7 +2,7 @@
   >>> grok.testing.grok(__name__)
   Traceback (most recent call last):
     ...
-  GrokError: <class 'grokcore.component.tests.subscriber.subscribers_no_interface.CaveProcessor'>
+  GrokError: <class 'grokcore.component.tests.subscriptions.subscriptions_no_interface.CaveProcessor'>
   must implement at least one interface (use grok.implements to specify).
 
 """

@@ -3,13 +3,13 @@
 
   >>> cave = Cave('sweet home')
 
-  >>> subscribers = grok.querySubscriptions(cave, ICleaner)
-  >>> subscribers
-  [<grokcore.component.tests.subscriber.subscribers.MondayCleaner object at ...>,
-   <grokcore.component.tests.subscriber.subscribers.SaturdayCleaner object at ...>,
-   <grokcore.component.tests.subscriber.subscribers.WednesdayCleaner object at ...>]
+  >>> subscriptions = grok.querySubscriptions(cave, ICleaner)
+  >>> subscriptions
+  [<grokcore.component.tests.subscriptions.subscriptions.MondayCleaner object at ...>,
+   <grokcore.component.tests.subscriptions.subscriptions.SaturdayCleaner object at ...>,
+   <grokcore.component.tests.subscriptions.subscriptions.WednesdayCleaner object at ...>]
 
-  >>> _ = map(lambda s: s.work(), subscribers)
+  >>> _ = map(lambda s: s.work(), subscriptions)
   Monday cleaning sweet home!
   Saturday cleaning sweet home!
   Wednesday cleaning sweet home!

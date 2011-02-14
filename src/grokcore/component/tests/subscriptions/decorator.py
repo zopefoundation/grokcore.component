@@ -3,9 +3,9 @@
 
   >>> cave = Cave('sweet home')
 
-  >>> subscribers = grok.querySubscriptions(cave, IActivity)
-  >>> subscribers
-  [<grokcore.component.tests.subscriber.decorator.DebuggingGrokcore object at ...>]
+  >>> subscriptions = grok.querySubscriptions(cave, IActivity)
+  >>> subscriptions
+  [<grokcore.component.tests.subscriptions.decorator.DebuggingGrokcore object at ...>]
 
   Subscripotion adapters are not registered as regular adapters:
 

@@ -4,35 +4,35 @@
   >>> cave = Cave('Tilburg cave')
   >>> martijn = Mammoth('Martijn')
 
-  You can query a subscribers using multiple components and sort them
+  You can query a subscriptions using multiple components and sort them
   using `grok.order` information:
 
-  >>> ordered_subscribers = grok.queryOrderedMultiSubscriptions(
+  >>> ordered_subscriptions = grok.queryOrderedMultiSubscriptions(
   ...     (cave, martijn), IActivity)
-  >>> ordered_subscribers
-  [<grokcore.component.tests.subscriber.ordered_multisubscribers.Cooking object at ...>,
-   <grokcore.component.tests.subscriber.ordered_multisubscribers.Gardening object at ...>,
-   <grokcore.component.tests.subscriber.ordered_multisubscribers.Cleaning object at ...>]
+  >>> ordered_subscriptions
+  [<grokcore.component.tests.subscriptions.ordered_multisubscriptions.Cooking object at ...>,
+   <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Gardening object at ...>,
+   <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Cleaning object at ...>]
 
-  >>> _ = map(lambda a: a.do(), ordered_subscribers)
+  >>> _ = map(lambda a: a.do(), ordered_subscriptions)
   Martijn is cooking in Tilburg cave!
   Martijn is growing pumpkins in Tilburg cave!
   Martijn is cleaning the Tilburg cave.
 
   Or choose not to:
 
-  >>> subscribers = grok.queryMultiSubscriptions(
+  >>> subscriptions = grok.queryMultiSubscriptions(
   ...     (cave, martijn), IActivity)
 
   (still need to sort them on class name in order to have a working doctest)
 
-  >>> subscribers = sorted(subscribers, key=lambda s: s.__class__.__name__)
-  >>> subscribers
-  [<grokcore.component.tests.subscriber.ordered_multisubscribers.Cleaning object at ...>,
-   <grokcore.component.tests.subscriber.ordered_multisubscribers.Cooking object at ...>,
-   <grokcore.component.tests.subscriber.ordered_multisubscribers.Gardening object at ...>]
+  >>> subscriptions = sorted(subscriptions, key=lambda s: s.__class__.__name__)
+  >>> subscriptions
+  [<grokcore.component.tests.subscriptions.ordered_multisubscriptions.Cleaning object at ...>,
+   <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Cooking object at ...>,
+   <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Gardening object at ...>]
 
-  >>> _ = map(lambda a: a.do(), subscribers)
+  >>> _ = map(lambda a: a.do(), subscriptions)
   Martijn is cleaning the Tilburg cave.
   Martijn is cooking in Tilburg cave!
   Martijn is growing pumpkins in Tilburg cave!

@@ -4,32 +4,32 @@
   >>> cave = Cave('Tilburg cave')
   >>> martijn = Mammoth('Martijn')
 
-  You can query a subscribers using multiple components. You will get
-  all subscribers registered for office and cave (since office is a
+  You can query a subscriptions using multiple components. You will get
+  all subscriptions registered for office and cave (since office is a
   base class of cave):
 
-  >>> subscribers = grok.queryMultiSubscriptions((cave, martijn), IActivity)
-  >>> subscribers
-  [<grokcore.component.tests.subscriber.multisubscribers.Sleep object at ...>,
-   <grokcore.component.tests.subscriber.multisubscribers.Food object at ...>,
-   <grokcore.component.tests.subscriber.multisubscribers.WritingCode object at ...>]
+  >>> subscriptions = grok.queryMultiSubscriptions((cave, martijn), IActivity)
+  >>> subscriptions
+  [<grokcore.component.tests.subscriptions.multisubscriptions.Sleep object at ...>,
+   <grokcore.component.tests.subscriptions.multisubscriptions.Food object at ...>,
+   <grokcore.component.tests.subscriptions.multisubscriptions.WritingCode object at ...>]
 
-  >>> _ = map(lambda s: s.do(), subscribers)
+  >>> _ = map(lambda s: s.do(), subscriptions)
   Martijn is sleeping at Tilburg cave.
   Martijn is feeding himself at Tilburg cave.
   Martijn is writing code at Tilburg cave!
 
 
-  Now, Martijn goes to the office. You will only get subscribers
+  Now, Martijn goes to the office. You will only get subscriptions
   registered for office:
 
   >>> office = Office('Grok corp(r)(tm) headquarters')
-  >>> office_subscribers = grok.queryMultiSubscriptions(
+  >>> office_subscriptions = grok.queryMultiSubscriptions(
   ...     (office, martijn), IActivity)
-  >>> office_subscribers
-  [<grokcore.component.tests.subscriber.multisubscribers.Sleep object at ...>]
+  >>> office_subscriptions
+  [<grokcore.component.tests.subscriptions.multisubscriptions.Sleep object at ...>]
 
-  >>> _ = map(lambda s: s.do(), office_subscribers)
+  >>> _ = map(lambda s: s.do(), office_subscriptions)
   Martijn is sleeping at Grok corp(r)(tm) headquarters.
 
 """

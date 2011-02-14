@@ -3,7 +3,7 @@
   Traceback (most recent call last):
     ...
   GrokError: No module-level context for
-  <class 'grokcore.component.tests.subscriber.subscribers_no_context.CaveProcessor'>,
+  <class 'grokcore.component.tests.subscriptions.subscriptions_no_context.CaveProcessor'>,
   please use the 'context' directive.
 
 """
