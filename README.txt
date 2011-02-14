@@ -213,3 +213,13 @@ the Dublin Core 'Modified' property accordingly::
       """Updated the Dublin Core 'Modified' property when a modified
       event is sent for an object."""
       IZopeDublinCore(obj).modified = datetime.datetime.utcnow()
+
+Subscriptions
+-------------
+
+Subscriptions look similar to Adapter, however, unlike regular adapters,
+subscription adapters are used when we want all of the adapters that adapt an
+object to a particular adapter.
+
+Analogous to MultiAdapter, there is a MultiSubscription component that "adapts"
+multiple objects.
