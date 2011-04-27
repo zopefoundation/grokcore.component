@@ -66,7 +66,7 @@ class global_adapter(martian.MultipleTimesDirective):
     """
     scope = martian.MODULE
 
-    def factory(self, factory, adapts=None, provides=None, name=u''):
+    def factory(self, factory, adapts=None, provides=None, name=None):
         if provides is not None and not IInterface.providedBy(provides):
             raise GrokImportError(
                 "You can only pass an interface to the "

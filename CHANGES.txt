@@ -4,8 +4,10 @@ Changes
 2.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Fix the `global_adapter` directive implementation to accept an explicit
+  "empty" name for nameless adapter registrations (as it used to be that
+  providing an empty name in the registration would actually result in
+  registering a named adapter in case the factory has a `grok.name`).
 
 2.3 (2011-02-14)
 ----------------
