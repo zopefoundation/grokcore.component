@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.4 (unreleased)
+2.4 (2011-04-27)
 ----------------
 
 - Fix the `global_adapter` directive implementation to accept an explicit
