@@ -7,21 +7,23 @@
   >>> subscriptions
   [<grokcore.component.tests.subscriptions.decorator.DebuggingGrokcore object at ...>]
 
-  Subscripotion adapters are not registered as regular adapters:
+  Subscription adapters are not registered as regular adapters:
 
+  >>> from zope import component
   >>> component.queryAdapter(cave, IActivity)
 
 """
 
 
 import grokcore.component as grok
-from zope import interface, component
+from zope import interface
 
 
 class Cave(grok.Context):
 
     def __init__(self, name):
         self.name = name
+
 
 class IActivity(interface.Interface):
     pass
