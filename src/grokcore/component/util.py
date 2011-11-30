@@ -35,7 +35,7 @@ def sort_components(components):
     return sorted(components, key=_sort_key)
 
 
-def getSite():
+def getSiteManager():
     site = zope.component.hooks.getSite()
     if site is None:
         sm = zope.component.getGlobalSiteManager() 
@@ -45,22 +45,22 @@ def getSite():
 
 
 def provideUtility(component, provides=None, name=u''):
-    sm = getSite()
+    sm = getSiteManager()
     sm.registerUtility(component, provides, name, event=False) 
 
 
 def provideAdapter(factory, adapts=None, provides=None, name=''):
-    sm = getSite()
+    sm = getSiteManager()
     sm.registerAdapter(factory, adapts, provides, name, event=False)
 
 
 def provideSubscriptionAdapter(factory, adapts=None, provides=None):
-    sm = getSite()
+    sm = getSiteManager()
     sm.registerSubscriptionAdapter(factory, adapts, provides, event=False)
 
 
 def provideHandler(factory, adapts=None):
-    sm = getSite()
+    sm = getSiteManager()
     sm.registerHandler(factory, adapts, event=False)
 
 def provideInterface(id, interface, iface_type=None, info=''):
@@ -136,6 +136,6 @@ def provideInterface(id, interface, iface_type=None, info=''):
     else:
         iface_type = IInterface
 
-    sm = getSite() 
+    sm = getSiteManager() 
     sm.registerUtility(interface, iface_type, id, info)
 
