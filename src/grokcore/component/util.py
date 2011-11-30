@@ -38,7 +38,7 @@ def sort_components(components):
 def getSite():
     site = zope.component.hooks.getSite()
     if site is None:
-        sm = zope.component.getSiteManager()
+        sm = zope.component.getGlobalSiteManager() 
     else:
         sm = site.getSiteManager()
     return sm
