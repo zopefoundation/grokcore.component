@@ -24,8 +24,12 @@ def _sort_key(component):
             component.__class__.__name__)
 
 
-def sort_components(components):
+def sort_components(components, key=None):
     """Sort a list of components using the information provided by
     `grok.order`.
     """
-    return sorted(components, key=_sort_key)
+    sort_key = _sort_key
+    if key is not None:
+        sort_key = lambda item: _sort_key(key(item))
+    return sorted(components, key=sort_key)
+

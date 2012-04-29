@@ -3,15 +3,27 @@
 If the grok.order directive is present with arguments, sorting will be
 done by the order specified.
 
-  >>> components = [First(), Second(), Third(), Fourth(), Fifth()]
-
   >>> from grokcore.component.util import sort_components
+
+  >>> components = [First(), Second(), Third(), Fourth(), Fifth()]
   >>> sort_components(components)
   [<...Fifth object at ...>,
    <...Fourth object at ...>,
    <...Third object at ...>,
    <...Second object at ...>,
    <...First object at ...>]
+
+
+You can use the key option:
+
+  >>> from operator import itemgetter
+
+  >>> components = [(1, First()), (2, Second()), (3, Third())]
+  >>> sort_components(components, key=itemgetter(1))
+  [(3, <...Third object at ...>),
+   (2, <...Second object at ...>),
+   (1, <...First object at ...>)]
+
 
 """
 

@@ -4,7 +4,8 @@ Changes
 2.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Add a ``key`` option to ``sort_components`` that behave like ``key``
+  options available on standard Python sort methods.
 
 
 2.4 (2011-04-27)
