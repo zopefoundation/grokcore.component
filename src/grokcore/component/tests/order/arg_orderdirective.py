@@ -1,5 +1,4 @@
 """
-
 If the grok.order directive is present with arguments, sorting will be
 done by the order specified.
 
@@ -13,7 +12,6 @@ done by the order specified.
    <...Second object at ...>,
    <...First object at ...>]
 
-
 You can use the key option:
 
   >>> from operator import itemgetter
@@ -23,7 +21,6 @@ You can use the key option:
   [(3, <...Third object at ...>),
    (2, <...Second object at ...>),
    (1, <...First object at ...>)]
-
 
 """
 
