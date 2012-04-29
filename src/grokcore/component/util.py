@@ -16,6 +16,7 @@
 import types
 import zope.component.hooks
 from zope.interface.interfaces import IInterface
+from zope.interface import alsoProvides
 from grokcore.component import directive
 
 def _sort_key(component):
