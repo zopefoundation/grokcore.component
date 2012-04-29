@@ -4,6 +4,10 @@ Changes
 2.5 (unreleased)
 ----------------
 
+- Fix the `global_adapter` to properly use information annotated by
+  ``grok.adapter``, and using the IContext object if it was not
+  specified. (Fix Launchpad issue #960097).
+
 - Add a ``key`` option to ``sort_components`` that behave like ``key``
   options available on standard Python sort methods.
 

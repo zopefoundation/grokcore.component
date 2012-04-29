@@ -45,4 +45,8 @@ setup(
                       ],
     tests_require=tests_require,
     extras_require={'test': tests_require},
+    entry_points = """
+        [grok.api]
+        grokcore.component = grokcore.component.interfaces:IGrokcoreComponentAPI
+    """
 )

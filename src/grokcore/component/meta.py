@@ -196,9 +196,7 @@ class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
                 bound = grokcore.component.provides.bind(default=None)
                 provides = bound.get(factory)
             if adapts is None:
-                adapts = getattr(factory, '__component_adapts__', None)
-                if adapts is None:
-                    adapts = grokcore.component.context.bind().get(factory)
+                adapts = (grokcore.component.context.bind().get(module),)
             if name is None:
                 name = grokcore.component.name.bind().get(factory)
 

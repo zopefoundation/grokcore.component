@@ -71,7 +71,9 @@ class global_adapter(martian.MultipleTimesDirective):
             raise GrokImportError(
                 "You can only pass an interface to the "
                 "provides argument of %s." % self.name)
-        if not isinstance(adapts, (list, tuple,)):
+        if adapts is None:
+            adapts = getattr(factory, '__component_adapts__', None)
+        elif not isinstance(adapts, (list, tuple,)):
             adapts = (adapts,)
         elif isinstance(adapts, list):
             adapts = tuple(adapts)
