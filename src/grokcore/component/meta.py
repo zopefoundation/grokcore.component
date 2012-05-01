@@ -22,7 +22,6 @@ import zope.component.interface
 from zope import component, interface
 from martian.error import GrokError
 from zope.interface import implementedBy
-from grokcore.component import util
 
 def _provides(component, module=None, **data):
     martian.util.check_implements_one(component)
@@ -44,7 +43,7 @@ class AdapterGrokker(martian.ClassGrokker):
     def execute(self, factory, config, context, provides, name, **kw):
         config.action(
             discriminator=('adapter', context, provides, name),
-            callable=util.provideAdapter,
+            callable=grokcore.component.provideAdapter,
             args=(factory, (context,), provides, name),
             )
         return True
@@ -64,7 +63,7 @@ class MultiAdapterGrokker(martian.ClassGrokker):
 
         config.action(
             discriminator=('adapter', for_, provides, name),
-            callable=util.provideAdapter,
+            callable=grokcore.component.provideAdapter,
             args=(factory, None, provides, name),
             )
         return True
@@ -79,7 +78,7 @@ class SubscriptionGrokker(martian.ClassGrokker):
     def execute(self, factory, config, context, provides, name, **kw):
         config.action(
             discriminator=None,
-            callable=util.provideSubscriptionAdapter,
+            callable=grokcore.component.provideSubscriptionAdapter,
             args=(factory, (context,), provides),
             )
         return True
@@ -99,7 +98,7 @@ class MultiSubscriptionGrokker(martian.ClassGrokker):
 
         config.action(
             discriminator=None,
-            callable=util.provideSubscriptionAdapter,
+            callable=grokcore.component.provideSubscriptionAdapter,
             args=(factory, adapts, provides),
             )
         return True
@@ -123,7 +122,7 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
 
         config.action(
             discriminator=('utility', provides, name),
-            callable=util.provideUtility,
+            callable=grokcore.component.provideUtility,
             args=(factory, provides, name),
             )
         return True
@@ -150,7 +149,7 @@ class ImplementerDecoratorGrokker(martian.GlobalGrokker):
             name = getattr(function, '__component_name__', u"")
             config.action(
                 discriminator=('adapter', interfaces, function.__implemented__, name),
-                callable=util.provideAdapter,
+                callable=grokcore.component.provideAdapter,
                 args=(function, interfaces, function.__implemented__, name),
                 )
         return True
@@ -181,7 +180,7 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
             config.action(
                 discriminator=('utility', provides, name),
-                callable=util.provideUtility,
+                callable=grokcore.component.provideUtility,
                 args=(obj, provides, name),
                 )
 
@@ -203,7 +202,7 @@ class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
 
             config.action(
                 discriminator=('adapter', adapts, provides, name),
-                callable=util.provideAdapter,
+                callable=grokcore.component.provideAdapter,
                 args=(factory, adapts, provides, name),
                 )
 
@@ -228,17 +227,17 @@ class SubscriberDirectiveGrokker(martian.GlobalGrokker):
             if provides is None:
                 config.action(
                     discriminator=None,
-                    callable=util.provideHandler,
+                    callable=grokcore.component.provideHandler,
                     args=(factory, subscribed))
             else:
                 config.action(
                     discriminator=None,
-                    callable=util.provideSubscriptionAdapter,
+                    callable=grokcore.component.provideSubscriptionAdapter,
                     args=(factory, subscribed, provides))
 
             for iface in subscribed:
                 config.action(
                     discriminator=None,
-                    callable=util.provideInterface,
+                    callable=grokcore.component.provideInterface,
                     args=('', iface))
         return True

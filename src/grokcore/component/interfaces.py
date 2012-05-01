@@ -34,19 +34,24 @@ class IContext(Interface):
 
 
 class IBaseClasses(Interface):
+    Adapter = Attribute("Base class for adapters.")
 
     ClassGrokker = Attribute("Base class to define a class grokker.")
-    InstanceGrokker = Attribute("Base class to define an instance grokker.")
-    GlobalGrokker = Attribute("Base class to define a module grokker.")
 
     Context = Attribute("Base class for automatically associated contexts.")
 
-    Adapter = Attribute("Base class for adapters.")
-    MultiAdapter = Attribute("Base class for multi-adapters.")
+    GlobalGrokker = Attribute("Base class to define a module grokker.")
+
     GlobalUtility = Attribute("Base class for global utilities.")
-    Subscription = Attribute("Base class for subscription adapters.")
+
+    InstanceGrokker = Attribute("Base class to define an instance grokker.")
+
+    MultiAdapter = Attribute("Base class for multi-adapters.")
+
     MultiSubscription = Attribute(
         "Base class for subscription mult-adapters.")
+
+    Subscription = Attribute("Base class for subscription adapters.")
 
 
 class IDirectives(Interface):
@@ -186,22 +191,49 @@ class IGrokErrors(Interface):
 
 
 class IMartianAPI(Interface):
-    """Part of Martian's API exposed by grokcore.component."""
-
-    # This should probably move to martian at some point.
+    """Part of Martian's API exposed by grokcore.component.
+    """
 
     ClassGrokker = Attribute("Grokker for classes.")
-    InstanceGrokker = Attribute("Grokker for instances.")
+
     GlobalGrokker = Attribute("Grokker that's invoked for a module.")
 
+    InstanceGrokker = Attribute("Grokker for instances.")
 
-class IGrokcoreComponentAPI(IBaseClasses, IDirectives, IDecorators,
-                            IGrokErrors, IMartianAPI):
-    """grokcore.component's public API."""
+
+class IGrokcoreComponentAPI(
+    IBaseClasses,
+    IDecorators,
+    IDirectives,
+    IGrokErrors,
+    IMartianAPI,
+    ):
+    """grokcore.component's public API.
+    """
+
+    getSiteManager = Attribute('Get the site manager for the nearest site.')
+
+    provideAdapter = Attribute('Registers an adapters')
+
+    provideHandler = Attribute('Registers an handler')
+
+    provideInterface = Attribute('Regsiters an interfaces as a utility')
+
+    provideSubscriptionAdapter = Attribute(
+        'Registers an subscriptions adapter')
+
+    provideUtility = Attribute('Registers an utility')
 
     querySubscriptions = Attribute("Function to query subscriptions.")
+
     queryOrderedSubscriptions = Attribute(
         "Function to query subscription in order.")
+
     queryMultiSubscriptions = Attribute("Function to query subscriptions.")
+
     queryOrderedMultiSubscriptions = Attribute(
         "Function to query subscriptions in order.")
+
+    sort_components = Attribute(
+        'Sort a list of components using the information provided by '
+        '`grok.order`.')

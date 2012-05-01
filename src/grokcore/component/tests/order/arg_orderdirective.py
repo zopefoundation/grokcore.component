@@ -2,7 +2,7 @@
 If the grok.order directive is present with arguments, sorting will be
 done by the order specified.
 
-  >>> from grokcore.component.util import sort_components
+  >>> from grokcore.component import sort_components
 
   >>> components = [First(), Second(), Third(), Fourth(), Fifth()]
   >>> sort_components(components)

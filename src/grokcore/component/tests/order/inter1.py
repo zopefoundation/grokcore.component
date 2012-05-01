@@ -12,7 +12,7 @@ The ordering works like so:
   >>> from inter2 import Four, Five, Six
   >>> components = [One(), Two(), Three(), Four(), Five(), Six()]
 
-  >>> from grokcore.component.util import sort_components
+  >>> from grokcore.component import sort_components
   >>> sort_components(components)
   [<...Three object at ...>,
    <...One object at ...>,

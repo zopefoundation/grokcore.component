@@ -6,7 +6,7 @@ sorting on the order specified, and then by the definition order.
 
   >>> components = [First(), Second(), Third(), Fourth(), Fifth()]
 
-  >>> from grokcore.component.util import sort_components
+  >>> from grokcore.component import sort_components
   >>> sort_components(components)
   [<...Fifth object at ...>,
    <...Third object at ...>,

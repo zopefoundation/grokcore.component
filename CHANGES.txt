@@ -4,13 +4,18 @@ Changes
 2.5 (unreleased)
 ----------------
 
+- Introduce provideUtility, providerAdapter, provideSubscriptionAdapter,
+  provideHandler and provideInterface in grokcore.component. These by default
+  delegate the registration of components to the global site manager like
+  was done before, but provide the possibility for custom registries for the
+  grokked components.
+
 - Fix the `global_adapter` to properly use information annotated by
   ``grok.adapter``, and using the IContext object if it was not
   specified. (Fix Launchpad issue #960097).
 
 - Add a ``key`` option to ``sort_components`` that behave like ``key``
   options available on standard Python sort methods.
-
 
 2.4 (2011-04-27)
 ----------------
