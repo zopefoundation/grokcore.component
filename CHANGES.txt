@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.5 (unreleased)
+2.5 (2012-05-01)
 ----------------
 
 - Introduce provideUtility, providerAdapter, provideSubscriptionAdapter,
