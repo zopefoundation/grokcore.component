@@ -13,7 +13,7 @@
 ##############################################################################
 """Grok components"""
 
-from zope.interface import implements
+from zope.interface import implementer
 
 from grokcore.component.interfaces import IContext
 
@@ -104,9 +104,9 @@ class MultiSubscription(object):
     """
 
 
+@implementer(IContext)
 class Context(object):
     """Subclasses of this will automatically be found as potential contexts for
     adapters and other types of context-dependent components.
 
     """
-    implements(IContext)
