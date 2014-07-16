@@ -14,7 +14,7 @@ Changes
 - update code to work with python2 and python3
 - update doctests to work with python2 and python3
 - adjust egg to work with newer version of setuptools
-
+- reimplment ``zope.interface.implements`` with a grokker
 
 2.5 (2012-05-01)
 ----------------
