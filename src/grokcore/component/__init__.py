@@ -17,7 +17,9 @@
 from zope.component import adapts
 adapts.__doc__ = "Declares the types of objects that a multi-adapter adapts."
 
-from zope.interface import implements, implementsOnly, classProvides
+from zope.interface import implementsOnly, classProvides
+
+from grokcore.component.compat import implements
 
 from martian import baseclass
 from martian.error import GrokError, GrokImportError

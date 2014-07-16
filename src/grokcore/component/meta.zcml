@@ -12,6 +12,7 @@
   </meta:directives>
 
   <!-- Load the grokkers -->
+  <grok:grok package=".compat" />
   <grok:grok package=".meta" />
 
 </configure>

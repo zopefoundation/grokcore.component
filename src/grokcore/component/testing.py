@@ -18,10 +18,12 @@ from zope.configuration.config import ConfigurationMachine
 from martian import scan
 from grokcore.component import zcml
 
-def grok(module_name):
+def grok(*module_names):
     config = ConfigurationMachine()
+    zcml.do_grok('grokcore.component.compat', config)
     zcml.do_grok('grokcore.component.meta', config)
-    zcml.do_grok(module_name, config)
+    for module_name in module_names:
+        zcml.do_grok(module_name, config)
     config.execute_actions()
 
 def grok_component(name, component,

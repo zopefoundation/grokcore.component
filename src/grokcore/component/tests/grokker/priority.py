@@ -35,7 +35,7 @@ class AlphaGrokker(martian.ClassGrokker):
     martian.component(Alpha)
 
     def grok(self, name, factory, module_info, **kw):
-        print "alpha"
+        print("alpha")
         return True
 
 class BetaGrokker(martian.ClassGrokker):
@@ -43,7 +43,7 @@ class BetaGrokker(martian.ClassGrokker):
     martian.priority(1)
     
     def grok(self, name, factory, module_info, **kw):
-        print "beta"
+        print("beta")
         return True
     
 class GammaGrokker(martian.ClassGrokker):
@@ -51,5 +51,5 @@ class GammaGrokker(martian.ClassGrokker):
     martian.priority(-1)
 
     def grok(self, name, factory, module_info, **kw):
-        print "gamma"
+        print("gamma")
         return True

@@ -19,7 +19,8 @@ class IClub(interface.Interface):
 class ISpikyClub(interface.Interface):
     pass
 
+@interface.provider(IClub, ISpikyClub)
 class Club(object):
-    interface.classProvides(IClub, ISpikyClub)
+    pass
 
 grok.global_utility(Club, direct=True)

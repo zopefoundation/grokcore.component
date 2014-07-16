@@ -14,7 +14,7 @@
    <grokcore.component.tests.subscriptions.multisubscriptions.Food object at ...>,
    <grokcore.component.tests.subscriptions.multisubscriptions.WritingCode object at ...>]
 
-  >>> _ = map(lambda s: s.do(), subscriptions)
+  >>> _ = [s.do() for s in subscriptions]
   Martijn is sleeping at Tilburg cave.
   Martijn is feeding himself at Tilburg cave.
   Martijn is writing code at Tilburg cave!
@@ -29,7 +29,7 @@
   >>> office_subscriptions
   [<grokcore.component.tests.subscriptions.multisubscriptions.Sleep object at ...>]
 
-  >>> _ = map(lambda s: s.do(), office_subscriptions)
+  >>> _ = [s.do() for s in office_subscriptions]
   Martijn is sleeping at Grok corp(r)(tm) headquarters.
 
 """
@@ -70,7 +70,7 @@ class Sleep(grok.MultiSubscription):
         self.who = who
 
     def do(self):
-        print '%s is sleeping at %s.' % (self.who.name, self.where.name)
+        print('%s is sleeping at %s.' % (self.who.name, self.where.name))
 
 
 class DayTimeActivity(grok.MultiSubscription):
@@ -83,16 +83,16 @@ class DayTimeActivity(grok.MultiSubscription):
         self.who = who
 
     def do(self):
-        print 'nothing'
+        print('nothing')
 
 
 class Food(DayTimeActivity):
 
     def do(self):
-        print '%s is feeding himself at %s.' % (self.who.name, self.where.name)
+        print('%s is feeding himself at %s.' % (self.who.name, self.where.name))
 
 
 class WritingCode(DayTimeActivity):
 
     def do(self):
-        print '%s is writing code at %s!' % (self.who.name, self.where.name)
+        print('%s is writing code at %s!' % (self.who.name, self.where.name))

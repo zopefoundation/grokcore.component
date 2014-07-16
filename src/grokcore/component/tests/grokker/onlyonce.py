@@ -8,6 +8,7 @@ the module containing the grokkers (e.g. meta.py).
 
 We do it manually now::
 
+  >>> import pdb;pdb.set_trace()
   >>> import grokcore.component as grok
   >>> grok.testing.grok('grokcore.component.tests.grokker.onlyonce_fixture._meta')
 

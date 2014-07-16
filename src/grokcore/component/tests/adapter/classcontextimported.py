@@ -1,7 +1,8 @@
 """
 Explicit class-level context for an imported model:
 
-  >>> grok.testing.grok(__name__)
+  >>> grok.testing.grok(__name__, 
+  ... 'grokcore.component.tests.adapter.adapter')
 
   >>> cave = Cave()
   >>> painting = IPainting(cave)
