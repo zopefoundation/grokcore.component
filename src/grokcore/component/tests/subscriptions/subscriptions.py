@@ -9,7 +9,7 @@
    <grokcore.component.tests.subscriptions.subscriptions.SaturdayCleaner object at ...>,
    <grokcore.component.tests.subscriptions.subscriptions.WednesdayCleaner object at ...>]
 
-  >>> _ = [s.do() for s in subscriptions]
+  >>> _ = [s.work() for s in subscriptions]
   Monday cleaning sweet home!
   Saturday cleaning sweet home!
   Wednesday cleaning sweet home!

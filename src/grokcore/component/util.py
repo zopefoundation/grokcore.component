@@ -128,7 +128,9 @@ def provideInterface(id, interface, iface_type=None, info=''):
         id = "%s.%s" % (interface.__module__, interface.__name__)
 
     if not IInterface.providedBy(interface):
-        if not isinstance(interface, (type, types.ClassType)):
+        # python3 compatible
+        if not isinstance(interface, type) or (hasattr(types, 'ClassType') and
+                                               isinstance(interface, types.ClassType)):
             raise TypeError(id, "is not an interface or class")
         return
 

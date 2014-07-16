@@ -27,12 +27,15 @@ def grok(*module_names):
     config.execute_actions()
 
 def grok_component(name, component,
-                   context=None, module_info=None, templates=None):
+                   context=None, module_info=None, templates=None, dotted_name=None):
     if module_info is None:
-        obj_module = getattr(component, '__grok_module__', None)
-        if obj_module is None:
-            obj_module = getattr(component, '__module__', None)
-        module_info = scan.module_info_from_dotted_name(obj_module)
+        if dotted_name is None:
+            obj_module = getattr(component, '__grok_module__', None)
+            if obj_module is None:
+                obj_module = getattr(component, '__module__', None)
+            module_info = scan.module_info_from_dotted_name(obj_module)
+        else:
+            module_info = scan.module_info_from_dotted_name(dotted_name)
 
     module = module_info.getModule()
     if context is not None:
