@@ -49,6 +49,7 @@ setup(
                       # Note: zope.testing is NOT just a test dependency here.
                       'zope.testing',
                       ],
+    test_suite='grokcore.component.tests.test_grok.test_suite',
     tests_require=tests_require,
     extras_require={'test': tests_require},
 )
