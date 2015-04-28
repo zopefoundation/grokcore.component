@@ -14,7 +14,7 @@
    <grokcore.component.tests.subscriptions.multisubscriptions.Food object at ...>,
    <grokcore.component.tests.subscriptions.multisubscriptions.WritingCode object at ...>]
 
-  >>> _ = [s.do() for s in subscriptions]
+  >>> for s in subscriptions: s.do()
   Martijn is sleeping at Tilburg cave.
   Martijn is feeding himself at Tilburg cave.
   Martijn is writing code at Tilburg cave!
@@ -29,7 +29,7 @@
   >>> office_subscriptions
   [<grokcore.component.tests.subscriptions.multisubscriptions.Sleep object at ...>]
 
-  >>> _ = [s.do() for s in office_subscriptions]
+  >>> for s in office_subscriptions: s.do()
   Martijn is sleeping at Grok corp(r)(tm) headquarters.
 
 """

@@ -18,8 +18,7 @@ checker = renormalizing.RENormalizing([
     # exceptions appear in traceback printouts.
     (re.compile(r"ConfigurationExecutionError: <class '([\w.]+)'>:"),
                 r'ConfigurationExecutionError: \1:'),
-    # unicode objects doese not more exist in python3.
-    # in python 3 a string eg. u'mystring' will be represent as 'mystring'. 
+    # unicode object representation changed in Python 3.
     (re.compile(r"u?\'(.*)\'"), 
                 r'u\'\1\''),
     (re.compile(r"u?\"(.*)\""), 
@@ -42,8 +41,8 @@ def suiteFromPackage(name):
                                         setUp=setUpZope,
                                         tearDown=cleanUpZope,
                                         checker=checker,
-                                        optionflags=doctest.ELLIPSIS+
-                                        doctest.NORMALIZE_WHITESPACE+
+                                        optionflags=doctest.ELLIPSIS |
+                                        doctest.NORMALIZE_WHITESPACE |
                                         doctest.IGNORE_EXCEPTION_DETAIL)
         except ImportError:  # or should this accept anything?
             traceback.print_exc()

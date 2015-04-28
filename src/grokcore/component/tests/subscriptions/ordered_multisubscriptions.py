@@ -14,7 +14,7 @@
    <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Gardening object at ...>,
    <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Cleaning object at ...>]
 
-  >>> _ = [s.do() for s in ordered_subscriptions]
+  >>> for s in ordered_subscriptions: s.do()
   Martijn is cooking in Tilburg cave!
   Martijn is growing pumpkins in Tilburg cave!
   Martijn is cleaning the Tilburg cave.
@@ -32,7 +32,7 @@
    <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Cooking object at ...>,
    <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Gardening object at ...>]
 
-  >>> _ = [s.do() for s in subscriptions]
+  >>> for s in subscriptions: s.do()
   Martijn is cleaning the Tilburg cave.
   Martijn is cooking in Tilburg cave!
   Martijn is growing pumpkins in Tilburg cave!
