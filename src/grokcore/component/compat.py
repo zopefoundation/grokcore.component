@@ -1,7 +1,15 @@
 import sys
+import types
 import martian
 from zope.interface import classImplements
 from zope.interface.interfaces import IInterface
+
+
+if hasattr(types, 'ClassType'):
+    class_types = (type, types.ClassType)
+else:
+    class_types = (type,)
+
 
 if sys.version_info[0] < 3:
     from zope.interface import implements
