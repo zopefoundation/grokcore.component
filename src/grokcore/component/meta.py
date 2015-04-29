@@ -22,6 +22,8 @@ import zope.component.interface
 from zope import component, interface
 from martian.error import GrokError
 from zope.interface import implementedBy
+from zope.interface.declarations import classImplements
+
 
 def _provides(component, module=None, **data):
     martian.util.check_implements_one(component)
@@ -240,4 +242,16 @@ class SubscriberDirectiveGrokker(martian.GlobalGrokker):
                     discriminator=None,
                     callable=grokcore.component.provideInterface,
                     args=('', iface))
+        return True
+
+
+class ClassImplementerGrokker(martian.ClassGrokker):
+    martian.component(object)
+    martian.directive(grokcore.component.implements)
+    martian.priority(2000)
+
+    def execute(self, class_, implements, **kw):
+        if implements is None:
+            return True
+        classImplements(class_, implements)
         return True
