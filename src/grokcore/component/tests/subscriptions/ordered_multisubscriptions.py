@@ -14,7 +14,7 @@
    <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Gardening object at ...>,
    <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Cleaning object at ...>]
 
-  >>> _ = map(lambda a: a.do(), ordered_subscriptions)
+  >>> for s in ordered_subscriptions: s.do()
   Martijn is cooking in Tilburg cave!
   Martijn is growing pumpkins in Tilburg cave!
   Martijn is cleaning the Tilburg cave.
@@ -32,7 +32,7 @@
    <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Cooking object at ...>,
    <grokcore.component.tests.subscriptions.ordered_multisubscriptions.Gardening object at ...>]
 
-  >>> _ = map(lambda a: a.do(), subscriptions)
+  >>> for s in subscriptions: s.do()
   Martijn is cleaning the Tilburg cave.
   Martijn is cooking in Tilburg cave!
   Martijn is growing pumpkins in Tilburg cave!
@@ -73,25 +73,25 @@ class DayTimeActivity(grok.MultiSubscription):
         self.who = who
 
     def do(self):
-        print 'Doing nothing.'
+        print('Doing nothing.')
 
 
 class Cleaning(DayTimeActivity):
     grok.order(99)
 
     def do(self):
-        print '%s is cleaning the %s.' % (self.who.name, self.where.name)
+        print('%s is cleaning the %s.' % (self.who.name, self.where.name))
 
 
 class Cooking(DayTimeActivity):
     grok.order(10)
 
     def do(self):
-        print '%s is cooking in %s!' % (self.who.name, self.where.name)
+        print('%s is cooking in %s!' % (self.who.name, self.where.name))
 
 
 class Gardening(DayTimeActivity):
     grok.order(15)
 
     def do(self):
-        print '%s is growing pumpkins in %s!' % (self.who.name, self.where.name)
+        print('%s is growing pumpkins in %s!' % (self.who.name, self.where.name))

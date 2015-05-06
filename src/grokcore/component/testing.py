@@ -18,19 +18,23 @@ from zope.configuration.config import ConfigurationMachine
 from martian import scan
 from grokcore.component import zcml
 
-def grok(module_name):
+def grok(*module_names):
     config = ConfigurationMachine()
+    zcml.do_grok('grokcore.component.compat', config)
     zcml.do_grok('grokcore.component.meta', config)
-    zcml.do_grok(module_name, config)
+    for module_name in module_names:
+        zcml.do_grok(module_name, config)
     config.execute_actions()
 
 def grok_component(name, component,
-                   context=None, module_info=None, templates=None):
+                   context=None, module_info=None, templates=None, dotted_name=None):
     if module_info is None:
-        obj_module = getattr(component, '__grok_module__', None)
-        if obj_module is None:
-            obj_module = getattr(component, '__module__', None)
-        module_info = scan.module_info_from_dotted_name(obj_module)
+        if dotted_name is None:
+            dotted_name = getattr(component, '__grok_module__', None)
+            if dotted_name is None:
+                dotted_name = getattr(component, '__module__', None)
+            module_info = scan.module_info_from_dotted_name(dotted_name)
+        module_info = scan.module_info_from_dotted_name(dotted_name)
 
     module = module_info.getModule()
     if context is not None:

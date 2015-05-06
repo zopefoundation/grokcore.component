@@ -12,7 +12,7 @@
    <grokcore.component.tests.subscriptions.ordered_subscriptions.WednesdayCleaner object at ...>,
    <grokcore.component.tests.subscriptions.ordered_subscriptions.SaturdayCleaner object at ...>]
 
-  >>> _ = map(lambda s: s.work(), ordered_subscriptions)
+  >>> for s in ordered_subscriptions: s.work()
   Monday cleaning!
   Wednesday cleaning!
   Saturday cleaning!
@@ -25,7 +25,7 @@
    <grokcore.component.tests.subscriptions.ordered_subscriptions.SaturdayCleaner object at ...>,
    <grokcore.component.tests.subscriptions.ordered_subscriptions.WednesdayCleaner object at ...>]
 
-  >>> _ = map(lambda s: s.work(), subscriptions)
+  >>> for s in subscriptions: s.work() 
   Monday cleaning!
   Saturday cleaning!
   Wednesday cleaning!
@@ -51,7 +51,7 @@ class MondayCleaner(grok.Subscription):
     grok.order(1)
 
     def work(self):
-        print 'Monday cleaning!'
+        print('Monday cleaning!')
 
 
 class WednesdayCleaner(grok.Subscription):
@@ -59,7 +59,7 @@ class WednesdayCleaner(grok.Subscription):
     grok.order(3)
 
     def work(self):
-        print 'Wednesday cleaning!'
+        print('Wednesday cleaning!')
 
 
 class SaturdayCleaner(grok.Subscription):
@@ -67,5 +67,5 @@ class SaturdayCleaner(grok.Subscription):
     grok.order(6)
 
     def work(self):
-        print 'Saturday cleaning!'
+        print('Saturday cleaning!')
 

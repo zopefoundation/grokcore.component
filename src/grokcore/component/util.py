@@ -13,11 +13,13 @@
 ##############################################################################
 """Grok utility functions.
 """
-import types
 import zope.component.hooks
-from zope.interface.interfaces import IInterface
 from zope.interface import alsoProvides
+from zope.interface.interfaces import IInterface
+
 from grokcore.component import directive
+from grokcore.component.compat import class_types
+
 
 def _sort_key(component):
     # If components have a grok.order directive, sort by that.
@@ -128,7 +130,7 @@ def provideInterface(id, interface, iface_type=None, info=''):
         id = "%s.%s" % (interface.__module__, interface.__name__)
 
     if not IInterface.providedBy(interface):
-        if not isinstance(interface, (type, types.ClassType)):
+        if not isinstance(interface, class_types):
             raise TypeError(id, "is not an interface or class")
         return
 

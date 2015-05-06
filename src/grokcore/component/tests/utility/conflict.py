@@ -25,7 +25,7 @@ conflict:
 
 """
 import grokcore.component as grok
-from zope.interface import Interface, classProvides
+from zope.interface import Interface, provider
 
 class IUtilityInterface(Interface):
     pass
@@ -64,13 +64,13 @@ class Mixed2(grok.GlobalUtility):
     grok.name('mixed class')
 
 
+@provider(IUtilityInterface)
 class Direct1(grok.GlobalUtility):
-    classProvides(IUtilityInterface)
     grok.name('direct class')
     grok.direct()
 
+@provider(IUtilityInterface)
 class Direct2(grok.GlobalUtility):
-    classProvides(IUtilityInterface)
     grok.name('direct class')
     grok.direct()
 

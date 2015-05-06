@@ -1,4 +1,6 @@
 """
+>>> grok.testing.grok('grokcore.component.tests.adapter.adapter')
+
 You can't call grok.context from a function:
 
   >>> func()

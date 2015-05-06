@@ -28,6 +28,12 @@ setup(
     classifiers=['Intended Audience :: Developers',
                  'License :: OSI Approved :: Zope Public License',
                  'Programming Language :: Python',
+                 'Programming Language :: Python :: 2',
+                 'Programming Language :: Python :: 2.6',
+                 'Programming Language :: Python :: 2.7',
+                 'Programming Language :: Python :: 3',
+                 'Programming Language :: Python :: 3.3',
+                 'Programming Language :: Python :: 3.4',
                  ],
 
     packages=find_packages('src'),
@@ -43,6 +49,7 @@ setup(
                       # Note: zope.testing is NOT just a test dependency here.
                       'zope.testing',
                       ],
+    test_suite='grokcore.component.tests.test_grok.test_suite',
     tests_require=tests_require,
     extras_require={'test': tests_require},
 )

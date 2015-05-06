@@ -167,9 +167,9 @@ class SmallClub(grok.GlobalUtility):
     grok.provides(ISmallClub)
     grok.name('tiny')
 
+@interface.provider(IClubMaker)
 class ClubMaker(grok.GlobalUtility):
     grok.implements(IClub)
-    interface.classProvides(IClubMaker)
     grok.direct()
     grok.name('maker')
 

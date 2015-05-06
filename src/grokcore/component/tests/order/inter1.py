@@ -9,7 +9,7 @@ The ordering works like so:
 4. If no ordering is specified by any objects, then objects are sorted
    alphabetically by class name
 
-  >>> from inter2 import Four, Five, Six
+  >>> from grokcore.component.tests.order.inter2 import Four, Five, Six
   >>> components = [One(), Two(), Three(), Four(), Five(), Six()]
 
   >>> from grokcore.component import sort_components

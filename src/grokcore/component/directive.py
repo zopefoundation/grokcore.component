@@ -170,3 +170,25 @@ class provides(martian.Directive):
     def get_default(cls, component, module, **data):
         martian.util.check_implements_one(component)
         return list(interface.implementedBy(component))[0]
+
+
+class implements(martian.Directive):
+    """ Declare interfaces implemented by instances of a class.
+        The arguments are one or more interfaces or interface
+        specifications (IDeclaration objects).
+    
+        Since the original implementer from zope.interface is not supported
+        anymore Python 3, grokcore.component continues to support it
+        on its own.
+        
+        :param interface or interfaces to be implement by a class.
+    """
+    scope = martian.CLASS
+    store = martian.ONCE
+    default = None
+    
+    def factory(self, *interfaces):
+        for interface in interfaces:
+            if not IInterface.providedBy(interface):
+                raise Exception('%s is not a interface' % repr(interface))
+        return interfaces

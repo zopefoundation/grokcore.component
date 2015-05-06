@@ -32,7 +32,8 @@ Now we will register the adapter using grok_component()::
 
   >>> from grokcore.component.testing import grok, grok_component
   >>> grok('grokcore.component.meta')
-  >>> grok_component('MyAdapter', MyAdapter)
+  >>> grok_component('MyAdapter', MyAdapter,
+  ... dotted_name='grokcore.component.tests.grokker.grokcomponent')
   True
   
 The adapter should now be available::
