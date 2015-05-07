@@ -1,5 +1,6 @@
 global-include *.mo
 include *.txt
+include *.rst
 include bootstrap.py
 include buildout.cfg
 include tox.ini

@@ -5,8 +5,6 @@ Changes
 ----------------
 
 - compatibility for python 3
-- update code to work with python2 and python3
-- adjust egg to work with newer version of setuptools
 - reimplement ``zope.interface.implements`` with a grokker
   for both python2 and python3
 
