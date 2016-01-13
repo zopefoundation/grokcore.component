@@ -68,6 +68,7 @@ def provideHandler(factory, adapts=None):
     sm = getSiteManager()
     sm.registerHandler(factory, adapts, event=False)
 
+
 def provideInterface(id, interface, iface_type=None, info=''):
     """register Interface with global site manager as utility
 

@@ -92,6 +92,7 @@ class adapter(zope.component.adapter):
             ob.__component_name__ = self.name
         return ob
 
+
 class implementer(zope.interface.implementer):
     """Declares that the function implements a certain interface (or a number
     of interfaces).
@@ -102,15 +103,15 @@ class implementer(zope.interface.implementer):
     """
 
     def __call__(self, ob):
-        # XXX we do not have function grokkers (yet) so we put the annotation
-        # on the module.
-        frame = sys._getframe(1)
-        adapters = frame.f_locals.get('__grok_adapters__', None)
-        if adapters is None:
-            frame.f_locals['__grok_adapters__'] = adapters = []
-        adapters.append(ob)
+        if not isinstance(ob, DescriptorAwareMetaClasses):
+            frame = sys._getframe(1)
+            adapters = frame.f_locals.get('__grok_adapters__', None)
+            if adapters is None:
+                frame.f_locals['__grok_adapters__'] = adapters = []
+            adapters.append(ob)
 
         return zope.interface.implementer.__call__(self, ob)
+
 
 class provider:
     """Declares that the function object provides a certain interface (or a
@@ -125,7 +126,6 @@ class provider:
     def __call__(self, ob):
         if isinstance(ob, DescriptorAwareMetaClasses):
             raise TypeError("Can't use implementer with classes.  Use one of "
-                            "the class-declaration functions instead."
-                            )
+                            "the class-declaration functions instead.")
         zope.interface.alsoProvides(ob, *self.interfaces)
         return ob
