@@ -4,20 +4,23 @@ Changes
 2.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Make grokcore.component.implementer compatible with
+  zope.interface.implementer by allowing doing the adapter magic when
+  used on functions.
 
 
 2.6 (2015-05-12)
 ----------------
 
-- compatibility for python 3
+- Compatibility for python 3l
+
 - Python 3 doesn't support the directive ``zope.interface.implements``
   any more and is required to use the ``@implementer`` class decorator instead.
-  This version of grokcore.components provides its own 
+  This version of grokcore.components provides its own
   ``grokcore.component.implements`` directive for both Python 2 and 3.
   So this directive can still be used with the help of a grokker.
   If you use grokcore.components >= 2.6  the new implementation will be used
-  while earlier versions used zope.interface.implements.  
+  while earlier versions used zope.interface.implements.
 
 2.5 (2012-05-01)
 ----------------
