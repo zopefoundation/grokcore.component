@@ -4,6 +4,12 @@ Changes
 2.7 (unreleased)
 ----------------
 
+- Nothing changed yet.
+
+
+2.6.1 (2016-01-29)
+------------------
+
 - Make grokcore.component.implementer compatible with
   zope.interface.implementer by allowing doing the adapter magic when
   used on functions.
