@@ -4,7 +4,9 @@ Changes
 2.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Add ability to exclude more than one module or package using
+  ``<grok:grok exclude="<names>" />`` and allow to use unix shell-style
+  wildcards within.
 
 
 2.6.1 (2016-01-29)
