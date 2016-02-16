@@ -1,7 +1,7 @@
 Changes
 =======
 
-2.7 (unreleased)
+2.7 (2016-02-16)
 ----------------
 
 - Add ability to exclude more than one module or package using
