@@ -42,9 +42,9 @@ Excluding both 'file_1` and `test_asdf`allows to successfully grok the module:
 
 """
 
-from zope.configuration import xmlconfig
+from zope.configuration import config, xmlconfig
 from grokcore.component.tests.zcml import excludemanypkg
 
-context = xmlconfig.ConfigurationMachine()
+context = config.ConfigurationMachine()
 xmlconfig.registerCommonDirectives(context)
 context.package = excludemanypkg
