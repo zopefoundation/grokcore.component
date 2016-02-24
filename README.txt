@@ -49,6 +49,10 @@ To sum up, your ``site.zcml`` file should look like something like this::
 
   </configure>
 
+There is an optional ``exclude`` on the `grok` directive. It allows to specify
+names of packages or modules that if encountered won't be grokked. These
+names might contain unix shell-style wildcards.
+
 Examples
 ========
 

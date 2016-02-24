@@ -14,10 +14,11 @@
 """Grok ZCML directives."""
 
 from zope.interface import Interface
-from zope.configuration.fields import GlobalObject
+from zope.configuration.fields import GlobalObject, Tokens
 from zope.schema import TextLine
 
 import martian
+import fnmatch
 
 
 class IGrokDirective(Interface):
@@ -28,10 +29,12 @@ class IGrokDirective(Interface):
         description=u"The package or module to be analyzed by grok.",
         required=False)
 
-    exclude = TextLine(
+    exclude = Tokens(
         title=u"Exclude",
-        description=u"Name to exclude in the grokking process.",
-        required=False)
+        description=u"Names (which might contain unix shell-style wildcards) "
+                    u"to be excluded in the grokking process.",
+        required=False,
+        value_type=TextLine())
 
 
 # add a cleanup hook so that grok will bootstrap itself again whenever
@@ -61,8 +64,12 @@ def do_grok(dotted_name, config, extra_exclude=None):
     if extra_exclude is not None:
 
         def exclude_filter(name):
-            return skip_tests(name) or extra_exclude == name
-
+            if skip_tests(name):
+                return True
+            for exclude in extra_exclude:
+                if fnmatch.fnmatch(name, exclude):
+                    return True
+            return False
     else:
         exclude_filter = skip_tests
 
