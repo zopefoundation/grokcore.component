@@ -53,6 +53,19 @@ There is an optional ``exclude`` on the `grok` directive. It allows to specify
 names of packages or modules that if encountered won't be grokked. These
 names might contain unix shell-style wildcards.
 
+`implementer()` versus `implements()`
+=====================================
+
+Note how the Python 3 compatibility brings a change in how the
+`grokcore.component.implements()` *directive* works. When using this directive
+you now have to make sure the component is grokkked, to have the underlying
+mechanism to take effect.
+
+Alternatively you could start to use the `grokcore.component.implementer()`
+*class decorator* instead. This will do the same thing, but does not require
+your component to be grokkked and still have your component declare it
+implements the given interface.
+
 Examples
 ========
 
