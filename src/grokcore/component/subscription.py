@@ -13,11 +13,19 @@
 ##############################################################################
 """Grok subscriptions functions.
 """
-from zope import component
+from zope.interface import providedBy
 from grokcore.component import util
 
 def queryOrderedMultiSubscriptions(components, interface):
-    return util.sort_components(component.subscribers(components, interface))
+    manager = util.getSiteManager()
+    subscriptions = manager.adapters.subscriptions(
+        map(providedBy, components), interface)
+    results = []
+    for subscription in util.sort_components(subscriptions):
+        result = subscription(*components)
+        if result is not None:
+            results.append(result)
+    return results
 
 def queryOrderedSubscriptions(component, interface):
     return queryOrderedMultiSubscriptions((component, ), interface)
@@ -29,7 +37,15 @@ def queryMultiSubscriptions(components, interface):
     :parameter interface: interface that the subscriptions should provide.
     :return: a list of subscriptions.
     """
-    return component.subscribers(components, interface)
+    manager = util.getSiteManager()
+    subscriptions = manager.adapters.subscriptions(
+        map(providedBy, components), interface)
+    results = []
+    for subscription in subscriptions:
+        result = subscription(*components)
+        if result is not None:
+            results.append(result)
+    return results
 
 def querySubscriptions(component, interface):
     """Query for subscriptions on `component` providing `interface`.
