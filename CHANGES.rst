@@ -4,8 +4,8 @@ Changes
 2.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Add ``conftest`` to the list of by default not grokked modules. It is used by
+  `py.test`.
 
 2.7 (2016-02-16)
 ----------------

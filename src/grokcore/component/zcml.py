@@ -51,7 +51,7 @@ the_module_grokker = martian.ModuleGrokker(the_multi_grokker)
 
 
 def skip_tests(name):
-    return name in ['tests', 'ftests', 'testing']
+    return name in ['tests', 'ftests', 'testing', 'conftest']
 
 
 def grokDirective(_context, package, exclude=None):
