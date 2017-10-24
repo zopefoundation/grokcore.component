@@ -13,6 +13,7 @@
 ##############################################################################
 """Grok directives.
 """
+import sys
 import martian
 import martian.util
 from martian.error import GrokError, GrokImportError
@@ -139,7 +140,7 @@ class direct(martian.MarkerDirective):
     scope = martian.CLASS
 
 class order(martian.Directive):
-    scope = martian.CLASS
+    scope = martian.CLASS_OR_MODULE
     store = martian.ONCE
     default = 0, 0
 
@@ -148,6 +149,13 @@ class order(martian.Directive):
     def factory(self, value=0):
         order._order += 1
         return value, order._order
+
+    def __call__(self, func):
+        frame = sys._getframe(1)
+        name = self.dotted_name()
+        value = frame.f_locals.pop(name)
+        self.set(func, value)
+        return func
 
 class path(martian.Directive):
     scope = martian.CLASS

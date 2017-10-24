@@ -4,7 +4,13 @@ Changes
 2.5.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Make ``grok.order()`` usable as a decorator on functions so they can
+  be sorted as well.
+
+- Make ``grok.queryOrderedSubscriptions`` and
+  ``grok.queryOrderedMultiSubscriptions`` sort the subscriptions
+  themselves and not the result returned by them. This let you for
+  instance sort events-type subscriptions.
 
 
 2.5.1 (2016-02-24)
