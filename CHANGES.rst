@@ -4,8 +4,7 @@ Changes
 3.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Rearrange tests such that Travis CI can pick up all functional tests too.
 
 3.0 (2017-10-19)
 ----------------
@@ -14,7 +13,6 @@ Changes
 
 - Drop support for Python 2.6 and 3.3.
 
-
 2.7 (2016-02-16)
 ----------------
 
@@ -22,14 +20,12 @@ Changes
   ``<grok:grok exclude="<names>" />`` and allow to use unix shell-style
   wildcards within.
 
-
 2.6.1 (2016-01-29)
 ------------------
 
 - Make grokcore.component.implementer compatible with
   zope.interface.implementer by allowing doing the adapter magic when
   used on functions.
-
 
 2.6 (2015-05-12)
 ----------------
