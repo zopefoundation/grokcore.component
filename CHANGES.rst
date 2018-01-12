@@ -1,8 +1,8 @@
 Changes
 =======
 
-3.1 (unreleased)
-----------------
+3.0.1 (2018-01-12)
+------------------
 
 - Rearrange tests such that Travis CI can pick up all functional tests too.
 
