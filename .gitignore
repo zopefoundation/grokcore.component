@@ -12,3 +12,4 @@ eggs/
 htmlcov/
 lib/
 pip-selfcheck.json
+pyvenv.cfg
