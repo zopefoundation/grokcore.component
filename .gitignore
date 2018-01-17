@@ -1,9 +1,10 @@
-*.egg-info/
-*.py[co]
+__pycache__/
 .coverage
+.coverage.*
 .installed.cfg
 .tox/
-__pycache__/
+*.egg-info/
+*.py[co]
 bin/
 build/
 develop-eggs/
