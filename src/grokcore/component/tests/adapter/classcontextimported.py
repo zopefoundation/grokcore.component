@@ -1,7 +1,7 @@
 """
 Explicit class-level context for an imported model:
 
-  >>> grok.testing.grok(__name__, 
+  >>> grok.testing.grok(__name__,
   ... 'grokcore.component.tests.adapter.adapter')
 
   >>> cave = Cave()
@@ -20,6 +20,6 @@ from zope import interface
 class IPainting(interface.Interface):
     pass
 
+@grok.implementer(IPainting)
 class Painting(grok.Adapter):
-    grok.implements(IPainting)
     grok.context(Cave)

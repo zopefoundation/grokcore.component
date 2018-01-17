@@ -22,18 +22,18 @@ class IDecoration(Interface):
 class ICaveCleaning(Interface):
     pass
 
+@grok.implementer(ICave)
 class Cave(object):
-    grok.implements(ICave)
+    pass
 
-
+@grok.implementer(IDecoration)
 class ImplicitProvides(grok.Adapter):
     """Here the provided interface is guessed because the class only
     implements one interface."""
     grok.context(ICave)
-    grok.implements(IDecoration)
 
+@grok.implementer(IDecoration, ICaveCleaning)
 class ExplicitProvides(grok.Adapter):
     """Here the provided interface is specific explicitly."""
     grok.context(ICave)
-    grok.implements(IDecoration, ICaveCleaning)
     grok.provides(IDecoration)

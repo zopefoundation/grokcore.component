@@ -27,15 +27,17 @@ from zope import interface
 class ICave(interface.Interface):
     pass
 
+@grok.implementer(ICave)
 class Cave(grok.Context):
-    grok.implements(ICave)
+    pass
 
+@grok.implementer(ICave)
 class Hole(grok.Context):
-    grok.implements(ICave)
+    pass
 
 class IHome(interface.Interface):
     pass
 
+@grok.implementer(IHome)
 class Home(grok.Adapter):
-    grok.implements(IHome)
     grok.context(ICave)

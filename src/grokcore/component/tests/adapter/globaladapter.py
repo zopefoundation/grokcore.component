@@ -64,15 +64,15 @@ class IHome(interface.Interface):
     pass
 
 
+@grok.implementer(IHome)
 class Home(object):
-    grok.implements(IHome)
 
     def __init__(self, id):
         self.id = id
 
 
+@grok.implementer(IHome)
 class CaveHomeFactory(object):
-    grok.implements(IHome)
 
     def __init__(self, id):
         self.id = id
@@ -134,8 +134,8 @@ class IGarage(interface.Interface):
     pass
 
 
+@grok.implementer(IGarage)
 class NamedGarageFactory(object):
-    grok.implements(IGarage)
     grok.name('named_garage_factory_name')
 
     def __init__(self, context):
