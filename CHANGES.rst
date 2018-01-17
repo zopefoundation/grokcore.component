@@ -1,7 +1,7 @@
 Changes
 =======
 
-3.0.2 (unreleased)
+3.0.2 (2018-01-17)
 ------------------
 
 - Replace the use of `grok.implements()` with the `@grok.implementer()`
