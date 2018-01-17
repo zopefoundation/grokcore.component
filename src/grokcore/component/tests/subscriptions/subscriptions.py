@@ -36,8 +36,8 @@ class ICleaner(interface.Interface):
         """Clean that cave.
         """
 
+@grok.implementer(ICleaner)
 class MondayCleaner(grok.Subscription):
-    grok.implements(ICleaner)
 
     def work(self):
         print('Monday cleaning %s!' % self.context.name)
@@ -50,9 +50,8 @@ class WednesdayCleaner(grok.Subscription):
         print('Wednesday cleaning %s!' % self.context.name)
 
 
+@grok.implementer(ICleaner)
 class SaturdayCleaner(grok.Subscription):
-    grok.implements(ICleaner)
 
     def work(self):
         print('Saturday cleaning %s!' % self.context.name)
-

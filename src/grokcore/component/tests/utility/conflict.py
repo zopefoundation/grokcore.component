@@ -34,33 +34,33 @@ class IAnotherInterface(Interface):
     pass
 
 
+@grok.implementer(IUtilityInterface)
 class Implicit1(grok.GlobalUtility):
-    grok.implements(IUtilityInterface)
     grok.name('implicit class')
 
+@grok.implementer(IUtilityInterface)
 class Implicit2(grok.GlobalUtility):
-    grok.implements(IUtilityInterface)
     grok.name('implicit class')
 
 
+@grok.implementer(IUtilityInterface, IAnotherInterface)
 class Explicit1(grok.GlobalUtility):
-    grok.implements(IUtilityInterface, IAnotherInterface)
     grok.provides(IUtilityInterface)
     grok.name('explicit class')
 
+@grok.implementer(IUtilityInterface, IAnotherInterface)
 class Explicit2(grok.GlobalUtility):
-    grok.implements(IUtilityInterface, IAnotherInterface)
     grok.provides(IUtilityInterface)
     grok.name('explicit class')
 
 
+@grok.implementer(IUtilityInterface, IAnotherInterface)
 class Mixed1(grok.GlobalUtility):
-    grok.implements(IUtilityInterface, IAnotherInterface)
     grok.provides(IUtilityInterface)
     grok.name('mixed class')
 
+@grok.implementer(IUtilityInterface)
 class Mixed2(grok.GlobalUtility):
-    grok.implements(IUtilityInterface)
     grok.name('mixed class')
 
 
@@ -74,16 +74,15 @@ class Direct2(grok.GlobalUtility):
     grok.name('direct class')
     grok.direct()
 
-
+@grok.implementer(IUtilityInterface)
 class ClassLevel(grok.GlobalUtility):
     """This utility inherits from Grok's base class and is registered
     this way."""
-    grok.implements(IUtilityInterface)
     grok.name('class and module')
 
+@grok.implementer(IUtilityInterface)
 class ModuleLevel(object):
     """This utility doesn't inherit from Grok's base class and is
     registered explicitly using the module-level directive below."""
-    grok.implements(IUtilityInterface)
 
 grok.global_utility(ModuleLevel, name='class and module')

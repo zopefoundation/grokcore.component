@@ -66,13 +66,13 @@ class IYetAnotherHome(interface.Interface):
     pass
 
 
+@grok.implementer(ICave)
 class Cave(grok.Context):
-    grok.implements(ICave)
     pass
 
 
+@grok.implementer(IHome)
 class Home(object):
-    grok.implements(IHome)
 
     def __init__(self, id=u"default"):
         self.id = id

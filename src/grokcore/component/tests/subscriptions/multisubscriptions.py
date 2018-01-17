@@ -61,8 +61,8 @@ class IActivity(interface.Interface):
         """Do something.
         """
 
+@grok.implementer(IActivity)
 class Sleep(grok.MultiSubscription):
-    grok.implements(IActivity)
     grok.adapts(Office, Mammoth)
 
     def __init__(self, where, who):
@@ -73,8 +73,8 @@ class Sleep(grok.MultiSubscription):
         print('%s is sleeping at %s.' % (self.who.name, self.where.name))
 
 
+@grok.implementer(IActivity)
 class DayTimeActivity(grok.MultiSubscription):
-    grok.implements(IActivity)
     grok.adapts(Cave, Mammoth)
     grok.baseclass()
 

@@ -25,7 +25,7 @@
    <grokcore.component.tests.subscriptions.ordered_subscriptions.SaturdayCleaner object at ...>,
    <grokcore.component.tests.subscriptions.ordered_subscriptions.WednesdayCleaner object at ...>]
 
-  >>> for s in subscriptions: s.work() 
+  >>> for s in subscriptions: s.work()
   Monday cleaning!
   Saturday cleaning!
   Wednesday cleaning!
@@ -46,26 +46,25 @@ class ICleaner(interface.Interface):
         """Clean that cave.
         """
 
+@grok.implementer(ICleaner)
 class MondayCleaner(grok.Subscription):
-    grok.implements(ICleaner)
     grok.order(1)
 
     def work(self):
         print('Monday cleaning!')
 
 
+@grok.implementer(ICleaner)
 class WednesdayCleaner(grok.Subscription):
-    grok.implements(ICleaner)
     grok.order(3)
 
     def work(self):
         print('Wednesday cleaning!')
 
 
+@grok.implementer(ICleaner)
 class SaturdayCleaner(grok.Subscription):
-    grok.implements(ICleaner)
     grok.order(6)
 
     def work(self):
         print('Saturday cleaning!')
-

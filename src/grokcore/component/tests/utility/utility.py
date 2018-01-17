@@ -75,7 +75,7 @@ be (re-)registered using grok.global_utility:
   True
   >>> isinstance(night, NightClub)
   True
-  
+
   >>> spiky = component.getUtility(ISpikyClub)
   >>> ISpikyClub.providedBy(spiky)
   True
@@ -122,7 +122,7 @@ Let's look up an instance we registered this way:
   True
   >>> isinstance(small4, SmallClub)
   True
-  
+
 """
 
 import grokcore.component as grok
@@ -146,30 +146,31 @@ class INightClub(interface.Interface):
 class IClubMaker(interface.Interface):
     pass
 
+@grok.implementer(IClub)
 class NormalClub(grok.GlobalUtility):
-    grok.implements(IClub)
+    pass
 
+@grok.implementer(IClub)
 class HugeClub(grok.GlobalUtility):
-    grok.implements(IClub)
-    grok.name('huge')    
+    grok.name('huge')
 
+@grok.implementer(ISpikyClub)
 class SpikyClub(grok.GlobalUtility):
-    grok.implements(ISpikyClub)
     grok.provides(IClub)
     grok.name('spiky')
 
+@grok.implementer(INightClub, ISpikyClub)
 class NightClub(grok.GlobalUtility):
-    grok.implements(INightClub, ISpikyClub)
     grok.provides(INightClub)
 
+@grok.implementer(ISmallClub, ITinyClub)
 class SmallClub(grok.GlobalUtility):
-    grok.implements(ISmallClub, ITinyClub)
     grok.provides(ISmallClub)
     grok.name('tiny')
 
 @interface.provider(IClubMaker)
+@grok.implementer(IClub)
 class ClubMaker(grok.GlobalUtility):
-    grok.implements(IClub)
     grok.direct()
     grok.name('maker')
 
@@ -179,11 +180,13 @@ class IFireplace(interface.Interface):
 class IHome(interface.Interface):
     pass
 
+@grok.implementer(IFireplace)
 class Fireplace(object):
-    grok.implements(IFireplace)
+    pass
 
+@grok.implementer(IFireplace, IHome)
 class Home(object):
-    grok.implements(IFireplace, IHome)
+    pass
 
 grok.global_utility(Fireplace)
 grok.global_utility(Fireplace, name='hot')
