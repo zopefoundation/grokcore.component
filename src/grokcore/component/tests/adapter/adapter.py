@@ -35,3 +35,7 @@ class IFireplace(interface.Interface):
 @grok.implementer(IFireplace, IHome)
 class Fireplace(grok.Adapter):
     grok.provides(IFireplace)
+
+
+SweetHome = Home
+grok.ignore('SweetHome')
