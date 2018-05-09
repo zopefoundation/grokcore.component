@@ -5,6 +5,7 @@ import os
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
+
 long_description = (
     read('README.rst')
     + '\n' +
@@ -46,7 +47,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=['setuptools',
-                      'martian >= 0.14',
+                      'martian >= 1.2',
                       'zope.component',
                       'zope.configuration',
                       'zope.interface',

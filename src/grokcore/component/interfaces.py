@@ -63,6 +63,10 @@ class IDirectives(Interface):
         it can still serve as a context.
         """
 
+    def ignore(name):
+        """Prevent name to be grokked in the current module.
+        """
+
     def implements(*interfaces):
         """Declare that a class implements the given interfaces."""
 
