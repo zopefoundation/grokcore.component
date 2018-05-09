@@ -1,8 +1,8 @@
 Changes
 =======
 
-3.0.3 (unreleased)
-------------------
+3.1 (2018-05-09)
+----------------
 
 - Expose ``martian.ignore`` through our API.
 
