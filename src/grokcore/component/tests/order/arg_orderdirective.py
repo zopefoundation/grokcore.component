@@ -26,17 +26,22 @@ You can use the key option:
 
 import grokcore.component as grok
 
+
 class First(object):
     grok.order(5)
+
 
 class Second(object):
     grok.order(4)
 
+
 class Third(object):
     grok.order(3)
 
+
 class Fourth(object):
     grok.order(2)
+
 
 class Fifth(object):
     grok.order(1)

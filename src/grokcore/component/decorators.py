@@ -22,6 +22,7 @@ from martian.error import GrokImportError
 
 from zope.interface.declarations import DescriptorAwareMetaClasses
 
+
 class subscribe:
     """Declares that a function is to be registered as an event handler for the
     specified objects.
@@ -57,6 +58,7 @@ class subscribe:
         # register it manually)
         return zope.component.adapter(*self.subscribed)(function)
 
+
 class adapter(zope.component.adapter):
     """Registers the function as an adapter for the specific interface.
 
@@ -71,7 +73,7 @@ class adapter(zope.component.adapter):
         if not interfaces:
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
-        if type(interfaces[0]) is types.FunctionType:
+        if isinstance(interfaces[0], types.FunctionType):
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
 
@@ -82,7 +84,8 @@ class adapter(zope.component.adapter):
                 self.name = kw.pop('name')
             if kw:
                 raise GrokImportError(
-                    "@grok.adapter got unexpected keyword arguments: %s" % ','.join(kw.keys()))
+                    "@grok.adapter got unexpected keyword arguments: %s"
+                    % ','.join(kw.keys()))
 
         zope.component.adapter.__init__(self, *interfaces)
 

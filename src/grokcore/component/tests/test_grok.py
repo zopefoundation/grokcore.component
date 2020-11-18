@@ -6,23 +6,25 @@ from pkg_resources import resource_listdir
 from zope.testing import cleanup, renormalizing
 import zope.component.eventtesting
 
+
 def setUpZope(test):
     zope.component.eventtesting.setUp(test)
 
+
 def cleanUpZope(test):
     cleanup.cleanUp()
+
 
 checker = renormalizing.RENormalizing([
     # str(Exception) has changed from Python 2.4 to 2.5 (due to
     # Exception now being a new-style class).  This changes the way
     # exceptions appear in traceback printouts.
     (re.compile(r"ConfigurationExecutionError: <class '([\w.]+)'>:"),
-                r'ConfigurationExecutionError: \1:'),
+     r'ConfigurationExecutionError: \1:'),
     # unicode object representation changed in Python 3.
-    (re.compile(r"u?\'(.*)\'"), 
-                r'u\'\1\''),
-    (re.compile(r"u?\"(.*)\""), 
-                r'u\"\1\"')])
+    (re.compile(r"u?\'(.*)\'"), r'u\'\1\''),
+    (re.compile(r"u?\"(.*)\""), r'u\"\1\"')])
+
 
 def suiteFromPackage(name):
     files = resource_listdir(__name__, name)
@@ -50,6 +52,7 @@ def suiteFromPackage(name):
         suite.addTest(test)
     return suite
 
+
 def test_suite():
     suite = unittest.TestSuite()
     for name in ['adapter', 'directive', 'grokker', 'utility', 'view',
@@ -66,6 +69,7 @@ def test_suite():
                                           tearDown=cleanUpZope)
     suite.addTest(grok_component)
     return suite
+
 
 if __name__ == '__main__':
     unittest.main(defaultTest='test_suite')

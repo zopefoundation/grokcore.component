@@ -17,6 +17,7 @@ Explicit module-level context for an imported model:
 import grokcore.component as grok
 from grokcore.component.tests.inherit import inherit_fixture
 
+
 # FooAdapter has a module-level grok.context to associate it
 class BarAdapter(inherit_fixture.FooAdapter):
     grok.name('bar')

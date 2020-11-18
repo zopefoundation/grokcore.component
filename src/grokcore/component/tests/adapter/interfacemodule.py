@@ -24,21 +24,27 @@ You can also specify interfaces instead of classes with
 import grokcore.component as grok
 from zope import interface
 
+
 class ICave(interface.Interface):
     pass
+
 
 @grok.implementer(ICave)
 class Cave(grok.Context):
     pass
 
+
 @grok.implementer(ICave)
 class Hole(grok.Context):
     pass
 
+
 grok.context(ICave)
+
 
 class IHome(interface.Interface):
     pass
+
 
 @grok.implementer(IHome)
 class Home(grok.Adapter):

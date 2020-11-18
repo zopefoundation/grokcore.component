@@ -16,11 +16,14 @@
 from zope import component
 from grokcore.component import util
 
+
 def queryOrderedMultiSubscriptions(components, interface):
     return util.sort_components(component.subscribers(components, interface))
 
+
 def queryOrderedSubscriptions(component, interface):
     return queryOrderedMultiSubscriptions((component, ), interface)
+
 
 def queryMultiSubscriptions(components, interface):
     """Query for subscriptions on the `components` providing `interface`.
@@ -30,6 +33,7 @@ def queryMultiSubscriptions(components, interface):
     :return: a list of subscriptions.
     """
     return component.subscribers(components, interface)
+
 
 def querySubscriptions(component, interface):
     """Query for subscriptions on `component` providing `interface`.

@@ -10,5 +10,5 @@ Imported model and adapter won't be grokked:
     ...
   TypeError: ('Could not adapt', <grokcore.component.tests.adapter.adapter.Cave object at ...>, <InterfaceClass grokcore.component.tests.adapter.adapter.IHome>)
 
-"""
-from grokcore.component.tests.adapter.adapter import Cave, Home
+"""  # noqa: E501 line too long
+from grokcore.component.tests.adapter.adapter import Cave, Home  # noqa: F401

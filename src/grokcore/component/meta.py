@@ -18,7 +18,6 @@ import operator
 import martian
 import martian.util
 import grokcore.component
-import zope.component.interface
 from zope import component, interface
 from martian.error import GrokError
 from zope.interface import implementedBy
@@ -28,6 +27,7 @@ from zope.interface.declarations import classImplements
 def _provides(component, module=None, **data):
     martian.util.check_implements_one(component)
     return list(interface.implementedBy(component))[0]
+
 
 def default_global_utility_provides(component, module, direct, **data):
     if direct:
@@ -47,7 +47,7 @@ class AdapterGrokker(martian.ClassGrokker):
             discriminator=('adapter', context, provides, name),
             callable=grokcore.component.provideAdapter,
             args=(factory, (context,), provides, name),
-            )
+        )
         return True
 
 
@@ -67,7 +67,7 @@ class MultiAdapterGrokker(martian.ClassGrokker):
             discriminator=('adapter', for_, provides, name),
             callable=grokcore.component.provideAdapter,
             args=(factory, None, provides, name),
-            )
+        )
         return True
 
 
@@ -82,7 +82,7 @@ class SubscriptionGrokker(martian.ClassGrokker):
             discriminator=None,
             callable=grokcore.component.provideSubscriptionAdapter,
             args=(factory, (context,), provides),
-            )
+        )
         return True
 
 
@@ -102,7 +102,7 @@ class MultiSubscriptionGrokker(martian.ClassGrokker):
             discriminator=None,
             callable=grokcore.component.provideSubscriptionAdapter,
             args=(factory, adapts, provides),
-            )
+        )
         return True
 
 
@@ -126,7 +126,7 @@ class GlobalUtilityGrokker(martian.ClassGrokker):
             discriminator=('utility', provides, name),
             callable=grokcore.component.provideUtility,
             args=(factory, provides, name),
-            )
+        )
         return True
 
 
@@ -134,8 +134,9 @@ class ImplementerDecoratorGrokker(martian.GlobalGrokker):
 
     def grok(self, name, module, module_info, config, **kw):
         adapters = module_info.getAnnotation('grok.adapters', [])
-        subscribers = set(map(operator.itemgetter(0),
-                              module_info.getAnnotation('grok.subscribers', [])))
+        subscribers = set(map(
+            operator.itemgetter(0),
+            module_info.getAnnotation('grok.subscribers', [])))
 
         for function in adapters:
             if function in subscribers:
@@ -150,11 +151,13 @@ class ImplementerDecoratorGrokker(martian.GlobalGrokker):
                 interfaces = (context, )
             name = getattr(function, '__component_name__', u"")
             config.action(
-                discriminator=('adapter', interfaces, function.__implemented__, name),
+                discriminator=(
+                    'adapter', interfaces, function.__implemented__, name),
                 callable=grokcore.component.provideAdapter,
                 args=(function, interfaces, function.__implemented__, name),
-                )
+            )
         return True
+
 
 class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
 
@@ -184,7 +187,7 @@ class GlobalUtilityDirectiveGrokker(martian.GlobalGrokker):
                 discriminator=('utility', provides, name),
                 callable=grokcore.component.provideUtility,
                 args=(obj, provides, name),
-                )
+            )
 
         return True
 
@@ -206,7 +209,7 @@ class GlobalAdapterDirectiveGrokker(martian.GlobalGrokker):
                 discriminator=('adapter', adapts, provides, name),
                 callable=grokcore.component.provideAdapter,
                 args=(factory, adapts, provides, name),
-                )
+            )
 
         return True
 

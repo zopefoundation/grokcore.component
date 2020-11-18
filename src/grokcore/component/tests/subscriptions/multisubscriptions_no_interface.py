@@ -5,7 +5,7 @@
   GrokError: <class 'grokcore.component.tests.subscriptions.multisubscriptions_no_interface.CaveGardenRedecorator'>
   must implement at least one interface (use grok.implements to specify).
 
-"""
+"""  # noqa: E501 line too long
 
 import grokcore.component as grok
 
@@ -13,8 +13,10 @@ import grokcore.component as grok
 class Cave(grok.Context):
     pass
 
+
 class Garden(grok.Context):
     pass
+
 
 class CaveGardenRedecorator(grok.MultiSubscription):
     pass

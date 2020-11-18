@@ -15,6 +15,7 @@
 """
 from zope.interface import Interface, Attribute
 
+
 class IContext(Interface):
     """Marker interface for auto-association of context.
 
@@ -211,7 +212,7 @@ class IGrokcoreComponentAPI(
     IDirectives,
     IGrokErrors,
     IMartianAPI,
-    ):
+):
     """grokcore.component's public API.
     """
 

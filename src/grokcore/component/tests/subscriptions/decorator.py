@@ -12,7 +12,7 @@
   >>> from zope import component
   >>> component.queryAdapter(cave, IActivity)
 
-"""
+"""  # noqa: E501 line too long
 
 
 import grokcore.component as grok

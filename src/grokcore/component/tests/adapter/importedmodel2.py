@@ -10,11 +10,13 @@ Grok error because import model doesn't count as context:
 
 """
 import grokcore.component as grok
-from grokcore.component.tests.adapter.adapter import Cave
+from grokcore.component.tests.adapter.adapter import Cave  # noqa: F401 unused
 from zope import interface
+
 
 class IPainting(interface.Interface):
     pass
+
 
 @grok.implementer(IPainting)
 class Painting(grok.Adapter):

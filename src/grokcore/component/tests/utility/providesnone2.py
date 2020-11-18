@@ -10,7 +10,9 @@ Subclasses of grok.GlobalUtility must implement exactly one interface:
 """
 import grokcore.component as grok
 
+
 class Club(object):
     pass
+
 
 grok.global_utility(Club, direct=True)

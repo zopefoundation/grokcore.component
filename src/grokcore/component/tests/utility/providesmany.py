@@ -13,11 +13,14 @@ specify which interface to use for the registration:
 import grokcore.component as grok
 from zope import interface
 
+
 class IClub(interface.Interface):
     pass
 
+
 class ISpikyClub(interface.Interface):
     pass
+
 
 @interface.provider(IClub, ISpikyClub)
 class Club(grok.GlobalUtility):

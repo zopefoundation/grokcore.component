@@ -80,7 +80,8 @@ class Subscription(object):
     from. When omitted the current context is assumed. Use the ``implements``
     directive to specify which interface the subscription provides, or if that
     is not unambiguous, also use the ``provides`` directive to specify which of
-    the implemented interfaces should be used when registering the subscription.
+    the implemented interfaces should be used when registering the
+    subscription.
 
     """
 

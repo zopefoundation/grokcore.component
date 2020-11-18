@@ -141,6 +141,7 @@ class NamedGarageFactory(object):
     def __init__(self, context):
         self.id = u"I'm a garage"
 
+
 implementer(IGarage)(NamedGarageFactory)
 
 # should register a named adapter

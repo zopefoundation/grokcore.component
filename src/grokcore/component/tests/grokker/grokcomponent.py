@@ -1,10 +1,9 @@
 """
-
 Let's first grok the meta module to define some basic grokkers::
 
   >>> import grokcore.component as grok
   >>> grok.testing.grok('grokcore.component.meta')
-  
+
 It is possible to grok an individual component. Let's define an adapter::
 
   >>> from zope.interface import Interface
@@ -58,4 +57,4 @@ Now we can use the SecondAdapter as well::
 
 The next optional argument is module_info and the final argument is
 templates.
-"""
+"""  # noqa: E501 line too long

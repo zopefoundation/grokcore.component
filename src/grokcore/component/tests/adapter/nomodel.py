@@ -12,8 +12,10 @@ If no model can be found in the module, we get an error:
 import grokcore.component as grok
 from zope import interface
 
+
 class IHome(interface.Interface):
     pass
+
 
 @grok.implementer(IHome)
 class Home(grok.Adapter):

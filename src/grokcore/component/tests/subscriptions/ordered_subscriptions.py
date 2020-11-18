@@ -30,7 +30,7 @@
   Saturday cleaning!
   Wednesday cleaning!
 
-"""
+"""   # noqa: E501 line too long
 
 import grokcore.component as grok
 from zope import interface
@@ -45,6 +45,7 @@ class ICleaner(interface.Interface):
     def work():
         """Clean that cave.
         """
+
 
 @grok.implementer(ICleaner)
 class MondayCleaner(grok.Subscription):

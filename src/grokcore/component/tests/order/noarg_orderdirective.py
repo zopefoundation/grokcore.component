@@ -17,17 +17,22 @@ be done by definition order.
 
 import grokcore.component as grok
 
+
 class First(object):
     grok.order()
+
 
 class Second(object):
     grok.order()
 
+
 class Third(object):
     grok.order()
 
+
 class Fourth(object):
     grok.order()
+
 
 class Fifth(object):
     grok.order()

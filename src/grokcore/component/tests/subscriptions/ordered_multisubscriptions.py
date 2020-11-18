@@ -38,7 +38,7 @@
   Martijn is growing pumpkins in Tilburg cave!
 
 
-"""
+"""  # noqa: E501 line too long
 
 import grokcore.component as grok
 from zope import interface
@@ -59,8 +59,7 @@ class Mammoth(grok.Context):
 class IActivity(interface.Interface):
 
     def do():
-        """Do something.
-        """
+        """Do something."""
 
 
 class DayTimeActivity(grok.MultiSubscription):
@@ -94,4 +93,5 @@ class Gardening(DayTimeActivity):
     grok.order(15)
 
     def do(self):
-        print('%s is growing pumpkins in %s!' % (self.who.name, self.where.name))
+        print(
+            '%s is growing pumpkins in %s!' % (self.who.name, self.where.name))

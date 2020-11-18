@@ -9,28 +9,34 @@ explicitly declared with grok.provides):
   ConfigurationConflictError: Conflicting configuration actions
     For: ('adapter', <InterfaceClass grokcore.component.tests.adapter.conflict.ICave>, <InterfaceClass grokcore.component.tests.adapter.conflict.IDecoration>, u'')
 
-"""
+"""  # noqa: E501 line too long
 import grokcore.component as grok
 from zope.interface import Interface
+
 
 class ICave(Interface):
     pass
 
+
 class IDecoration(Interface):
     pass
+
 
 class ICaveCleaning(Interface):
     pass
 
+
 @grok.implementer(ICave)
 class Cave(object):
     pass
+
 
 @grok.implementer(IDecoration)
 class ImplicitProvides(grok.Adapter):
     """Here the provided interface is guessed because the class only
     implements one interface."""
     grok.context(ICave)
+
 
 @grok.implementer(IDecoration, ICaveCleaning)
 class ExplicitProvides(grok.Adapter):
