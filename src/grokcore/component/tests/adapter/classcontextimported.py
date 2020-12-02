@@ -17,8 +17,10 @@ import grokcore.component as grok
 from grokcore.component.tests.adapter.adapter import Cave
 from zope import interface
 
+
 class IPainting(interface.Interface):
     pass
+
 
 @grok.implementer(IPainting)
 class Painting(grok.Adapter):

@@ -18,6 +18,7 @@ from zope.configuration.config import ConfigurationMachine
 from martian import scan
 from grokcore.component import zcml
 
+
 def grok(*module_names):
     config = ConfigurationMachine()
     zcml.do_grok('grokcore.component.compat', config)
@@ -26,8 +27,10 @@ def grok(*module_names):
         zcml.do_grok(module_name, config)
     config.execute_actions()
 
+
 def grok_component(name, component,
-                   context=None, module_info=None, templates=None, dotted_name=None):
+                   context=None, module_info=None, templates=None,
+                   dotted_name=None):
     if module_info is None:
         if dotted_name is None:
             dotted_name = getattr(component, '__grok_module__', None)
@@ -45,5 +48,5 @@ def grok_component(name, component,
     result = zcml.the_multi_grokker.grok(name, component,
                                          module_info=module_info,
                                          config=config)
-    config.execute_actions()    
+    config.execute_actions()
     return result

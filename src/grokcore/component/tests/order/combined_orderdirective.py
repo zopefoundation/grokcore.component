@@ -18,17 +18,22 @@ sorting on the order specified, and then by the definition order.
 
 import grokcore.component as grok
 
+
 class First(object):
     grok.order(2)
+
 
 class Second(object):
     grok.order(1)
 
+
 class Third(object):
     grok.order()
 
+
 class Fourth(object):
     grok.order()
+
 
 class Fifth(object):
     grok.order(1)

@@ -36,7 +36,9 @@ def sort_components(components, key=None):
     """
     sort_key = _sort_key
     if key is not None:
-        sort_key = lambda item: _sort_key(key(item))
+        def sort_key(item):
+            return _sort_key(key(item))
+
     return sorted(components, key=sort_key)
 
 

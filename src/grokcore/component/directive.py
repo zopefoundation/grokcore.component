@@ -21,6 +21,7 @@ from zope import interface
 from zope.interface.interfaces import IInterface
 from grokcore.component.interfaces import IContext
 
+
 class global_utility(martian.MultipleTimesDirective):
     """Registers an instance of ``class`` (or ``class`` itself, depending on
     the value of the ``direct`` parameter) as a global utility.
@@ -44,6 +45,7 @@ class global_utility(martian.MultipleTimesDirective):
                 "You can only pass an interface to the "
                 "provides argument of %s." % self.name)
         return (factory, provides, name, direct)
+
 
 class global_adapter(martian.MultipleTimesDirective):
     """Registers the ``factory`` callable as a global adapter.
@@ -80,6 +82,7 @@ class global_adapter(martian.MultipleTimesDirective):
 
         return (factory, adapts, provides, name)
 
+
 class name(martian.Directive):
     """Declares the name of a named utility, named adapter, etc.
 
@@ -88,6 +91,7 @@ class name(martian.Directive):
     store = martian.ONCE
     validate = martian.validateText
     default = u''
+
 
 class context(martian.Directive):
     """Declares the type of object that the adapter (or a similar context-
@@ -119,6 +123,7 @@ class context(martian.Directive):
                 % (component), component)
         return component
 
+
 class title(martian.Directive):
     """Declares the human-readable title of a component (such as a permission,
     role, etc.)
@@ -128,8 +133,10 @@ class title(martian.Directive):
     store = martian.ONCE
     validate = martian.validateText
 
+
 class description(title):
     pass
+
 
 class direct(martian.MarkerDirective):
     """Declares that a ``GlobalUtility`` class should be registered as a
@@ -137,6 +144,7 @@ class direct(martian.MarkerDirective):
 
     """
     scope = martian.CLASS
+
 
 class order(martian.Directive):
     scope = martian.CLASS
@@ -149,10 +157,12 @@ class order(martian.Directive):
         order._order += 1
         return value, order._order
 
+
 class path(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE
     validate = martian.validateText
+
 
 class provides(martian.Directive):
     """Declares the interface that a adapter or utility provides for the
@@ -176,19 +186,19 @@ class implements(martian.Directive):
     """ Declare interfaces implemented by instances of a class.
         The arguments are one or more interfaces or interface
         specifications (IDeclaration objects).
-    
+
         Since the original implementer from zope.interface is not supported
         anymore Python 3, grokcore.component continues to support it
         on its own.
-        
+
         :param interface or interfaces to be implement by a class.
     """
     scope = martian.CLASS
     store = martian.ONCE
     default = None
-    
+
     def factory(self, *interfaces):
-        for interface in interfaces:
-            if not IInterface.providedBy(interface):
-                raise Exception('%s is not a interface' % repr(interface))
+        for iface in interfaces:
+            if not IInterface.providedBy(iface):
+                raise Exception('%s is not a interface' % repr(iface))
         return interfaces

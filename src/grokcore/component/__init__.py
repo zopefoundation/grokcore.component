@@ -13,9 +13,7 @@
 ##############################################################################
 """Grok
 """
-
-from zope.component import adapts
-adapts.__doc__ = "Declares the types of objects that a multi-adapter adapts."
+# flake8: noqa F401
 
 from zope.interface import implementsOnly, classProvides
 
@@ -74,6 +72,10 @@ from grokcore.component.util import (
 # 'grokcore.component' package.  Useful for tests and interpreter examples.
 import grokcore.component.testing
 
-# Only export public API
 from grokcore.component.interfaces import IGrokcoreComponentAPI
+from zope.component import adapts
+
+
+adapts.__doc__ = "Declares the types of objects that a multi-adapter adapts."
+# Only export public API
 __all__ = list(IGrokcoreComponentAPI)

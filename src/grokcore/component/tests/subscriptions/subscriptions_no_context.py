@@ -6,15 +6,17 @@
   <class 'grokcore.component.tests.subscriptions.subscriptions_no_context.CaveProcessor'>,
   please use the 'context' directive.
 
-"""
+"""  # noqa: E501 line too long
 
 import grokcore.component as grok
 from zope import interface
+
 
 class ITask(interface.Interface):
 
     def finish():
         pass
+
 
 class CaveProcessor(grok.Subscription):
     grok.provides(ITask)

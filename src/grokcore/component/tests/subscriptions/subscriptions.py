@@ -16,12 +16,13 @@
 
   Subscription adapters are not registered as regular adapters:
 
+  >>> from zope import component
   >>> component.queryAdapter(cave, ICleaner)
 
-"""
+"""  # noqa: E501 line too long
 
 import grokcore.component as grok
-from zope import interface, component
+from zope import interface
 
 
 class Cave(grok.Context):
@@ -33,8 +34,8 @@ class Cave(grok.Context):
 class ICleaner(interface.Interface):
 
     def work():
-        """Clean that cave.
-        """
+        """Clean that cave."""
+
 
 @grok.implementer(ICleaner)
 class MondayCleaner(grok.Subscription):

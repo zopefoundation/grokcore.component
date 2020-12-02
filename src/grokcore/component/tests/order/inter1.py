@@ -25,11 +25,14 @@ The ordering works like so:
 
 import grokcore.component as grok
 
+
 class One(object):
     grok.order()
 
+
 class Two(object):
     grok.order(2)
+
 
 class Three(object):
     pass

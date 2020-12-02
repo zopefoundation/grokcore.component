@@ -11,7 +11,8 @@ not block BetaGrokker from picking up the same component::
 In the fixture there is AlphaBetaSub that inherits from both Alpha and Beta.
 Thus, both Grokkers are executed, with AlphaGrokker coming before BetaGrokker::
 
-    >>> grok.testing.grok('grokcore.component.tests.grokker.continue_scanning_fixture')
+    >>> grok.testing.grok(
+    ...     'grokcore.component.tests.grokker.continue_scanning_fixture')
     alpha
     beta
 
@@ -22,16 +23,19 @@ import martian
 class Alpha(object):
     pass
 
+
 class Beta(object):
     pass
 
+
 class AlphaGrokker(martian.ClassGrokker):
     martian.component(Alpha)
-    martian.priority(1) # we need to go before BetaGrokker
+    martian.priority(1)  # we need to go before BetaGrokker
 
     def grok(self, name, factory, module_info, config, **kw):
         print("alpha")
         return True
+
 
 class BetaGrokker(martian.ClassGrokker):
     martian.component(Beta)
@@ -39,4 +43,3 @@ class BetaGrokker(martian.ClassGrokker):
     def grok(self, name, factory, module_info, config, **kw):
         print("beta")
         return True
-    

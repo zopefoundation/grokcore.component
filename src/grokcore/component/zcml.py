@@ -13,9 +13,10 @@
 ##############################################################################
 """Grok ZCML directives."""
 
-from zope.interface import Interface
 from zope.configuration.fields import GlobalObject, Tokens
+from zope.interface import Interface
 from zope.schema import TextLine
+from zope.testing.cleanup import addCleanUp
 
 import martian
 import fnmatch
@@ -43,7 +44,7 @@ def resetBootstrap():
     # we need to make sure that the grokker registry is clean again
     the_module_grokker.clear()
 
-from zope.testing.cleanup import addCleanUp
+
 addCleanUp(resetBootstrap)
 
 the_multi_grokker = martian.MetaMultiGrokker()

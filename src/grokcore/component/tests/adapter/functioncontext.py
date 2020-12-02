@@ -21,10 +21,12 @@ You can't call grok.context from a method either:
 import grokcore.component as grok
 from grokcore.component.tests.adapter.adapter import Cave
 
+
 def func():
     """We don't allow calling `grok.context` from anything else than a
     module or a class"""
     grok.context(Cave)
+
 
 class SomeClass(object):
 

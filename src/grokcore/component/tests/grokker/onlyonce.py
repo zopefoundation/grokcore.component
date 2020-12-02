@@ -9,7 +9,8 @@ the module containing the grokkers (e.g. meta.py).
 We do it manually now::
 
   >>> import grokcore.component as grok
-  >>> grok.testing.grok('grokcore.component.tests.grokker.onlyonce_fixture._meta')
+  >>> grok.testing.grok(
+  ...     'grokcore.component.tests.grokker.onlyonce_fixture._meta')
 
 This _meta.py module then will be grokked again during 'normal' grok time. Grok
 will not re-register the grokkers as this could have unwanted side-effects. It

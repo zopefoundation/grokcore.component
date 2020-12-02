@@ -8,4 +8,3 @@ You can't call grok.context multiple times on class level:
   class or module.
 
 """
-

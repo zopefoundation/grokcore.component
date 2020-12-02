@@ -4,6 +4,7 @@ use zope.component.provideHandler to register the subscriber.  This
 can be useful for unittests where you may not want to grok everything
 in a module but just enable certain components.
 
+  >>> from zope.component.interfaces import ObjectEvent
   >>> from zope.component import provideHandler
   >>> provideHandler(mammothAdded)
 
@@ -15,13 +16,16 @@ in a module but just enable certain components.
 
 """
 import grokcore.component as grok
-from zope.component.interfaces import IObjectEvent, ObjectEvent
+from zope.component.interfaces import IObjectEvent
+
 
 class Mammoth(object):
     def __init__(self, name):
         self.name = name
 
+
 mammoths = []
+
 
 @grok.subscribe(Mammoth, IObjectEvent)
 def mammothAdded(mammoth, event):

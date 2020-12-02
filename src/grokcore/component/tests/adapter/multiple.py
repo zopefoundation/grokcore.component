@@ -12,14 +12,18 @@ Multiple models lead to ambiguity:
 import grokcore.component as grok
 from zope import interface
 
+
 class Cave(grok.Context):
     pass
+
 
 class Club(grok.Context):
     pass
 
+
 class IHome(interface.Interface):
     pass
+
 
 @grok.implementer(IHome)
 class Home(grok.Adapter):

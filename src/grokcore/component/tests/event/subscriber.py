@@ -1,6 +1,8 @@
 """
 You can subscribe to events using the @grok.subscribe decorator:
 
+  >>> import zope.event
+  >>> from zope.component.interfaces import ObjectEvent
   >>> grok.testing.grok(__name__)
   >>> manfred = Mammoth('Manfred')
   >>> zope.event.notify(ObjectEvent(manfred))
@@ -16,20 +18,24 @@ The decorated event handling function can also be called directly:
   ['Manfred', 'Max']
 
 """
-import zope.event
+
 import grokcore.component as grok
-from zope.component.interfaces import IObjectEvent, ObjectEvent
+from zope.component.interfaces import IObjectEvent
+
 
 class Mammoth(object):
     def __init__(self, name):
         self.name = name
 
+
 mammoths = []
 mammoths2 = []
+
 
 @grok.subscribe(Mammoth, IObjectEvent)
 def mammothAdded(mammoth, event):
     mammoths.append(mammoth.name)
+
 
 @grok.subscribe(Mammoth, IObjectEvent)
 def mammothAddedInstance(mammoth, event):

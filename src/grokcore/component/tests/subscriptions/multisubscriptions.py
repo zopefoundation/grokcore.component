@@ -32,7 +32,7 @@
   >>> for s in office_subscriptions: s.do()
   Martijn is sleeping at Grok corp(r)(tm) headquarters.
 
-"""
+"""  # noqa: E501 line too long
 
 import grokcore.component as grok
 from zope import interface
@@ -58,8 +58,8 @@ class Mammoth(grok.Context):
 class IActivity(interface.Interface):
 
     def do():
-        """Do something.
-        """
+        """Do something."""
+
 
 @grok.implementer(IActivity)
 class Sleep(grok.MultiSubscription):
@@ -89,7 +89,8 @@ class DayTimeActivity(grok.MultiSubscription):
 class Food(DayTimeActivity):
 
     def do(self):
-        print('%s is feeding himself at %s.' % (self.who.name, self.where.name))
+        print(
+            '%s is feeding himself at %s.' % (self.who.name, self.where.name))
 
 
 class WritingCode(DayTimeActivity):

@@ -6,10 +6,12 @@ Subclasses of grok.GlobalUtility must implement exactly one interface:
     ...
   GrokError: <class 'grokcore.component.tests.utility.implementsnone2.Club'> must
   implement at least one interface (use grok.implements to specify).
-"""
+"""  # noqa: E501 line too long
 import grokcore.component as grok
+
 
 class Club(object):
     pass
+
 
 grok.global_utility(Club)
