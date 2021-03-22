@@ -21,7 +21,7 @@
 
 """
 import grokcore.component as grok
-from zope.component.interfaces import IObjectEvent
+from zope.interface.interfaces import IObjectEvent
 
 
 def function_context():
