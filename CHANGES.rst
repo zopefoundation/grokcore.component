@@ -6,6 +6,8 @@ Changes
 
 - Add support for Python 3.7 up to 3.9.
 
+- Update to ``zope.component >= 5``.
+
 - Drop support for Python 3.4.
 
 

@@ -2,7 +2,7 @@
 You can subscribe to events using the @grok.subscribe decorator:
 
   >>> import zope.event
-  >>> from zope.component.interfaces import ObjectEvent
+  >>> from zope.interface.interfaces import ObjectEvent
   >>> grok.testing.grok(__name__)
   >>> manfred = Mammoth('Manfred')
   >>> zope.event.notify(ObjectEvent(manfred))
@@ -20,7 +20,7 @@ The decorated event handling function can also be called directly:
 """
 
 import grokcore.component as grok
-from zope.component.interfaces import IObjectEvent
+from zope.interface.interfaces import IObjectEvent
 
 
 class Mammoth(object):
