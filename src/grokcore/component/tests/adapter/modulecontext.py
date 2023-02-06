@@ -12,8 +12,9 @@ Explicit module-level context in case of multiple models:
   True
 
 """
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class Cave(grok.Context):

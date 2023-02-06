@@ -9,8 +9,9 @@ If no model can be found in the module, we get an error:
   'context' directive.
 
 """
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class IHome(interface.Interface):

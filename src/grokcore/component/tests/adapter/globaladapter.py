@@ -47,9 +47,10 @@
 
 """
 
-import grokcore.component as grok
 from zope import interface
 from zope.interface import implementer
+
+import grokcore.component as grok
 
 
 class Cave(grok.Context):

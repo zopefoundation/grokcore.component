@@ -15,10 +15,12 @@
 """
 import martian
 import martian.util
-from martian.error import GrokError, GrokImportError
+from martian.error import GrokError
+from martian.error import GrokImportError
 from martian.util import scan_for_classes
 from zope import interface
 from zope.interface.interfaces import IInterface
+
 from grokcore.component.interfaces import IContext
 
 

@@ -1,10 +1,13 @@
-import re
-import unittest
-import traceback
 import doctest
+import re
+import traceback
+import unittest
+
 from pkg_resources import resource_listdir
-from zope.testing import cleanup, renormalizing
+
 import zope.component.eventtesting
+from zope.testing import cleanup
+from zope.testing import renormalizing
 
 
 def setUpZope(test):

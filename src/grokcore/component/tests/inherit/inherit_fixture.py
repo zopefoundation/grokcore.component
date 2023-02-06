@@ -1,5 +1,6 @@
-import grokcore.component
 from zope.interface import Interface
+
+import grokcore.component
 
 
 class Foo(grokcore.component.Context):

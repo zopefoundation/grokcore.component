@@ -17,11 +17,13 @@ import operator
 
 import martian
 import martian.util
-import grokcore.component
-from zope import component, interface
 from martian.error import GrokError
+from zope import component
+from zope import interface
 from zope.interface import implementedBy
 from zope.interface.declarations import classImplements
+
+import grokcore.component
 
 
 def _provides(component, module=None, **data):

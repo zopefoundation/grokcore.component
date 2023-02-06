@@ -24,8 +24,10 @@ conflict:
   <BLANKLINE>
 
 """  # noqa: E501 line too long
+from zope.interface import Interface
+from zope.interface import provider
+
 import grokcore.component as grok
-from zope.interface import Interface, provider
 
 
 class IUtilityInterface(Interface):

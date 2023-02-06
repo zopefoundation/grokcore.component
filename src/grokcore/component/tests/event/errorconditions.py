@@ -20,8 +20,9 @@
   GrokImportError: @grok.subscribe requires at least one argument.
 
 """
-import grokcore.component as grok
 from zope.interface.interfaces import IObjectEvent
+
+import grokcore.component as grok
 
 
 def function_context():

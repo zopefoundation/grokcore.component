@@ -125,8 +125,9 @@ Let's look up an instance we registered this way:
 
 """  # noqa: E501 line too long
 
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class IClub(interface.Interface):

@@ -13,9 +13,10 @@ Explicit class-level context for an imported model:
   True
 
 """
+from zope import interface
+
 import grokcore.component as grok
 from grokcore.component.tests.adapter.adapter import Cave
-from zope import interface
 
 
 class IPainting(interface.Interface):

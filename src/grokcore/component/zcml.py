@@ -13,13 +13,14 @@
 ##############################################################################
 """Grok ZCML directives."""
 
-from zope.configuration.fields import GlobalObject, Tokens
+import fnmatch
+
+import martian
+from zope.configuration.fields import GlobalObject
+from zope.configuration.fields import Tokens
 from zope.interface import Interface
 from zope.schema import TextLine
 from zope.testing.cleanup import addCleanUp
-
-import martian
-import fnmatch
 
 
 class IGrokDirective(Interface):

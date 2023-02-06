@@ -17,8 +17,9 @@ You can register a named adapter by using grok.name:
   True
 """  # noqa: E501 line too long
 
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class Cave(grok.Context):

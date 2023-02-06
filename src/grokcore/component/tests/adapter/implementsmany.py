@@ -8,9 +8,9 @@ interface:
   GrokError: <class 'grokcore.component.tests.adapter.implementsmany.Home'> is implementing
   more than one interface (use grok.provides to specify which one to use).
 """  # noqa: E501 line too long
-import grokcore.component as grok
-
 from zope import interface
+
+import grokcore.component as grok
 
 
 class Cave(grok.Context):
