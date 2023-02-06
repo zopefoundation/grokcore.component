@@ -197,12 +197,12 @@ class IHome(interface.Interface):
 
 
 @grok.implementer(IFireplace)
-class Fireplace(object):
+class Fireplace:
     pass
 
 
 @grok.implementer(IFireplace, IHome)
-class Home(object):
+class Home:
     pass
 
 

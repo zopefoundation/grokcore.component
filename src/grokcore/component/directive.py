@@ -41,7 +41,7 @@ class global_utility(martian.MultipleTimesDirective):
     """
     scope = martian.MODULE
 
-    def factory(self, factory, provides=None, name=u'', direct=False):
+    def factory(self, factory, provides=None, name='', direct=False):
         if provides is not None and not IInterface.providedBy(provides):
             raise GrokImportError(
                 "You can only pass an interface to the "
@@ -92,7 +92,7 @@ class name(martian.Directive):
     scope = martian.CLASS
     store = martian.ONCE
     validate = martian.validateText
-    default = u''
+    default = ''
 
 
 class context(martian.Directive):
@@ -190,8 +190,7 @@ class implements(martian.Directive):
         specifications (IDeclaration objects).
 
         Since the original implementer from zope.interface is not supported
-        anymore Python 3, grokcore.component continues to support it
-        on its own.
+        anymore; grokcore.component continues to support it on its own.
 
         :param interface or interfaces to be implement by a class.
     """

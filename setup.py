@@ -22,9 +22,8 @@ setup(
     name='grokcore.component',
     version='4.0.dev0',
     author='Grok Team',
-    author_email='grok-dev@zope.org',
-    url='http://grok.zope.org',
-    download_url='https://github.com/zopefoundation/grokcore.component',
+    author_email='zope-dev@zope.dev',
+    url='https://github.com/zopefoundation/grokcore.component',
     description='Grok-like configuration for basic components '
                 '(adapters, utilities, subscribers)',
     long_description=long_description,
@@ -49,6 +48,7 @@ setup(
     namespace_packages=['grokcore'],
     include_package_data=True,
     zip_safe=False,
+    python_requires='>=3.7',
     install_requires=['setuptools',
                       'martian >= 1.2',
                       'zope.component',
@@ -57,7 +57,5 @@ setup(
                       # Note: zope.testing is NOT just a test dependency here.
                       'zope.testing',
                       ],
-    test_suite='grokcore.component.tests.test_grok.test_suite',
-    tests_require=tests_require,
     extras_require={'test': tests_require},
 )

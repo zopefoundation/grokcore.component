@@ -151,7 +151,7 @@ class ImplementerDecoratorGrokker(martian.GlobalGrokker):
             if interfaces is None:
                 context = grokcore.component.context.bind().get(module)
                 interfaces = (context, )
-            name = getattr(function, '__component_name__', u"")
+            name = getattr(function, '__component_name__', "")
             config.action(
                 discriminator=(
                     'adapter', interfaces, function.__implemented__, name),

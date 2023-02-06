@@ -4,7 +4,7 @@
   >>> cave = Cave()
   >>> home = IHome(cave)
   >>> home.id
-  u'default'
+  'default'
   >>> IHome.providedBy(home)
   True
   >>>
@@ -12,7 +12,7 @@
   True
   >>> morehome = IMoreHome(cave)
   >>> morehome.id
-  u'default'
+  'default'
   >>> IHome.providedBy(morehome)
   True
   >>> isinstance(morehome, Home)
@@ -23,7 +23,7 @@
   >>> isinstance(yetanotherhome, Home)
   True
   >>> yetanotherhome.id
-  u'default'
+  'default'
 
   >>> from grokcore.component.tests.adapter import noarguments_fixture
   Traceback (most recent call last):
@@ -38,7 +38,7 @@
   >>> from zope.component import getAdapter
   >>> home = getAdapter(cave, IHome, name='home')
   >>> home.id
-  u'secondary'
+  'secondary'
 
 """
 
@@ -73,9 +73,9 @@ class Cave(grok.Context):
 
 
 @grok.implementer(IHome)
-class Home(object):
+class Home:
 
-    def __init__(self, id=u"default"):
+    def __init__(self, id="default"):
         self.id = id
 
 
@@ -96,7 +96,7 @@ def yet_another_home_for_cave(cave):
     return Home()
 
 
-@grok.adapter(Cave, name=u"home")
+@grok.adapter(Cave, name="home")
 @grok.implementer(IHome)
 def home_for_cave_named(cave):
-    return Home(u"secondary")
+    return Home("secondary")

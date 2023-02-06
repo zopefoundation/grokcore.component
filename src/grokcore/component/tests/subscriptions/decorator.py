@@ -30,7 +30,7 @@ class IActivity(interface.Interface):
     pass
 
 
-class DebuggingGrokcore(object):
+class DebuggingGrokcore:
 
     def __init__(self, where):
         self.where = where

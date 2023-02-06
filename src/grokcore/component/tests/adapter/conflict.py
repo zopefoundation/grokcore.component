@@ -28,7 +28,7 @@ class ICaveCleaning(Interface):
 
 
 @grok.implementer(ICave)
-class Cave(object):
+class Cave:
     pass
 
 

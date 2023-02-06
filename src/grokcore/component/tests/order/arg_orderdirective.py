@@ -27,21 +27,21 @@ You can use the key option:
 import grokcore.component as grok
 
 
-class First(object):
+class First:
     grok.order(5)
 
 
-class Second(object):
+class Second:
     grok.order(4)
 
 
-class Third(object):
+class Third:
     grok.order(3)
 
 
-class Fourth(object):
+class Fourth:
     grok.order(2)
 
 
-class Fifth(object):
+class Fifth:
     grok.order(1)

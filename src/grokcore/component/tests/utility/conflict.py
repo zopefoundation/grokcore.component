@@ -91,7 +91,7 @@ class ClassLevel(grok.GlobalUtility):
 
 
 @grok.implementer(IUtilityInterface)
-class ModuleLevel(object):
+class ModuleLevel:
     """This utility doesn't inherit from Grok's base class and is
     registered explicitly using the module-level directive below."""
 

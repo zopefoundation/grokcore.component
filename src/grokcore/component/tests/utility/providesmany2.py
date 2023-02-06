@@ -24,7 +24,7 @@ class ISpikyClub(interface.Interface):
 
 
 @interface.provider(IClub, ISpikyClub)
-class Club(object):
+class Club:
     pass
 
 

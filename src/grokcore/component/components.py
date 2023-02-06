@@ -18,7 +18,7 @@ from zope.interface import implementer
 from grokcore.component.interfaces import IContext
 
 
-class Adapter(object):
+class Adapter:
     """Base class for an adapter that adapts a single object (commonly referred
     to as the *context*).
 
@@ -37,7 +37,7 @@ class Adapter(object):
         self.context = context
 
 
-class MultiAdapter(object):
+class MultiAdapter:
     """Base class for an adapter that adapts *n* objects (where *n>=1*).
 
     Use the ``adapts`` directive to specify which kinds of objects are adapted
@@ -53,7 +53,7 @@ class MultiAdapter(object):
     pass
 
 
-class GlobalUtility(object):
+class GlobalUtility:
     """Base class to define a globally registered utility.
 
     Base class for a globally registered utility. Unless you use the ``direct``
@@ -69,7 +69,7 @@ class GlobalUtility(object):
     pass
 
 
-class Subscription(object):
+class Subscription:
     """Base class for a subscription adapter.
 
     Subscriptions are similar to adapters, except that it is possible to
@@ -89,7 +89,7 @@ class Subscription(object):
         self.context = context
 
 
-class MultiSubscription(object):
+class MultiSubscription:
     """Base class for a subscription multi-adapter.
 
     MultiSubscriptions are similar to multi adapters, except that it is
@@ -106,7 +106,7 @@ class MultiSubscription(object):
 
 
 @implementer(IContext)
-class Context(object):
+class Context:
     """Subclasses of this will automatically be found as potential contexts for
     adapters and other types of context-dependent components.
 

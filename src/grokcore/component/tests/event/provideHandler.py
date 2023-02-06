@@ -20,7 +20,7 @@ from zope.interface.interfaces import IObjectEvent
 import grokcore.component as grok
 
 
-class Mammoth(object):
+class Mammoth:
     def __init__(self, name):
         self.name = name
 

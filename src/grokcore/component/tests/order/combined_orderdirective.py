@@ -19,21 +19,21 @@ sorting on the order specified, and then by the definition order.
 import grokcore.component as grok
 
 
-class First(object):
+class First:
     grok.order(2)
 
 
-class Second(object):
+class Second:
     grok.order(1)
 
 
-class Third(object):
+class Third:
     grok.order()
 
 
-class Fourth(object):
+class Fourth:
     grok.order()
 
 
-class Fifth(object):
+class Fifth:
     grok.order(1)

@@ -77,7 +77,7 @@ class adapter(zope.component.adapter):
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
 
-        self.name = u""
+        self.name = ""
 
         if kw:
             if 'name' in kw:

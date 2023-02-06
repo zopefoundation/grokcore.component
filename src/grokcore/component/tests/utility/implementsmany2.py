@@ -22,7 +22,7 @@ class ISpikyClub(interface.Interface):
 
 
 @grok.implementer(IClub, ISpikyClub)
-class Club(object):
+class Club:
     pass
 
 

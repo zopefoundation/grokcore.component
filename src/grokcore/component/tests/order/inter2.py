@@ -5,13 +5,13 @@ This module used by inter1 tests
 import grokcore.component as grok
 
 
-class Four(object):
+class Four:
     grok.order(1)
 
 
-class Five(object):
+class Five:
     pass
 
 
-class Six(object):
+class Six:
     grok.order()
