@@ -18,21 +18,21 @@ be done by definition order.
 import grokcore.component as grok
 
 
-class First(object):
+class First:
     grok.order()
 
 
-class Second(object):
+class Second:
     grok.order()
 
 
-class Third(object):
+class Third:
     grok.order()
 
 
-class Fourth(object):
+class Fourth:
     grok.order()
 
 
-class Fifth(object):
+class Fifth:
     grok.order()

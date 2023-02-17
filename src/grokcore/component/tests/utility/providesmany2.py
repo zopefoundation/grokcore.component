@@ -10,8 +10,9 @@ specify which interface to use for the registration:
   provides more than one interface (use grok.provides to specify which one
   to use).
 """
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class IClub(interface.Interface):
@@ -23,7 +24,7 @@ class ISpikyClub(interface.Interface):
 
 
 @interface.provider(IClub, ISpikyClub)
-class Club(object):
+class Club:
     pass
 
 

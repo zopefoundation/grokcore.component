@@ -10,8 +10,9 @@ explicitly declared with grok.provides):
     For: ('adapter', <InterfaceClass grokcore.component.tests.adapter.conflict.ICave>, <InterfaceClass grokcore.component.tests.adapter.conflict.IDecoration>, u'')
 
 """  # noqa: E501 line too long
-import grokcore.component as grok
 from zope.interface import Interface
+
+import grokcore.component as grok
 
 
 class ICave(Interface):
@@ -27,7 +28,7 @@ class ICaveCleaning(Interface):
 
 
 @grok.implementer(ICave)
-class Cave(object):
+class Cave:
     pass
 
 

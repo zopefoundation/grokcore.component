@@ -13,7 +13,8 @@
 ##############################################################################
 """Public interfaces.
 """
-from zope.interface import Interface, Attribute
+from zope.interface import Attribute
+from zope.interface import Interface
 
 
 class IContext(Interface):
@@ -117,7 +118,7 @@ class IDirectives(Interface):
         """Explicitly specify with which interface a component will be
         looked up."""
 
-    def global_utility(factory, provides=None, name=u''):
+    def global_utility(factory, provides=None, name=''):
         """Register a global utility.
 
         factory - the factory that creates the global utility
@@ -125,7 +126,7 @@ class IDirectives(Interface):
         name - the name of the utility
         """
 
-    def global_adapter(factory, adapts=None, provides=None, name=u''):
+    def global_adapter(factory, adapts=None, provides=None, name=''):
         """Register a global adapter.
 
         factory - the adapter factory, a callable

@@ -48,8 +48,9 @@ specify the one to use:
   True
 """
 
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class Cave(grok.Context):

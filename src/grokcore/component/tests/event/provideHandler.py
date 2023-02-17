@@ -15,11 +15,12 @@ in a module but just enable certain components.
   ['Manfred']
 
 """
-import grokcore.component as grok
 from zope.interface.interfaces import IObjectEvent
 
+import grokcore.component as grok
 
-class Mammoth(object):
+
+class Mammoth:
     def __init__(self, name):
         self.name = name
 

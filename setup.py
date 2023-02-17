@@ -1,5 +1,7 @@
-from setuptools import setup, find_packages
 import os
+
+from setuptools import find_packages
+from setuptools import setup
 
 
 def read(*rnames):
@@ -18,29 +20,27 @@ tests_require = [
 
 setup(
     name='grokcore.component',
-    version='3.2.1.dev0',
+    version='4.0.dev0',
     author='Grok Team',
-    author_email='grok-dev@zope.org',
-    url='http://grok.zope.org',
-    download_url='https://github.com/zopefoundation/grokcore.component',
+    author_email='zope-dev@zope.dev',
+    url='https://github.com/zopefoundation/grokcore.component',
     description='Grok-like configuration for basic components '
                 '(adapters, utilities, subscribers)',
     long_description=long_description,
     license='ZPL',
-    classifiers=['Intended Audience :: Developers',
-                 'Development Status :: 6 - Mature',
-                 'License :: OSI Approved :: Zope Public License',
-                 'Operating System :: OS Independent',
-                 'Programming Language :: Python :: 2',
-                 'Programming Language :: Python :: 2.7',
-                 'Programming Language :: Python :: 3',
-                 'Programming Language :: Python :: 3.5',
-                 'Programming Language :: Python :: 3.6',
-                 'Programming Language :: Python :: 3.7',
-                 'Programming Language :: Python :: 3.8',
-                 'Programming Language :: Python :: 3.9',
-                 'Programming Language :: Python :: Implementation :: CPython',
-                 'Programming Language :: Python :: Implementation :: PyPy',
+    classifiers=[
+        'Intended Audience :: Developers',
+        'Development Status :: 6 - Mature',
+        'License :: OSI Approved :: Zope Public License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: PyPy',
                  ],
 
     packages=find_packages('src'),
@@ -48,6 +48,7 @@ setup(
     namespace_packages=['grokcore'],
     include_package_data=True,
     zip_safe=False,
+    python_requires='>=3.7',
     install_requires=['setuptools',
                       'martian >= 1.2',
                       'zope.component',
@@ -56,7 +57,5 @@ setup(
                       # Note: zope.testing is NOT just a test dependency here.
                       'zope.testing',
                       ],
-    test_suite='grokcore.component.tests.test_grok.test_suite',
-    tests_require=tests_require,
     extras_require={'test': tests_require},
 )

@@ -34,8 +34,9 @@
 
 """  # noqa: E501 line too long
 
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class Office(grok.Context):
@@ -70,7 +71,7 @@ class Sleep(grok.MultiSubscription):
         self.who = who
 
     def do(self):
-        print('%s is sleeping at %s.' % (self.who.name, self.where.name))
+        print('{} is sleeping at {}.'.format(self.who.name, self.where.name))
 
 
 @grok.implementer(IActivity)
@@ -89,11 +90,10 @@ class DayTimeActivity(grok.MultiSubscription):
 class Food(DayTimeActivity):
 
     def do(self):
-        print(
-            '%s is feeding himself at %s.' % (self.who.name, self.where.name))
+        print(f'{self.who.name} is feeding himself at {self.where.name}.')
 
 
 class WritingCode(DayTimeActivity):
 
     def do(self):
-        print('%s is writing code at %s!' % (self.who.name, self.where.name))
+        print(f'{self.who.name} is writing code at {self.where.name}!')

@@ -40,8 +40,9 @@
 
 """  # noqa: E501 line too long
 
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class Cave(grok.Context):
@@ -79,19 +80,18 @@ class Cleaning(DayTimeActivity):
     grok.order(99)
 
     def do(self):
-        print('%s is cleaning the %s.' % (self.who.name, self.where.name))
+        print('{} is cleaning the {}.'.format(self.who.name, self.where.name))
 
 
 class Cooking(DayTimeActivity):
     grok.order(10)
 
     def do(self):
-        print('%s is cooking in %s!' % (self.who.name, self.where.name))
+        print('{} is cooking in {}!'.format(self.who.name, self.where.name))
 
 
 class Gardening(DayTimeActivity):
     grok.order(15)
 
     def do(self):
-        print(
-            '%s is growing pumpkins in %s!' % (self.who.name, self.where.name))
+        print(f'{self.who.name} is growing pumpkins in {self.where.name}!')

@@ -51,7 +51,7 @@ def getSiteManager():
     return sm
 
 
-def provideUtility(component, provides=None, name=u''):
+def provideUtility(component, provides=None, name=''):
     sm = getSiteManager()
     sm.registerUtility(component, provides, name, event=False)
 
@@ -130,7 +130,7 @@ def provideInterface(id, interface, iface_type=None, info=''):
     ['I']
     """
     if not id:
-        id = "%s.%s" % (interface.__module__, interface.__name__)
+        id = "{}.{}".format(interface.__module__, interface.__name__)
 
     if not IInterface.providedBy(interface):
         if not isinstance(interface, class_types):

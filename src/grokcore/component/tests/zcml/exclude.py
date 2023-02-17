@@ -27,7 +27,9 @@ module:
 """
 
 from zope.configuration import xmlconfig
+
 from grokcore.component.tests.zcml import excludepkg
+
 
 context = xmlconfig.ConfigurationMachine()
 xmlconfig.registerCommonDirectives(context)

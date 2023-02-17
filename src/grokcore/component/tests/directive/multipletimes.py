@@ -24,11 +24,12 @@ GlobalUtilityInfo objects annotated on the module.
   >>> provides is None
   True
   >>> name
-  u''
+  ''
 
 """
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class IClub(interface.Interface):
@@ -40,12 +41,12 @@ class ICave(interface.Interface):
 
 
 @grok.implementer(IClub)
-class Club(object):
+class Club:
     pass
 
 
 @grok.implementer(ICave)
-class Cave(object):
+class Cave:
     pass
 
 

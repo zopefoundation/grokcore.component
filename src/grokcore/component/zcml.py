@@ -13,27 +13,28 @@
 ##############################################################################
 """Grok ZCML directives."""
 
-from zope.configuration.fields import GlobalObject, Tokens
+import fnmatch
+
+import martian
+from zope.configuration.fields import GlobalObject
+from zope.configuration.fields import Tokens
 from zope.interface import Interface
 from zope.schema import TextLine
 from zope.testing.cleanup import addCleanUp
-
-import martian
-import fnmatch
 
 
 class IGrokDirective(Interface):
     """Grok a package or module."""
 
     package = GlobalObject(
-        title=u"Package",
-        description=u"The package or module to be analyzed by grok.",
+        title="Package",
+        description="The package or module to be analyzed by grok.",
         required=False)
 
     exclude = Tokens(
-        title=u"Exclude",
-        description=u"Names (which might contain unix shell-style wildcards) "
-                    u"to be excluded in the grokking process.",
+        title="Exclude",
+        description="Names (which might contain unix shell-style wildcards) "
+                    "to be excluded in the grokking process.",
         required=False,
         value_type=TextLine())
 

@@ -1,5 +1,5 @@
 import grokcore.component as grok
 
 
-class Alpha(object):
+class Alpha:
     grok.baseclass()

@@ -1,5 +1,6 @@
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class IDummy(interface.Interface):

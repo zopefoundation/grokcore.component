@@ -7,56 +7,57 @@
 
   >>> home = IHome(cave)
   >>> home.id
-  u'one'
+  'one'
 
-  >>> home = getAdapter(cave, IHome, name=u"two")
+  >>> home = getAdapter(cave, IHome, name="two")
   >>> home.id
-  u'two'
+  'two'
 
-  >>> home = getAdapter(cave, IHome, name=u"three")
+  >>> home = getAdapter(cave, IHome, name="three")
   >>> home.id
-  u'three'
+  'three'
 
-  >>> home = getAdapter(cave, IHome, name=u"four")
+  >>> home = getAdapter(cave, IHome, name="four")
   >>> home.id
-  u'four'
+  'four'
 
-  >>> home = getAdapter(fireplace, IHome, name=u"five")
+  >>> home = getAdapter(fireplace, IHome, name="five")
   >>> home.id
-  u'five'
+  'five'
 
   >>> home = getMultiAdapter((cave, fireplace), IHome)
   >>> home.id
-  u'six'
+  'six'
 
-  >>> home = getAdapter(fireplace, IHome, name=u'seven')
+  >>> home = getAdapter(fireplace, IHome, name='seven')
   >>> home.id
-  u'seven-a'
+  'seven-a'
 
-  >>> home = getMultiAdapter((cave, fireplace), IHome, name=u'seven')
+  >>> home = getMultiAdapter((cave, fireplace), IHome, name='seven')
   >>> home.id
-  u'seven-b'
+  'seven-b'
 
   >>> garage = getAdapter(cave, IGarage, name='named_garage_factory_name')
   >>> garage.id
-  u"I'm a garage"
+  "I'm a garage"
 
   >>> garage = getAdapter(cave, IGarage)
   >>> garage.id
-  u"I'm a garage"
+  "I'm a garage"
 
 """
 
-import grokcore.component as grok
 from zope import interface
 from zope.interface import implementer
+
+import grokcore.component as grok
 
 
 class Cave(grok.Context):
     pass
 
 
-class Fireplace(object):
+class Fireplace:
     pass
 
 
@@ -65,14 +66,14 @@ class IHome(interface.Interface):
 
 
 @grok.implementer(IHome)
-class Home(object):
+class Home:
 
     def __init__(self, id):
         self.id = id
 
 
 @grok.implementer(IHome)
-class CaveHomeFactory(object):
+class CaveHomeFactory:
 
     def __init__(self, id):
         self.id = id
@@ -81,7 +82,7 @@ class CaveHomeFactory(object):
         return Home(self.id)
 
 
-class CaveFireplaceHomeFactory(object):
+class CaveFireplaceHomeFactory:
 
     def __init__(self, id):
         self.id = id
@@ -90,14 +91,14 @@ class CaveFireplaceHomeFactory(object):
         return Home(self.id)
 
 
-factory1 = CaveHomeFactory(u"one")
-factory2 = CaveHomeFactory(u"two")
-factory3 = CaveHomeFactory(u"three")
-factory4 = CaveHomeFactory(u"four")
-factory5 = CaveHomeFactory(u"five")
-factory6 = CaveFireplaceHomeFactory(u"six")
-factory7a = CaveHomeFactory(u"seven-a")
-factory7b = CaveFireplaceHomeFactory(u"seven-b")
+factory1 = CaveHomeFactory("one")
+factory2 = CaveHomeFactory("two")
+factory3 = CaveHomeFactory("three")
+factory4 = CaveHomeFactory("four")
+factory5 = CaveHomeFactory("five")
+factory6 = CaveFireplaceHomeFactory("six")
+factory7a = CaveHomeFactory("seven-a")
+factory7b = CaveFireplaceHomeFactory("seven-b")
 
 # make some direct assertions
 
@@ -115,19 +116,19 @@ grok.adapter(Cave, Fireplace)(factory7b)
 # should accept single value for adapts
 grok.global_adapter(factory1, Cave, IHome)
 # should accept tuple for adapts
-grok.global_adapter(factory2, (Cave,), IHome, name=u"two")
+grok.global_adapter(factory2, (Cave,), IHome, name="two")
 # should look at the provided interface
-grok.global_adapter(factory3, Cave, name=u"three")
+grok.global_adapter(factory3, Cave, name="three")
 # should pick the canonical context
-grok.global_adapter(factory4, name=u"four")
+grok.global_adapter(factory4, name="four")
 # should use __component_adapts__
-grok.global_adapter(factory5, name=u"five")
+grok.global_adapter(factory5, name="five")
 # should work as multi-adapter
 grok.global_adapter(factory6, (Cave, Fireplace,))
 # should use __component_adapts__ adapting one object
-grok.global_adapter(factory7a, name=u"seven")
+grok.global_adapter(factory7a, name="seven")
 # should use __component_adapts__ adaping two objects
-grok.global_adapter(factory7b, name=u"seven")
+grok.global_adapter(factory7b, name="seven")
 
 
 class IGarage(interface.Interface):
@@ -135,11 +136,11 @@ class IGarage(interface.Interface):
 
 
 @grok.implementer(IGarage)
-class NamedGarageFactory(object):
+class NamedGarageFactory:
     grok.name('named_garage_factory_name')
 
     def __init__(self, context):
-        self.id = u"I'm a garage"
+        self.id = "I'm a garage"
 
 
 implementer(IGarage)(NamedGarageFactory)
@@ -147,4 +148,4 @@ implementer(IGarage)(NamedGarageFactory)
 # should register a named adapter
 grok.global_adapter(NamedGarageFactory, Cave, IGarage)
 # should override component's name
-grok.global_adapter(NamedGarageFactory, Cave, IGarage, name=u'')
+grok.global_adapter(NamedGarageFactory, Cave, IGarage, name='')

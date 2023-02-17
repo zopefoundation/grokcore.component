@@ -16,21 +16,21 @@ name.
 """
 
 
-class First(object):
+class First:
     pass
 
 
-class Second(object):
+class Second:
     pass
 
 
-class Third(object):
+class Third:
     pass
 
 
-class Fourth(object):
+class Fourth:
     pass
 
 
-class Fifth(object):
+class Fifth:
     pass

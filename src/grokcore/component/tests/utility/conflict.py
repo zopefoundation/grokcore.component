@@ -24,8 +24,10 @@ conflict:
   <BLANKLINE>
 
 """  # noqa: E501 line too long
+from zope.interface import Interface
+from zope.interface import provider
+
 import grokcore.component as grok
-from zope.interface import Interface, provider
 
 
 class IUtilityInterface(Interface):
@@ -89,7 +91,7 @@ class ClassLevel(grok.GlobalUtility):
 
 
 @grok.implementer(IUtilityInterface)
-class ModuleLevel(object):
+class ModuleLevel:
     """This utility doesn't inherit from Grok's base class and is
     registered explicitly using the module-level directive below."""
 

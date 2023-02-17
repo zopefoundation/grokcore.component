@@ -26,13 +26,13 @@ The ordering works like so:
 import grokcore.component as grok
 
 
-class One(object):
+class One:
     grok.order()
 
 
-class Two(object):
+class Two:
     grok.order(2)
 
 
-class Three(object):
+class Three:
     pass

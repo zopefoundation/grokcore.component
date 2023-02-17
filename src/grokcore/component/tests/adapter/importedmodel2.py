@@ -9,9 +9,10 @@ Grok error because import model doesn't count as context:
   please use the 'context' directive.
 
 """
+from zope import interface
+
 import grokcore.component as grok
 from grokcore.component.tests.adapter.adapter import Cave  # noqa: F401 unused
-from zope import interface
 
 
 class IPainting(interface.Interface):

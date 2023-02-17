@@ -15,8 +15,9 @@
 """  # noqa: E501 line too long
 
 
-import grokcore.component as grok
 from zope import interface
+
+import grokcore.component as grok
 
 
 class Cave(grok.Context):
@@ -29,7 +30,7 @@ class IActivity(interface.Interface):
     pass
 
 
-class DebuggingGrokcore(object):
+class DebuggingGrokcore:
 
     def __init__(self, where):
         self.where = where

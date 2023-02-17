@@ -15,11 +15,11 @@
 """
 import sys
 import types
+
 import zope.component
 import zope.interface
-from martian.util import frame_is_module
 from martian.error import GrokImportError
-
+from martian.util import frame_is_module
 from zope.interface.declarations import DescriptorAwareMetaClasses
 
 
@@ -77,7 +77,7 @@ class adapter(zope.component.adapter):
             raise GrokImportError(
                 "@grok.adapter requires at least one argument.")
 
-        self.name = u""
+        self.name = ""
 
         if kw:
             if 'name' in kw:
