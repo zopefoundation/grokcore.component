@@ -23,8 +23,6 @@ from martian import ignore
 from martian.error import GrokError
 from martian.error import GrokImportError
 from zope.component import adapts
-from zope.interface import classProvides
-from zope.interface import implementsOnly
 
 # Import this module so that it's available as soon as you import the
 # 'grokcore.component' package.  Useful for tests and interpreter examples.
