@@ -4,15 +4,19 @@ Changes
 4.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Upgrade to support ``zope.interface >= 6.0`` by no longer importing removed
+  functions:
+
+    + ``classProvides``
+    + ``implementsOnly``
 
 
 4.0 (2023-02-17)
 ----------------
 
-* Add support for Python 3.10, 3.11.
+- Add support for Python 3.10, 3.11.
 
-* Drop support for Python 2.7, 3.5, 3.6.
+- Drop support for Python 2.7, 3.5, 3.6.
 
 
 3.2.0 (2021-03-22)
