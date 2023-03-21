@@ -1,7 +1,7 @@
 Changes
 =======
 
-4.1 (unreleased)
+4.1 (2023-03-21)
 ----------------
 
 - Upgrade to support ``zope.interface >= 6.0`` by no longer importing removed
