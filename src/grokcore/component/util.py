@@ -34,8 +34,9 @@ def sort_components(components, key=None):
     """Sort a list of components using the information provided by
     `grok.order`.
     """
-    sort_key = _sort_key
-    if key is not None:
+    if key is None:
+        sort_key = _sort_key
+    else:
         def sort_key(item):
             return _sort_key(key(item))
 
