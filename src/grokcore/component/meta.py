@@ -45,10 +45,11 @@ class AdapterGrokker(martian.ClassGrokker):
     martian.directive(grokcore.component.name)
 
     def execute(self, factory, config, context, provides, name, **kw):
+        for_ = (context,)
         config.action(
-            discriminator=('adapter', context, provides, name),
+            discriminator=('adapter', for_, provides, name),
             callable=grokcore.component.provideAdapter,
-            args=(factory, (context,), provides, name),
+            args=(factory, for_, provides, name),
         )
         return True
 
