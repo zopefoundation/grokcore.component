@@ -4,7 +4,10 @@ Changes
 4.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Adjust discriminator for adapters so it matches the one used by the
+  ``zope.component`` ZCML directive (``<adapter factory=""/>``) and thus a
+  conflict error is raised if there are two registrations for the same
+  discriminator.
 
 
 4.1 (2023-03-21)
