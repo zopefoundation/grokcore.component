@@ -1,8 +1,8 @@
 Changes
 =======
 
-4.2 (unreleased)
-----------------
+4.1.1 (2025-01-28)
+------------------
 
 - Adjust discriminator for adapters so it matches the one used by the
   ``zope.component`` ZCML directive (``<adapter factory=""/>``) and thus a
