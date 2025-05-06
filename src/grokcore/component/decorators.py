@@ -31,6 +31,7 @@ class subscribe:
     as a subscriber for the object type and the event interface.
 
     """
+
     def __init__(self, *args):
         self.subscribed = args
 
@@ -122,6 +123,7 @@ class provider:
     This is akin to calling directlyProvides() on the function object.
 
     """
+
     def __init__(self, *interfaces):
         self.interfaces = interfaces
 
