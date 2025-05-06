@@ -80,14 +80,14 @@ class Cleaning(DayTimeActivity):
     grok.order(99)
 
     def do(self):
-        print('{} is cleaning the {}.'.format(self.who.name, self.where.name))
+        print(f'{self.who.name} is cleaning the {self.where.name}.')
 
 
 class Cooking(DayTimeActivity):
     grok.order(10)
 
     def do(self):
-        print('{} is cooking in {}!'.format(self.who.name, self.where.name))
+        print(f'{self.who.name} is cooking in {self.where.name}!')
 
 
 class Gardening(DayTimeActivity):

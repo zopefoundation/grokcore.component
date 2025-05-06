@@ -71,7 +71,7 @@ class Sleep(grok.MultiSubscription):
         self.who = who
 
     def do(self):
-        print('{} is sleeping at {}.'.format(self.who.name, self.where.name))
+        print(f'{self.who.name} is sleeping at {self.where.name}.')
 
 
 @grok.implementer(IActivity)
