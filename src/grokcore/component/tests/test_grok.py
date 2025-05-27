@@ -36,7 +36,7 @@ def suiteFromPackage(name):
                 optionflags=doctest.ELLIPSIS
                 | doctest.NORMALIZE_WHITESPACE
                 | doctest.IGNORE_EXCEPTION_DETAIL)
-        except ImportError:  # or should this accept anything?
+        except ModuleNotFoundError:  # or should this accept anything?
             traceback.print_exc()
             raise
         suite.addTest(test)
