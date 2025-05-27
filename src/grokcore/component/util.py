@@ -131,7 +131,7 @@ def provideInterface(id, interface, iface_type=None, info=''):
     ['I']
     """
     if not id:
-        id = "{}.{}".format(interface.__module__, interface.__name__)
+        id = f"{interface.__module__}.{interface.__name__}"
 
     if not IInterface.providedBy(interface):
         if not isinstance(interface, class_types):
