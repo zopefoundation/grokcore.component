@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "grokcore.component"
-version = "5.1.dev0"
+version = "5.1"
 description = "Grok-like configuration for basic components (adapters, utilities, subscribers)"
 license = "ZPL-2.1"
 classifiers = [
