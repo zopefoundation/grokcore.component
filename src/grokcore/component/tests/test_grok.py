@@ -1,8 +1,7 @@
 import doctest
 import traceback
 import unittest
-
-from pkg_resources import resource_listdir
+from importlib.resources import files
 
 import zope.component.eventtesting
 from zope.testing import cleanup
@@ -17,11 +16,10 @@ def cleanUpZope(test):
 
 
 def suiteFromPackage(name):
-    files = resource_listdir(__name__, name)
+    test_dir = files('grokcore.component.tests').joinpath(name)
+    file_list = [f.name for f in test_dir.iterdir() if f.name.endswith('.py')]
     suite = unittest.TestSuite()
-    for filename in files:
-        if not filename.endswith('.py'):
-            continue
+    for filename in file_list:
         if filename.endswith('_fixture.py'):
             continue
         if filename == '__init__.py':
