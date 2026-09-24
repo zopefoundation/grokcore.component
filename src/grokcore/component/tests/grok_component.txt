@@ -35,7 +35,7 @@ Now we will register the adapter using grok_component()::
   >>> grok_component('MyAdapter', MyAdapter,
   ... dotted_name='grokcore.component.tests.grokker.grokcomponent')
   True
-  
+
 The adapter should now be available::
 
   >>> adapted = IFoo(Bar())
