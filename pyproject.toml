@@ -42,7 +42,10 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-test = ["zope.event", "zope.testing"]
+test = [
+    "zope.event",
+    "zope.testing",
+]
 
 [project.urls]
 Source = "https://github.com/zopefoundation/grokcore.component"
