@@ -1,7 +1,7 @@
 Changes
 =======
 
-5.2 (unreleased)
+5.2 (2026-09-25)
 ----------------
 
 * Move ``zope.testing`` to the ``test`` extra.  The cleanup hook registration
