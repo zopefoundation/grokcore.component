@@ -4,8 +4,8 @@ Changes
 5.2 (unreleased)
 ----------------
 
-* Move ``zope.testing`` to the ``test`` extra.  The cleanup hook registration is
-  now guarded, so this is a no-op for consumers.
+* Move ``zope.testing`` to the ``test`` extra.  The cleanup hook registration
+  is now guarded, so this is a no-op for consumers.
 
 
 5.1 (2026-03-19)
