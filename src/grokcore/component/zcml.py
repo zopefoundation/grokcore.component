@@ -20,7 +20,6 @@ from zope.configuration.fields import GlobalObject
 from zope.configuration.fields import Tokens
 from zope.interface import Interface
 from zope.schema import TextLine
-from zope.testing.cleanup import addCleanUp
 
 
 class IGrokDirective(Interface):
@@ -39,14 +38,10 @@ class IGrokDirective(Interface):
         value_type=TextLine())
 
 
-# add a cleanup hook so that grok will bootstrap itself again whenever
-# the Component Architecture is torn down.
 def resetBootstrap():
     # we need to make sure that the grokker registry is clean again
     the_module_grokker.clear()
 
-
-addCleanUp(resetBootstrap)
 
 the_multi_grokker = martian.MetaMultiGrokker()
 the_module_grokker = martian.ModuleGrokker(the_multi_grokker)
@@ -78,3 +73,13 @@ def do_grok(dotted_name, config, extra_exclude=None):
     martian.grok_dotted_name(
         dotted_name, the_module_grokker, exclude_filter=exclude_filter,
         config=config)
+
+
+# add a cleanup hook so that grok will bootstrap itself again whenever
+# the Component Architecture is torn down.
+try:
+    from zope.testing.cleanup import addCleanUp
+except ModuleNotFoundError:  # pragma: no cover
+    pass
+else:
+    addCleanUp(resetBootstrap)
